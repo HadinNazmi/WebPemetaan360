@@ -1,0 +1,202 @@
+/* ===== SECTION BERITA & ARTIKEL BENTO GRID ===== */
+.sec-news-articles {
+  background: #ffffff;
+  padding: 85px 0 95px;
+  border-bottom: 1px solid #f0f0f0;
+  font-family: 'Montserrat', "Segoe UI", Arial, sans-serif;
+}
+.sec-news-articles .wrap-content {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+.news-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+.news-main-toggle {
+  display: inline-flex;
+  background: #eef2f6;
+  padding: 4px;
+  border-radius: 999px;
+  width: fit-content;
+}
+.btn-toggle-main {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #4b5563;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 20px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.btn-toggle-main.active {
+  background: #003366;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 51, 102, 0.25);
+}
+
+.news-category-pills {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.btn-cat-pill {
+  border: none;
+  outline: none;
+  background: #f1f3f5;
+  color: #495057;
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 7px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.btn-cat-pill:hover {
+  background: #e2e8f0;
+  color: #111111;
+}
+.btn-cat-pill.active {
+  background: #003366;
+  color: #ffffff;
+}
+
+/* Bento Grid */
+.news-bento-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr 1fr;
+  grid-template-rows: 245px 245px;
+  gap: 20px;
+}
+.news-card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease;
+  background: #111;
+  cursor: pointer;
+}
+.news-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
+}
+.news-card-featured {
+  grid-row: span 2;
+  height: 100%;
+}
+.news-card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.news-card:hover .news-card-img {
+  transform: scale(1.05);
+}
+.news-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.52) 45%, rgba(0, 0, 0, 0.06) 75%, transparent 100%);
+  pointer-events: none;
+  transition: background 0.3s ease;
+}
+.news-card:hover .news-card-overlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.96) 0%, rgba(0, 0, 0, 0.58) 50%, rgba(0, 0, 0, 0.12) 80%, transparent 100%);
+}
+.news-card-content {
+  position: relative;
+  z-index: 2;
+  padding: 24px;
+  color: #ffffff;
+  box-sizing: border-box;
+}
+.news-card-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #ffc107;
+  margin-bottom: 8px;
+}
+.news-card-title {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.38;
+  color: #ffffff;
+  margin: 0 0 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  letter-spacing: -0.2px;
+}
+.news-card-featured .news-card-title {
+  font-size: 22px;
+  line-height: 1.32;
+  -webkit-line-clamp: 4;
+  margin-bottom: 16px;
+}
+.news-card-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+}
+.news-card-date svg {
+  width: 13px;
+  height: 13px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+@media (max-width: 992px) {
+  .news-bento-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+  .news-card-featured {
+    grid-column: span 2;
+    height: 380px;
+  }
+  .news-card {
+    height: 250px;
+  }
+}
+
+@media (max-width: 600px) {
+  .news-bento-grid {
+    grid-template-columns: 1fr;
+  }
+  .news-card-featured {
+    grid-column: span 1;
+    height: 340px;
+  }
+  .news-card-featured .news-card-title {
+    font-size: 18px;
+  }
+  .news-card {
+    height: 240px;
+  }
+}
+

@@ -1,0 +1,296 @@
+/* ===== SECTION PENYALURAN BANTUAN CSR (SPLIT LAYOUT DENGAN KARTU HOVER BIRU) ===== */
+.sec-csr-aid {
+  background: #ffffff;
+  padding: 85px 0 95px;
+  border-bottom: 1px solid #f0f0f0;
+  overflow: hidden;
+  font-family: 'Montserrat', "Segoe UI", Arial, sans-serif;
+}
+.wrap-content {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+.csr-aid-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+  margin-bottom: 44px;
+}
+.csr-aid-header-left {
+  max-width: 520px;
+}
+.csr-aid-eyebrow {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #003366;
+  margin-bottom: 10px;
+}
+.csr-aid-title {
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #111111;
+  margin: 0;
+  letter-spacing: -0.4px;
+}
+.csr-aid-header-right {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  justify-content: space-between;
+}
+.csr-aid-desc {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: #4b5563;
+  margin: 0;
+  flex: 1;
+}
+.btn-csr-aid {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1.5px solid #111111;
+  border-radius: 999px;
+  padding: 9px 22px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #111111;
+  text-decoration: none;
+  transition: all .25s ease;
+  white-space: nowrap;
+}
+.btn-csr-aid svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  transition: transform .25s ease;
+}
+.btn-csr-aid:hover {
+  background: #003366;
+  border-color: #003366;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 51, 102, 0.25);
+}
+.btn-csr-aid:hover svg {
+  transform: translateX(3px);
+}
+
+/* Grid Split: Foto Kiri & Kartu Kanan */
+.csr-aid-body {
+  display: grid;
+  grid-template-columns: 460px 1fr;
+  gap: 32px;
+  align-items: stretch;
+}
+.csr-aid-photo-wrap {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  height: 440px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+  background: #eef2f6;
+}
+.csr-aid-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+.csr-aid-photo-wrap:hover .csr-aid-photo {
+  transform: scale(1.04);
+}
+
+/* Carousel Kartu Kanan */
+.csr-aid-carousel-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.csr-aid-track {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 10px 6px 20px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  cursor: grab;
+  user-select: none;
+}
+.csr-aid-track::-webkit-scrollbar {
+  display: none;
+}
+.csr-aid-track.is-dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+}
+
+/* Kartu Bantuan CSR */
+.csr-aid-card {
+  flex: 0 0 270px;
+  min-width: 270px;
+  height: 360px;
+  background: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 14px;
+  padding: 34px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  scroll-snap-align: start;
+  cursor: default;
+  box-sizing: border-box;
+  transition: all 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.csr-aid-card-top {
+  display: flex;
+  flex-direction: column;
+}
+.csr-card-title {
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #111111;
+  margin: 0 0 14px;
+  transition: color 0.3s ease;
+}
+.csr-card-line {
+  width: 32px;
+  height: 3.5px;
+  background: #e4002b;
+  border-radius: 2px;
+  margin-bottom: 20px;
+  transition: background 0.3s ease;
+}
+.csr-card-desc {
+  font-size: 13.5px;
+  line-height: 1.68;
+  color: #555555;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+.csr-card-arrow {
+  align-self: flex-end;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #111111;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+.csr-card-arrow svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+}
+
+/* Efek Hover Berubah Warna Menjadi Biru Khas Pertamina */
+.csr-aid-card:hover {
+  background: #003366;
+  border-color: #003366;
+  box-shadow: 0 18px 40px rgba(0, 51, 102, 0.32);
+  transform: translateY(-8px);
+}
+.csr-aid-card:hover .csr-card-title {
+  color: #ffffff;
+}
+.csr-aid-card:hover .csr-card-line {
+  background: #ffffff;
+}
+.csr-aid-card:hover .csr-card-desc {
+  color: rgba(255, 255, 255, 0.92);
+}
+.csr-aid-card:hover .csr-card-arrow {
+  color: #ffffff;
+  transform: translate(3px, -3px);
+}
+
+/* Tombol Navigasi Bawah Kanan */
+.csr-aid-nav {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+  padding-right: 6px;
+}
+.btn-aid-nav {
+  width: 44px;
+  height: 44px;
+  border: 1.5px solid #111111;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111111;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.btn-aid-nav svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+}
+.btn-aid-nav:hover {
+  background: #003366;
+  border-color: #003366;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 992px) {
+  .csr-aid-header {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .csr-aid-header-right {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .csr-aid-body {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+  .csr-aid-photo-wrap {
+    height: 320px;
+  }
+}
+@media (max-width: 500px) {
+  .csr-aid-title {
+    font-size: 26px;
+  }
+  .csr-aid-card {
+    flex: 0 0 250px;
+    min-width: 250px;
+    height: 340px;
+    padding: 26px 22px;
+  }
+  .csr-card-title {
+    font-size: 19px;
+  }
+}
+

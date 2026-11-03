@@ -1,0 +1,40 @@
+// Mock data meniru skema tabel impact_metrics sesuai PRD Bagian 2.7
+export const mockImpactMetrics = [
+  {
+    id: 1,
+    nama_metrik: 'Donatur Terdaftar (SiMinah)',
+    kategori: 'DONATUR TERDAFTAR (SIMINAH)',
+    nilai_angka: 1450,
+    satuan: 'Donatur',
+    sub_satuan: null,
+    suffix: '+',
+    format_angka: 'integer',
+    deskripsi: 'Masyarakat, UMKM kuliner, dan mitra komunitas yang terdaftar aktif menyalurkan sedekah jelantah melalui sistem SiMinah.',
+    urutan: 1,
+  },
+  {
+    id: 2,
+    nama_metrik: 'Minyak Jelantah Tertampung',
+    kategori: 'MINYAK JELANTAH TERTAMPUNG',
+    nilai_angka: 28.5,
+    satuan: 'Ton',
+    sub_satuan: '(Jelantah)',
+    suffix: '',
+    format_angka: 'decimal',
+    deskripsi: 'Volume akumulasi minyak jelantah terkumpul untuk diolah secara aman menjadi energi ramah lingkungan dan mencegah pencemaran perairan.',
+    urutan: 2,
+  },
+  {
+    id: 3,
+    nama_metrik: 'Pengguna Web (Simon+)',
+    kategori: 'PENGGUNA WEB (SIMON+)',
+    nilai_angka: 3820,
+    satuan: 'Pengguna Aktif',
+    sub_satuan: null,
+    suffix: '+',
+    format_angka: 'integer',
+    deskripsi: 'Total pengguna dan pengelola program CSR yang aktif terdaftar dalam sistem pemantauan dan evaluasi program Simon+.',
+    urutan: 3,
+  },
+];
+
