@@ -1,0 +1,3474 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tour 360 - Prototype</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
+<script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+<style>
+  :root {
+    --bar-h: 88px;      /* tinggi bar hitam atas */
+    --tabs-h: 88px;     /* tinggi tab bawah */
+    --red: #e4002b;
+    --wrap: 1280px;
+  }
+  /* ===== FONT LOKAL MONTSERRAT ===== */
+  @font-face {
+    font-family: 'Montserrat';
+    src: url('aset360/font/Montserrat-VariableFont_wght.ttf') format('truetype-variations'),
+         url('aset360/font/Montserrat-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Montserrat';
+    src: url('aset360/font/Montserrat-Italic-VariableFont_wght.ttf') format('truetype-variations'),
+         url('aset360/font/Montserrat-Italic-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Montserrat';
+    src: url('aset360/font/static/Montserrat-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Montserrat';
+    src: url('aset360/font/static/Montserrat-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Montserrat';
+    src: url('aset360/font/static/Montserrat-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Montserrat';
+    src: url('aset360/font/static/Montserrat-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Montserrat';
+    src: url('aset360/font/static/Montserrat-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Montserrat';
+    src: url('aset360/font/static/Montserrat-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  *, *::before, *::after { 
+    box-sizing: border-box; 
+    font-family: 'Montserrat', "Segoe UI", Arial, sans-serif;
+  }
+  html, body { 
+    margin: 0; 
+    min-height: 100%; 
+    font-family: 'Montserrat', "Segoe UI", Arial, sans-serif; 
+    background: #fff; 
+    color: #111; 
+    overflow-x: hidden; 
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  button, input, select, textarea {
+    font-family: 'Montserrat', "Segoe UI", Arial, sans-serif;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ===== HEADER (TRANSPARAN) ===== */
+  header { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    z-index: 100; 
+    pointer-events: none; 
+    color: #fff; 
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0) 100%);
+    transition: background-color .3s ease, box-shadow .3s ease, backdrop-filter .3s ease; 
+  }
+  header > * { pointer-events: auto; }
+  header.scrolled { 
+    background: rgba(0, 0, 0, 0.92); 
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px); 
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6); 
+  }
+  header.scrolled .mainnav { background: transparent; }
+
+  .topbar { background: transparent; height: var(--bar-h); color: #fff; }
+  .wrap { max-width: var(--wrap); height: 100%; margin: 0 auto; padding: 0 24px;
+          display: flex; align-items: flex-start; justify-content: space-between; }
+
+  .logo { align-self: flex-end; padding-bottom: 16px; display: flex; align-items: center; }
+  .logo img { height: 48px; width: auto; max-width: 240px; object-fit: contain; display: block; }
+
+  .util { display: flex; align-items: center; gap: 24px; font-size: 13.5px; padding-top: 28px; color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,.8); }
+  .util a { color: #fff; transition: color .2s; }
+  .util a:hover { color: #ffb3c0; }
+  .util .lang { display: flex; align-items: center; gap: 6px; color: #fff; }
+  .flag { width: 12px; height: 12px; border-radius: 50%; background: linear-gradient(#e4002b 50%, #fff 50%); }
+  .btn-outline { border: 1.5px solid #fff; border-radius: 999px; padding: 8px 18px; font-size: 13px; font-weight: 600; color: #fff !important; text-shadow: none; }
+  .btn-outline:hover { background: #fff; color: #000 !important; }
+
+  .mainnav { height: 52px; background: transparent; color: #fff; }
+  .mainnav .wrap { justify-content: flex-end; align-items: center; gap: 28px; font-weight: 600; font-size: 15px;
+                   color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,.9); }
+  .mainnav a { color: #fff !important; transition: color .2s; }
+  .mainnav a:hover { color: #ffb3c0 !important; }
+  .mainnav svg { width: 22px; height: 22px; fill: none; stroke: #fff; stroke-width: 2.2; cursor: pointer; filter: drop-shadow(0 2px 6px rgba(0,0,0,.8)); }
+
+  /* ===== HERO 360 ===== */
+  .hero { position: relative; height: calc(100vh - var(--tabs-h)); background: #111; overflow: hidden; }
+  #tour { position: absolute; inset: 0; }
+  .pnlm-title-box { display: none !important; } /* sembunyikan judul scene bawaan */
+
+  /* Overlay transisi fade halus */
+  #tour-overlay {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 15;
+    transition: opacity .35s ease;
+  }
+  #tour-overlay.active {
+    opacity: 0.85;
+    pointer-events: auto;
+  }
+
+  /* Tombol melayang kembali ke Kilang */
+  #btn-back-kilang {
+    position: absolute;
+    top: calc(var(--bar-h) + 64px);
+    left: 24px;
+    z-index: 25;
+    background: rgba(0, 0, 0, 0.78);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 999px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: none; /* muncul hanya di luar scene kilang */
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+    transition: background .2s, transform .2s, border-color .2s;
+  }
+  #btn-back-kilang:hover {
+    background: var(--red);
+    border-color: var(--red);
+    transform: translateX(-3px);
+  }
+  #btn-back-kilang svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* ===== TAB BAWAH ===== */
+  .tabs { height: var(--tabs-h); background: #000; }
+  .tabs .wrap { align-items: center; gap: 8px; overflow-x: auto; }
+  .tab { flex: 1 0 200px; cursor: pointer; padding-top: 8px; color: #8a8a8a; font-size: 15px; font-weight: 600;
+         background: none; border: 0; text-align: left; font-family: inherit; }
+  .tab .label { display: flex; align-items: center; gap: 10px; height: 36px; }
+  .tab .dot { width: 10px; height: 10px; border-radius: 50%; background: #333; flex: none; }
+  .tab .line { height: 3px; background: #333; position: relative; }
+  .tab .line::after { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--red); transition: width .4s; }
+  .tab:hover { color: #ccc; }
+  .tab.active { color: #fff; }
+  .tab.active .dot { background: var(--red); }
+  .tab.active .line::after { width: 35%; }
+
+  /* ===== HOTSPOT UMUM ===== */
+  .hs { width: 64px; height: 64px; cursor: pointer; }
+  .hs::before { content: ""; position: absolute; inset: 0; border-radius: 50%;
+                border: 3px solid #fff; background: rgba(0,0,0,.6);
+                display: flex; align-items: center; justify-content: center;
+                font-weight: 800; color: #fff; animation: denyut 1.6s infinite; }
+  .hs:hover::before { background: #ffb300; color: #000; }
+  .hs span { position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+             white-space: nowrap; background: #000; color: #fff; padding: 6px 12px; border-radius: 6px;
+             font-size: 13px; opacity: 0; pointer-events: none; transition: opacity .2s; }
+  .hs:hover span { opacity: 1; }
+
+  /* Hotspot Pintu Antar Ruang */
+  .door-hs::before { content: "➜"; font-size: 28px; }
+
+  /* Hotspot Info Program */
+  .info-hs { width: 48px; height: 48px; position: relative; }
+  .info-hs::before { content: "i"; font-size: 24px; font-family: Georgia, serif; font-style: italic;
+                     background: var(--red); border-color: #fff; }
+  .info-hs:hover::before { background: #fff; color: var(--red); }
+
+  /* Tooltip pratinjau kartu program */
+  .prog-tip-card {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(6px);
+    width: 190px;
+    background: rgba(18, 18, 18, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 10px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+    color: #fff;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .2s ease, transform .2s ease, visibility .2s;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+    text-align: left;
+  }
+  .prog-tip-card::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px 6px 0 6px;
+    border-style: solid;
+    border-color: rgba(18, 18, 18, 0.95) transparent transparent transparent;
+  }
+  .info-hs:hover .prog-tip-card {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+  .prog-tip-img-wrap {
+    width: 100%;
+    height: 95px;
+    background: #222;
+    overflow: hidden;
+  }
+  .prog-tip-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .prog-tip-text {
+    padding: 7px 10px 9px;
+  }
+  .prog-tip-title {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+  }
+  .prog-tip-sub {
+    font-size: 10.5px;
+    color: #ff4766;
+    font-weight: 600;
+    margin-top: 3px;
+  }
+
+  /* ===== POP UP LANGSUNG MUNCUL DI TANJUNG PALAS 2 ===== */
+  .pin-popup-hs {
+    width: 24px;
+    height: 24px;
+    cursor: default;
+    z-index: 10;
+  }
+  .pin-popup-hs::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--red);
+    border: 3px solid #fff;
+    box-shadow: 0 0 12px rgba(228, 0, 43, 0.9);
+    animation: denyutMerah 1.6s infinite;
+  }
+  .pin-popup-card {
+    position: absolute;
+    bottom: calc(100% + 14px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 250px;
+    background: rgba(15, 15, 15, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 12px;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.75);
+    overflow: hidden;
+    color: #fff;
+    backdrop-filter: blur(10px);
+    text-align: left;
+    pointer-events: auto;
+    z-index: 50;
+    animation: floatPopup 3s ease-in-out infinite alternate;
+  }
+  .pin-popup-card::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px 8px 0 8px;
+    border-style: solid;
+    border-color: rgba(15, 15, 15, 0.94) transparent transparent transparent;
+  }
+  @keyframes floatPopup {
+    0%   { transform: translateX(-50%) translateY(0); }
+    100% { transform: translateX(-50%) translateY(-6px); }
+  }
+  .pin-popup-img-wrap {
+    width: 100%;
+    height: 125px;
+    background: #111;
+    overflow: hidden;
+    position: relative;
+  }
+  .pin-popup-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .pin-popup-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--red);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.6);
+  }
+  .pin-popup-body {
+    padding: 12px 14px 14px;
+  }
+  .pin-popup-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .pin-popup-desc {
+    font-size: 11px;
+    color: #bbb;
+    line-height: 1.45;
+  }
+
+  /* ===== HOTSPOT TITIK MASUK KILANG -> TANJUNG PALAS ===== */
+  /* Ukuran proporsional dengan objek jauh: 34px, merah dengan border putih & denyut halus */
+  .dest-portal-hs {
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    z-index: 10;
+  }
+  .dest-portal-hs::before {
+    content: "➜";
+    font-size: 15px;
+    color: #fff;
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    background: var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.55);
+    animation: denyutMerah 1.6s infinite;
+    transition: transform .2s, background .2s;
+  }
+  .dest-portal-hs:hover::before {
+    background: #ff1f44;
+    transform: scale(1.12);
+  }
+
+  /* Animasi denyut halus proporsional */
+  @keyframes denyutMerah {
+    0%   { box-shadow: 0 0 0 0 rgba(228, 0, 43, 0.85); }
+    70%  { box-shadow: 0 0 0 10px rgba(228, 0, 43, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(228, 0, 43, 0); }
+  }
+
+  @keyframes denyut {
+    0%   { box-shadow: 0 0 0 0 rgba(255,255,255,.7); }
+    70%  { box-shadow: 0 0 0 16px rgba(255,255,255,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+  }
+
+  /* Label pil putih kecil & rapi di sebelah tombol */
+  .dest-pill-label {
+    position: absolute;
+    left: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    background: #ffffff;
+    color: #111111;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(0, 0, 0, 0.1);
+    pointer-events: auto;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    letter-spacing: .15px;
+    transition: transform .2s, background-color .2s;
+  }
+  .dest-pill-label:hover {
+    background: #f0f0f0;
+    transform: translateY(-50%) translateX(2px);
+  }
+  .dest-pill-label::before {
+    content: "";
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 4px 5px 4px 0;
+    border-style: solid;
+    border-color: transparent #ffffff transparent transparent;
+  }
+
+  /* ===== KARTU PRATINJAU TITIK (createTooltipFunc) ===== */
+  .dest-card {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%) translateY(6px);
+    width: 210px;
+    background: rgba(18, 18, 18, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 10px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+    color: #fff;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .25s ease, transform .25s ease, visibility .25s;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+    text-align: left;
+    cursor: default;
+  }
+  .dest-card::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px 6px 0 6px;
+    border-style: solid;
+    border-color: rgba(18, 18, 18, 0.95) transparent transparent transparent;
+  }
+
+  /* Desktop hover: kartu muncul halus */
+  @media (hover: hover) and (pointer: fine) {
+    .dest-portal-hs:hover .dest-card {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+    .dest-card-btn { display: none !important; }
+    .dest-card-hint { display: inline-block; }
+  }
+
+  /* Mobile / Touch: kartu muncul saat aktif */
+  .dest-card.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+  }
+
+  /* Sembunyikan kartu pratinjau saat kamera sedang zoom */
+  .is-transitioning .dest-card {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  .dest-card-img-wrap {
+    width: 100%;
+    height: 100px;
+    background: #222;
+    overflow: hidden;
+  }
+  .dest-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .dest-card-body {
+    padding: 8px 12px 10px;
+  }
+  .dest-card-title {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 2px;
+    color: #fff;
+    line-height: 1.3;
+  }
+  .dest-card-desc {
+    font-size: 10.5px;
+    color: #aaa;
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+  .dest-card-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .dest-card-hint {
+    font-size: 10px;
+    font-weight: 600;
+    color: #ff4766;
+  }
+  .dest-card-btn {
+    background: var(--red);
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .dest-card-btn:hover { background: #b80022; }
+
+  /* ===== MODAL PROGRAM ===== */
+  #modal { display: none; position: fixed; inset: 0; z-index: 50; background: rgba(0,0,0,.65);
+           align-items: center; justify-content: center; padding: 16px; }
+  #modal.open { display: flex; }
+  #modal .box { background: #fff; color: #222; border-radius: 12px; width: 100%; max-width: 440px;
+                max-height: 90vh; overflow-y: auto; padding: 20px; }
+  #modal img { width: 100%; border-radius: 8px; margin-bottom: 12px; display: block; }
+  #modal h3 { margin: 0 0 8px; font-size: 20px; }
+  #modal p { margin: 0 0 16px; line-height: 1.5; color: #444; }
+  #modal button { background: var(--red); color: #fff; border: 0; border-radius: 999px;
+                  padding: 10px 22px; font-size: 14px; cursor: pointer; }
+
+  /* ===== MOBILE ===== */
+  @media (max-width: 900px) {
+    :root { --bar-h: 64px; --tabs-h: 78px; }
+    .logo { padding-bottom: 12px; }
+    .logo img { height: 38px; max-width: 180px; }
+    .util a:not(.btn-outline), .util .lang { display: none; }
+    .util { padding-top: 14px; }
+    .btn-outline { padding: 7px 12px; font-size: 12px; }
+    .mainnav .wrap { overflow-x: auto; gap: 18px; font-size: 14px; white-space: nowrap; }
+    .tab { flex: 0 0 160px; font-size: 13px; }
+
+    #btn-back-kilang {
+      top: calc(var(--bar-h) + 54px);
+      left: 14px;
+      padding: 8px 14px;
+      font-size: 13px;
+    }
+
+    .dest-pill-label {
+      font-size: 10px;
+      padding: 3px 8px;
+      left: calc(100% + 6px);
+    }
+
+    .energizing-grid {
+      grid-template-columns: 1fr;
+      gap: 36px;
+      text-align: center;
+    }
+    .energizing-content {
+      padding-left: 0;
+    }
+    .energizing-content h2 {
+      font-size: 26px;
+    }
+    .btn-more {
+      margin: 0 auto;
+    }
+    .sec-about-banner {
+      min-height: 400px;
+      background-position: 75% center;
+    }
+    .sec-about-banner .wrap-content {
+      padding: 50px 20px;
+    }
+    .banner-title {
+      font-size: 32px;
+    }
+    .banner-desc {
+      font-size: 14.5px;
+      margin-bottom: 24px;
+    }
+    .banner-actions {
+      gap: 10px;
+    }
+    .btn-banner {
+      padding: 9px 18px;
+      font-size: 13px;
+    }
+
+    .sec-digital-impact {
+      padding: 60px 0 70px;
+    }
+    .stat-header-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .stat-main-title {
+      font-size: 28px;
+    }
+    .stat-header-right {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .stat-cards-grid {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+    .stat-divider {
+      margin: 36px 0 38px;
+    }
+    .stat-value-wrap {
+      font-size: 46px;
+    }
+    .stat-unit {
+      font-size: 22px;
+    }
+    .stat-desc {
+      max-width: 100%;
+    }
+
+    .slider-card {
+      flex: 0 0 50%;
+      min-width: 50%;
+      height: 480px;
+    }
+    .slider-card-title {
+      font-size: 19px;
+    }
+    .slider-nav-btn {
+      width: 40px;
+      height: 40px;
+    }
+    .footer-columns-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .footer-bottom-bar {
+      flex-direction: column;
+      gap: 16px;
+      text-align: center;
+    }
+    .footer-bottom-left {
+      justify-content: center;
+    }
+    .footer-social-icons {
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .footer-columns-grid {
+      grid-template-columns: 1fr;
+      gap: 26px;
+    }
+  }
+
+  /* ===== KONTEN BAWAH (ENERGIZING & GALERI DOKUMENTASI) ===== */
+  .wrap-content {
+    max-width: var(--wrap);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Section Energizing You */
+  .sec-energizing {
+    background: #ffffff;
+    color: #1a1a1a;
+    padding: 96px 0;
+    position: relative;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .energizing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .energizing-media {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .energizing-art {
+    max-width: 420px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 24px rgba(0,0,0,0.06));
+    transition: transform .4s ease;
+  }
+  .energizing-art:hover {
+    transform: translateY(-4px) scale(1.02);
+  }
+  .energizing-content {
+    padding-left: 10px;
+  }
+  .eyebrow {
+    display: inline-block;
+    color: #0066cb;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .energizing-content h2 {
+    font-size: 34px;
+    font-weight: 700;
+    color: #111;
+    line-height: 1.25;
+    margin: 0 0 20px;
+    letter-spacing: -.5px;
+  }
+  .energizing-content p {
+    font-size: 15.5px;
+    line-height: 1.8;
+    color: #555;
+    margin: 0 0 16px;
+  }
+  .energizing-content p:last-of-type {
+    margin-bottom: 28px;
+  }
+  .energizing-content strong {
+    color: #111;
+  }
+  .btn-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 1.5px solid #222;
+    border-radius: 999px;
+    padding: 10px 26px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #222;
+    transition: all .25s ease;
+  }
+  .btn-more svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    transition: transform .25s ease;
+  }
+  .btn-more:hover {
+    background: #0066cb;
+    border-color: #0066cb;
+    color: #fff;
+  }
+  .btn-more:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* Section Tentang Kami Banner (Section 3) */
+  .sec-about-banner {
+    position: relative;
+    min-height: 460px;
+    display: flex;
+    align-items: center;
+    background-color: #0b2238;
+    background-image: linear-gradient(90deg, rgba(8, 25, 43, 0.92) 0%, rgba(8, 25, 43, 0.8) 38%, rgba(8, 25, 43, 0.35) 70%, rgba(0, 0, 0, 0.08) 100%), url('image/section3.JPG');
+    background-position: center right;
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+  }
+  .sec-about-banner .wrap-content {
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    padding: 70px 24px;
+  }
+  .banner-content {
+    max-width: 580px;
+    color: #ffffff;
+  }
+  .banner-eyebrow {
+    display: inline-block;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 12px;
+  }
+  .banner-title {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: #ffffff;
+    margin: 0 0 18px;
+    letter-spacing: -.6px;
+  }
+  .banner-desc {
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 32px;
+    max-width: 520px;
+  }
+  .banner-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+  }
+  .btn-banner {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1.5px solid rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 999px;
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    text-decoration: none;
+    transition: all .25s ease;
+  }
+  .btn-banner svg {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    transition: transform .25s ease;
+  }
+  .btn-banner:hover {
+    background: #ffffff;
+    border-color: #ffffff;
+    color: #003366;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  }
+  .btn-banner:hover svg {
+    transform: translate(2px, -2px);
+  }
+
+  /* Section Statistik Dampak Digital (SiMinah & Simon+) */
+  .sec-digital-impact {
+    background: #ffffff;
+    padding: 85px 0 95px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .stat-header-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1.15fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .stat-header-left {
+    max-width: 560px;
+  }
+  .stat-badge {
+    display: inline-block;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #111111;
+    margin-bottom: 12px;
+  }
+  .stat-main-title {
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: #111111;
+    letter-spacing: -0.4px;
+    margin: 0;
+  }
+  .stat-header-right {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    justify-content: space-between;
+  }
+  .stat-main-desc {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: #4b5563;
+    margin: 0;
+    flex: 1;
+  }
+  .stat-main-desc strong {
+    color: #111827;
+  }
+  .btn-stat-action {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1.5px solid #111111;
+    border-radius: 999px;
+    padding: 9px 22px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #111111;
+    text-decoration: none;
+    transition: all .25s ease;
+    white-space: nowrap;
+  }
+  .btn-stat-action svg {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    transition: transform .25s ease;
+  }
+  .btn-stat-action:hover {
+    background: #000000;
+    border-color: #000000;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  }
+  .btn-stat-action:hover svg {
+    transform: translateX(3px);
+  }
+
+  .stat-divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 48px 0 52px;
+  }
+
+  .stat-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+  }
+  .stat-col {
+    display: flex;
+    flex-direction: column;
+  }
+  .stat-category {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #111111;
+    margin-bottom: 14px;
+  }
+  .stat-value-wrap {
+    display: flex;
+    align-items: baseline;
+    font-size: clamp(44px, 4.8vw, 64px);
+    font-weight: 500;
+    line-height: 1.05;
+    color: #000000;
+    letter-spacing: -1px;
+    margin-bottom: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-value-wrap .stat-counter {
+    display: inline-block;
+  }
+  .stat-value-wrap .stat-suffix {
+    font-size: 0.85em;
+    font-weight: 500;
+    margin-left: 2px;
+    color: #000000;
+  }
+  .stat-unit {
+    font-size: clamp(22px, 2.4vw, 30px);
+    font-weight: 400;
+    color: #111111;
+    margin-bottom: 14px;
+    letter-spacing: -0.2px;
+    line-height: 1.2;
+  }
+  .stat-unit-sub {
+    font-size: 16px;
+    font-weight: 400;
+    color: #6b7280;
+    margin-left: 4px;
+  }
+  .stat-desc {
+    font-size: 14px;
+    line-height: 1.65;
+    color: #555555;
+    margin: 0;
+    max-width: 320px;
+  }
+
+  /* ===== SECTION SHOWCASE SLIDER (10 FOTO HORIZONTAL SLIDER) ===== */
+  .sec-showcase-slider {
+    position: relative;
+    width: 100%;
+    background: #ffffff;
+    overflow: hidden;
+  }
+  .slider-outer {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+  .slider-track {
+    display: flex;
+    gap: 0;
+    width: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    cursor: grab;
+    user-select: none;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+  .slider-track::-webkit-scrollbar {
+    display: none;
+  }
+  .slider-track.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+  }
+  .slider-card {
+    flex: 0 0 25%;
+    min-width: 25%;
+    height: 520px;
+    position: relative;
+    overflow: hidden;
+    scroll-snap-align: start;
+    border: none !important;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    box-sizing: border-box;
+    background: #ffffff;
+  }
+  .slider-card-img {
+    position: absolute;
+    inset: -1px;
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    object-fit: cover;
+    display: block;
+    transition: transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1);
+    border: none;
+  }
+  .slider-card:hover .slider-card-img {
+    transform: scale(1.06);
+  }
+  .slider-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.52) 42%, rgba(0, 0, 0, 0.08) 75%, transparent 100%);
+    pointer-events: none;
+    transition: background 0.3s ease;
+  }
+  .slider-card:hover .slider-card-overlay {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.96) 0%, rgba(0, 0, 0, 0.6) 46%, rgba(0, 0, 0, 0.15) 80%, transparent 100%);
+  }
+  .slider-card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 30px 28px 36px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    pointer-events: none;
+  }
+  .slider-card-cat {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 8px;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .slider-card-title {
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1.32;
+    color: #ffffff;
+    margin: 0 0 22px 0;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: -0.2px;
+  }
+  .slider-card-btn {
+    pointer-events: auto;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+  .slider-card-btn svg {
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    transition: transform 0.25s ease;
+  }
+  .slider-card:hover .slider-card-btn,
+  .slider-card-btn:hover {
+    background: #e4002b;
+    border-color: #e4002b;
+    color: #ffffff;
+    transform: scale(1.05);
+    box-shadow: 0 4px 16px rgba(228, 0, 43, 0.45);
+  }
+  /* Animasi tipis saat ditekan */
+  .slider-card-btn:active,
+  .slider-card-btn.is-pressed {
+    transform: scale(0.92);
+  }
+  .slider-card-btn:active svg,
+  .slider-card-btn.is-pressed svg {
+    animation: subtleArrowKick 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  @keyframes subtleArrowKick {
+    0% { transform: translateX(0); }
+    40% { transform: translateX(5px); }
+    100% { transform: translateX(0); }
+  }
+
+  /* Navigasi Panah Slider Melayang */
+  .slider-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: all 0.25s ease;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+  }
+  .slider-nav-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    stroke-width: 2.4;
+    fill: none;
+  }
+  .slider-nav-btn:hover {
+    background: #e4002b;
+    border-color: #e4002b;
+    transform: translateY(-50%) scale(1.08);
+  }
+  .slider-nav-prev { left: 18px; }
+  .slider-nav-next { right: 18px; }
+
+  @media (max-width: 1100px) {
+    .slider-card {
+      flex: 0 0 33.333%;
+      min-width: 33.333%;
+    }
+  }
+  @media (max-width: 500px) {
+    .slider-card {
+      flex: 0 0 85%;
+      min-width: 85%;
+      height: 440px;
+    }
+    .slider-card-content {
+      padding: 24px 20px 28px;
+    }
+    .slider-card-title {
+      font-size: 18px;
+    }
+  }
+
+  /* ===== SECTION PENYALURAN BANTUAN CSR (SPLIT LAYOUT DENGAN KARTU HOVER BIRU) ===== */
+  .sec-csr-aid {
+    background: #ffffff;
+    padding: 85px 0 95px;
+    border-bottom: 1px solid #f0f0f0;
+    overflow: hidden;
+  }
+  .csr-aid-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    margin-bottom: 44px;
+  }
+  .csr-aid-header-left {
+    max-width: 520px;
+  }
+  .csr-aid-eyebrow {
+    display: inline-block;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #003366;
+    margin-bottom: 10px;
+  }
+  .csr-aid-title {
+    font-size: 34px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: #111111;
+    margin: 0;
+    letter-spacing: -0.4px;
+  }
+  .csr-aid-header-right {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    justify-content: space-between;
+  }
+  .csr-aid-desc {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: #4b5563;
+    margin: 0;
+    flex: 1;
+  }
+  .btn-csr-aid {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1.5px solid #111111;
+    border-radius: 999px;
+    padding: 9px 22px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #111111;
+    text-decoration: none;
+    transition: all .25s ease;
+    white-space: nowrap;
+  }
+  .btn-csr-aid svg {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    transition: transform .25s ease;
+  }
+  .btn-csr-aid:hover {
+    background: #003366;
+    border-color: #003366;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 51, 102, 0.25);
+  }
+  .btn-csr-aid:hover svg {
+    transform: translateX(3px);
+  }
+
+  /* Grid Split: Foto Kiri & Kartu Kanan */
+  .csr-aid-body {
+    display: grid;
+    grid-template-columns: 460px 1fr;
+    gap: 32px;
+    align-items: stretch;
+  }
+  .csr-aid-photo-wrap {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    height: 440px;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+    background: #eef2f6;
+  }
+  .csr-aid-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+  .csr-aid-photo-wrap:hover .csr-aid-photo {
+    transform: scale(1.04);
+  }
+
+  /* Carousel Kartu Kanan */
+  .csr-aid-carousel-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+  .csr-aid-track {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: 10px 6px 20px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    cursor: grab;
+    user-select: none;
+  }
+  .csr-aid-track::-webkit-scrollbar {
+    display: none;
+  }
+  .csr-aid-track.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+  }
+
+  /* Kartu Bantuan CSR */
+  .csr-aid-card {
+    flex: 0 0 270px;
+    min-width: 270px;
+    height: 360px;
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 14px;
+    padding: 34px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    scroll-snap-align: start;
+    cursor: default; /* tidak bisa diklik */
+    box-sizing: border-box;
+    transition: all 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .csr-aid-card-top {
+    display: flex;
+    flex-direction: column;
+  }
+  .csr-card-title {
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #111111;
+    margin: 0 0 14px;
+    transition: color 0.3s ease;
+  }
+  .csr-card-line {
+    width: 32px;
+    height: 3.5px;
+    background: #e4002b;
+    border-radius: 2px;
+    margin-bottom: 20px;
+    transition: background 0.3s ease;
+  }
+  .csr-card-desc {
+    font-size: 13.5px;
+    line-height: 1.68;
+    color: #555555;
+    margin: 0;
+    transition: color 0.3s ease;
+  }
+  .csr-card-arrow {
+    align-self: flex-end;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #111111;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  .csr-card-arrow svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+  }
+
+  /* Efek Hover Berubah Warna Menjadi Biru Khas Pertamina */
+  .csr-aid-card:hover {
+    background: #003366; /* Biru pekat Pertamina seperti kartu 'Bonds' */
+    border-color: #003366;
+    box-shadow: 0 18px 40px rgba(0, 51, 102, 0.32);
+    transform: translateY(-8px);
+  }
+  .csr-aid-card:hover .csr-card-title {
+    color: #ffffff;
+  }
+  .csr-aid-card:hover .csr-card-line {
+    background: #ffffff;
+  }
+  .csr-aid-card:hover .csr-card-desc {
+    color: rgba(255, 255, 255, 0.92);
+  }
+  .csr-aid-card:hover .csr-card-arrow {
+    color: #ffffff;
+    transform: translate(3px, -3px);
+  }
+
+  /* Tombol Navigasi Bawah Kanan */
+  .csr-aid-nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin-top: 14px;
+    padding-right: 6px;
+  }
+  .btn-aid-nav {
+    width: 44px;
+    height: 44px;
+    border: 1.5px solid #111111;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #111111;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .btn-aid-nav svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+  }
+  .btn-aid-nav:hover {
+    background: #003366;
+    border-color: #003366;
+    color: #ffffff;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 992px) {
+    .csr-aid-header {
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
+    .csr-aid-header-right {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .csr-aid-body {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .csr-aid-photo-wrap {
+      height: 320px;
+    }
+    .csr-aid-card {
+      flex: 0 0 250px;
+      min-width: 250px;
+      height: 340px;
+      padding: 28px 24px;
+    }
+  }
+
+  /* ===== SECTION BERITA & ARTIKEL (BENTO GRID LINK ARTIKEL) ===== */
+  .sec-news-articles {
+    background: #ffffff;
+    padding: 85px 0 95px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .news-top-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 30px;
+  }
+  .news-main-toggle {
+    display: inline-flex;
+    background: #eef2f6;
+    padding: 4px;
+    border-radius: 999px;
+    width: fit-content;
+  }
+  .btn-toggle-main {
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #4b5563;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 20px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .btn-toggle-main.active {
+    background: #003366;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 51, 102, 0.25);
+  }
+
+  .news-category-pills {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .btn-cat-pill {
+    border: none;
+    outline: none;
+    background: #f1f3f5;
+    color: #495057;
+    font-size: 12.5px;
+    font-weight: 500;
+    padding: 7px 18px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .btn-cat-pill:hover {
+    background: #e2e8f0;
+    color: #111111;
+  }
+  .btn-cat-pill.active {
+    background: #003366;
+    color: #ffffff;
+  }
+
+  /* Bento Grid */
+  .news-bento-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr 1fr;
+    grid-template-rows: 245px 245px;
+    gap: 20px;
+  }
+  .news-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease;
+    background: #111;
+    cursor: pointer;
+  }
+  .news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
+  }
+  .news-card-featured {
+    grid-row: span 2;
+    height: 100%;
+  }
+  .news-card-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .news-card:hover .news-card-img {
+    transform: scale(1.05);
+  }
+  .news-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.52) 45%, rgba(0, 0, 0, 0.06) 75%, transparent 100%);
+    pointer-events: none;
+    transition: background 0.3s ease;
+  }
+  .news-card:hover .news-card-overlay {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.96) 0%, rgba(0, 0, 0, 0.58) 50%, rgba(0, 0, 0, 0.12) 80%, transparent 100%);
+  }
+  .news-card-content {
+    position: relative;
+    z-index: 2;
+    padding: 24px;
+    color: #ffffff;
+    box-sizing: border-box;
+  }
+  .news-card-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #ffc107;
+    margin-bottom: 8px;
+  }
+  .news-card-title {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.38;
+    color: #ffffff;
+    margin: 0 0 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    letter-spacing: -0.2px;
+  }
+  .news-card-featured .news-card-title {
+    font-size: 22px;
+    line-height: 1.32;
+    -webkit-line-clamp: 4;
+    margin-bottom: 16px;
+  }
+  .news-card-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .news-card-date svg {
+    width: 13px;
+    height: 13px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+  }
+
+  @media (max-width: 992px) {
+    .news-bento-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+    }
+    .news-card-featured {
+      grid-column: span 2;
+      height: 380px;
+    }
+    .news-card {
+      height: 250px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .news-bento-grid {
+      grid-template-columns: 1fr;
+    }
+    .news-card-featured {
+      grid-column: span 1;
+      height: 340px;
+    }
+    .news-card-featured .news-card-title {
+      font-size: 18px;
+    }
+    .news-card {
+      height: 240px;
+    }
+  }
+
+  /* ===== SITE FOOTER (LIGHT STYLE SESUAI PERTAMINA RESMI) ===== */
+  .site-footer {
+    background: #f8f9fa;
+    color: #333333;
+    padding: 70px 0 35px;
+    border-top: 1px solid #e9ecef;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .footer-center-brand {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 52px;
+  }
+  .footer-center-logo {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+    margin: 0 auto 18px;
+    display: block;
+  }
+  .footer-center-brand .footer-info-line {
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: #333333;
+    margin: 5px 0;
+  }
+  .footer-center-brand .footer-info-line a {
+    color: #111111;
+    font-weight: 500;
+  }
+  .footer-center-brand .footer-info-line a:hover {
+    color: #e4002b;
+    text-decoration: underline;
+  }
+
+  .footer-columns-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1.3fr 1.5fr 1.2fr 1.6fr;
+    gap: 32px;
+    padding-bottom: 48px;
+  }
+  .footer-col h4 {
+    color: #111111;
+    font-size: 14.5px;
+    font-weight: 600;
+    margin: 0 0 18px;
+    letter-spacing: -0.2px;
+  }
+  .footer-col a {
+    display: block;
+    color: #555555;
+    font-size: 13px;
+    line-height: 1.55;
+    margin-bottom: 11px;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+  .footer-col a:hover {
+    color: #e4002b;
+    transform: translateX(2px);
+  }
+
+  /* Widgets Kontak Kami */
+  .footer-contact-widgets {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .widget-pcc {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    padding: 8px 14px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: fit-content;
+  }
+  .widget-pcc:hover {
+    border-color: #e4002b;
+    box-shadow: 0 4px 12px rgba(228, 0, 43, 0.12);
+  }
+  .widget-pcc-text {
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: #003366;
+    text-transform: uppercase;
+  }
+  .widget-pcc-num {
+    background: #e4002b;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 800;
+    padding: 5px 11px;
+    border-radius: 8px;
+    line-height: 1;
+    letter-spacing: 0.5px;
+  }
+
+  .widget-wbs {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 999px;
+    padding: 7px 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: fit-content;
+  }
+  .widget-wbs:hover {
+    border-color: #709a32;
+    box-shadow: 0 4px 12px rgba(112, 154, 50, 0.15);
+  }
+  .widget-wbs-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #88b137;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .widget-wbs-icon svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+  }
+  .widget-wbs-text {
+    display: flex;
+    flex-direction: column;
+  }
+  .widget-wbs-text strong {
+    font-size: 11px;
+    font-weight: 700;
+    color: #222222;
+    line-height: 1.2;
+  }
+  .widget-wbs-text span {
+    font-size: 9.5px;
+    color: #777777;
+  }
+
+  /* Footer Bottom Bar */
+  .footer-bottom-bar {
+    border-top: 1px solid #e5e9f0;
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12.5px;
+    color: #555555;
+  }
+  .footer-bottom-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .footer-bottom-left a {
+    color: #444444;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-bottom-left a:hover {
+    color: #e4002b;
+    text-decoration: underline;
+  }
+  .footer-social-icons {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .footer-social-icons a {
+    color: #111111;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s, transform 0.2s;
+  }
+  .footer-social-icons a:hover {
+    color: #e4002b;
+    transform: translateY(-2px);
+  }
+  .footer-social-icons svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="topbar">
+    <div class="wrap">
+      <a href="#" class="logo" title="Pertamina"><img src="image/logo.png" alt="Pertamina" onerror="this.src='image/logo2.png'"></a>
+      <div class="util">
+        <a href="#berita">Berita</a>
+        <a href="#galeri">Galeri</a>
+        <a href="#bantuan-csr">Bantuan CSR</a>
+        <span class="lang">ID <span class="flag"></span></span>
+        <a href="#" class="btn-outline">Registrasi Program</a>
+      </div>
+    </div>
+  </div>
+  <nav class="mainnav">
+    <div class="wrap">
+      <a href="#tentang-kami">Tentang Kami</a>
+      <a href="#visi-misi">Visi &amp; Misi</a>
+      <a href="#capaian-digital">Capaian Digital</a>
+      <a href="#galeri">Program Kami</a>
+      <a href="#bantuan-csr">Bantuan CSR</a>
+      <a href="#berita">Berita Terkini</a>
+      <a href="#tour">Peta Lokasi</a>
+      <a href="#galeri">Media &amp; Informasi</a>
+      <a href="#visi-misi">Keberlanjutan</a>
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+    </div>
+  </nav>
+</header>
+
+<!-- HERO 360 -->
+<section class="hero">
+  <div id="tour"></div>
+
+  <!-- Efek fade transisi zoom -->
+  <div id="tour-overlay"></div>
+
+  <!-- Tombol melayang kembali ke Kilang (muncul di luar scene kilang) -->
+  <button id="btn-back-kilang" type="button" onclick="backToKilang()">
+    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Kembali ke Kilang
+  </button>
+</section>
+
+<!-- TAB BAWAH -->
+<section class="tabs">
+  <div class="wrap" id="tabs"></div>
+</section>
+
+<!-- SECTION VISI & MISI (LOGOCSR) -->
+<section class="sec-energizing" id="visi-misi">
+  <div class="wrap-content">
+    <div class="energizing-grid">
+      <!-- Kolom Kiri: Logo Pertamina Patra Niaga CSR -->
+      <div class="energizing-media">
+        <img src="image/logocsr.jpeg" alt="Logo CSR PT Pertamina Patra Niaga" class="energizing-art">
+      </div>
+      <!-- Kolom Kanan: Teks Visi & Misi -->
+      <div class="energizing-content">
+        <span class="eyebrow">VISI &amp; MISI CSR</span>
+        <h2>Komitmen Keberlanjutan &amp; Pemberdayaan Masyarakat</h2>
+        <p>
+          Sebagai wujud nyata Tanggung Jawab Sosial dan Lingkungan (TJSL), PT Pertamina Patra Niaga senantiasa berkontribusi aktif dalam meningkatkan kualitas hidup masyarakat serta menjaga kelestarian lingkungan hidup secara berkelanjutan.
+        </p>
+        <p>
+          <strong>Visi:</strong> Menjadi pelopor terdepan dalam pemberdayaan masyarakat dan pelestarian lingkungan yang berkelanjutan, guna mendorong kemandirian energi dan pertumbuhan ekonomi masyarakat yang inklusif.
+        </p>
+        <p>
+          <strong>Misi:</strong> Menjalankan program pemberdayaan ekonomi melalui pengembangan UMKM dan penguatan potensi lokal, melestarikan keanekaragaman hayati dan ekosistem pesisir, serta meningkatkan kualitas hidup masyarakat sekitar melalui pemenuhan fasilitas air bersih, kesehatan, dan pendidikan berkelanjutan.
+        </p>
+        <a href="#galeri" class="btn-more">
+          <span>Selengkapnya</span>
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION TENTANG KAMI BANNER -->
+<section class="sec-about-banner" id="tentang-kami">
+  <div class="wrap-content">
+    <div class="banner-content">
+      <span class="banner-eyebrow">SEKILAS PERTAMINA</span>
+      <h2 class="banner-title">Tentang Kami</h2>
+      <p class="banner-desc">
+        Lebih dari enam dekade menyediakan energi untuk seluruh penjuru negeri dan sejumlah wilayah di luar negeri.
+      </p>
+      <div class="banner-actions">
+        <a href="#visi-misi" class="btn-banner">
+          <span>Selengkapnya</span>
+          <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H9M17 7V15"/></svg>
+        </a>
+        <a href="#visi-misi" class="btn-banner">
+          <span>Direksi dan Komisaris</span>
+          <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H9M17 7V15"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION STATISTIK DAMPAK DIGITAL (SIMINAH & SIMON+) -->
+<section class="sec-digital-impact" id="capaian-digital">
+  <div class="wrap-content">
+    <div class="stat-header-grid">
+      <div class="stat-header-left">
+        <span class="stat-badge">PROGRAM SIMINAH &amp; SIMON+</span>
+        <h2 class="stat-main-title">Dampak Nyata Digitalisasi Keberlanjutan Lingkungan</h2>
+      </div>
+      <div class="stat-header-right">
+        <p class="stat-main-desc">
+          Melalui integrasi platform <strong>SiMinah</strong> untuk sirkularitas minyak jelantah dan sistem monitoring <strong>Simon+</strong> untuk tata kelola program CSR, Pertamina Patra Niaga mencatatkan akselerasi dampak positif yang terukur secara transparan.
+        </p>
+        <a href="#galeri" class="btn-stat-action">
+          <span>Selengkapnya</span>
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="stat-divider"></div>
+
+    <div class="stat-cards-grid">
+      <!-- Kolom 1: Donatur Terdaftar (SiMinah) -->
+      <div class="stat-col">
+        <span class="stat-category">DONATUR TERDAFTAR (SIMINAH)</span>
+        <div class="stat-value-wrap">
+          <span class="stat-counter" data-target="1450" data-format="integer">0</span><span class="stat-suffix">+</span>
+        </div>
+        <div class="stat-unit">Donatur</div>
+        <p class="stat-desc">
+          Masyarakat, UMKM kuliner, dan mitra komunitas yang terdaftar aktif menyalurkan sedekah jelantah melalui sistem SiMinah.
+        </p>
+      </div>
+
+      <!-- Kolom 2: Ton Minyak Jelantah Tertampung (SiMinah) -->
+      <div class="stat-col">
+        <span class="stat-category">MINYAK JELANTAH TERTAMPUNG</span>
+        <div class="stat-value-wrap">
+          <span class="stat-counter" data-target="28.5" data-format="decimal" data-decimals="1">0</span>
+        </div>
+        <div class="stat-unit">Ton <span class="stat-unit-sub">(Jelantah)</span></div>
+        <p class="stat-desc">
+          Volume akumulasi minyak jelantah terkumpul untuk diolah secara aman menjadi energi ramah lingkungan dan mencegah pencemaran perairan.
+        </p>
+      </div>
+
+      <!-- Kolom 3: Pengguna Web (Simon+) -->
+      <div class="stat-col">
+        <span class="stat-category">PENGGUNA WEB (SIMON+)</span>
+        <div class="stat-value-wrap">
+          <span class="stat-counter" data-target="3820" data-format="integer">0</span><span class="stat-suffix">+</span>
+        </div>
+        <div class="stat-unit">Pengguna Aktif</div>
+        <p class="stat-desc">
+          Total pengguna dan pengelola program CSR yang aktif terdaftar dalam sistem pemantauan dan evaluasi program Simon+.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION SHOWCASE SLIDER 10 FOTO -->
+<section class="sec-showcase-slider" id="galeri">
+  <div class="slider-outer">
+    <!-- Tombol Navigasi Kiri & Kanan -->
+    <button class="slider-nav-btn slider-nav-prev" id="slider-prev" type="button" aria-label="Geser ke kiri">
+      <svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+    </button>
+    <button class="slider-nav-btn slider-nav-next" id="slider-next" type="button" aria-label="Geser ke kanan">
+      <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+    </button>
+
+    <!-- Track Slide 10 Foto Horizontal -->
+    <div class="slider-track" id="showcase-track">
+      <!-- Foto 1 -->
+      <div class="slider-card" data-href="program-1.html">
+        <img src="image/galeri-1.jpg" alt="Layanan Informasi Publik" class="slider-card-img"
+             onerror="this.src='aset360/tanjungpalas/preview.JPG'">
+        <div class="slider-card-overlay"></div>
+        <div class="slider-card-content">
+          <span class="slider-card-cat">PROFIL PPID</span>
+          <h3 class="slider-card-title">Layanan Informasi Publik</h3>
+          <a href="program-1.html" class="slider-card-btn" data-href="program-1.html" aria-label="Buka Halaman PPID">
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Foto 2 -->
+      <div class="slider-card" data-href="program-2.html">
+        <img src="image/galeri-2.jpg" alt="Harga BBM Pertamina" class="slider-card-img"
+             onerror="this.src='aset360/tanjungpalas/previewtanjungpalas1.jpg'">
+        <div class="slider-card-overlay"></div>
+        <div class="slider-card-content">
+          <span class="slider-card-cat">INFORMASI</span>
+          <h3 class="slider-card-title">Harga BBM Pertamina</h3>
+          <a href="program-2.html" class="slider-card-btn" data-href="program-2.html" aria-label="Buka Halaman Harga BBM">
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Foto 3 -->
+      <div class="slider-card" data-href="program-3.html">
+        <img src="image/galeri-3.jpg" alt="Tata Kelola Perseroan" class="slider-card-img"
+             onerror="this.src='aset360/mundam/previewAPO.JPG'">
+        <div class="slider-card-overlay"></div>
+        <div class="slider-card-content">
+          <span class="slider-card-cat">GCG</span>
+          <h3 class="slider-card-title">Tata Kelola Perseroan</h3>
+          <a href="program-3.html" class="slider-card-btn" data-href="program-3.html" aria-label="Buka Halaman GCG">
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Foto 4 -->
+      <div class="slider-card" data-href="program-4.html">
+        <img src="image/galeri-4.jpg" alt="Menjadi Perwira Pertamina" class="slider-card-img"
+             onerror="this.src='aset360/tanjungpalas/tanjungpalas.jpg'">
+        <div class="slider-card-overlay"></div>
+        <div class="slider-card-content">
+          <span class="slider-card-cat">REKRUTMEN</span>
+          <h3 class="slider-card-title">Menjadi Perwira Pertamina</h3>
+          <a href="program-4.html" class="slider-card-btn" data-href="program-4.html" aria-label="Buka Halaman Perwira Pertamina">
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Foto 5 -->
+      <div class="slider-card" data-href="program-5.html">
+        <img src="image/galeri-5.jpg" alt="Restorasi Hutan Mangrove" class="slider-card-img"
+             onerror="this.src='aset360/mundam/mundam1.jpg'">
+        <div class="slider-card-overlay"></div>
+        <div class="slider-card-content">
+          <span class="slider-card-cat">KEBERLANJUTAN</span>
+          <h3 class="slider-card-title">Restorasi Hutan Mangrove</h3>
+          <a href="program-5.html" class="slider-card-btn" data-href="program-5.html" aria-label="Buka Halaman Restorasi Mangrove">
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Foto 6 -->
+      <div class="slider-card" data-href="program-6.html">
+        <img src="image/galeri-6.jpg" alt="Kemandirian Komunitas Pesisir" class="slider-card-img"
+             onerror="this.src='aset360/mundam/mundam.jpg'">
+        <div class="slider-card-overlay"></div>
+        <div class="slider-card-content">
+          <span class="slider-card-cat">PEMBERDAYAAN</span>
+          <h3 class="slider-card-title">Kemandirian Komunitas Pesisir</h3>
+          <a href="program-6.html" class="slider-card-btn" data-href="program-6.html" aria-label="Buka Halaman Kemandirian Komunitas">
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Foto 7 -->
+      <div class="slider-card" data-href="program-7.html">
+        <img src="image/galeri-7.jpg" alt="Program Air Bersih Terpadu" class="slider-card-img"
+             onerror="this.src='aset360/mundam/previewAPO.JPG'">
+        <div class="slider-card-overlay"></div>
+        <div class="slider-card-content">
+          <span class="slider-card-cat">SARANA AIR BERSIH</span>
+          <h3 class="slider-card-title">Akses Air Bersih Sehat (APO)</h3>
+          <a href="program-7.html" class="slider-card-btn" data-href="program-7.html" aria-label="Buka Halaman Air Bersih APO">
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Foto 8 -->
+      <div class="slider-card" data-href="program-8.html">
+        <img src="image/galeri-8.jpg" alt="Pengelolaan Ekosistem Gambut" class="slider-card-img"
+             onerror="this.src='aset360/tanjungpalas/preview.JPG'">
+        <div class="slider-card-overlay"></div>
+        <div class="slider-card-content">
+          <span class="slider-card-cat">LAHAN GAMBUT</span>
+          <h3 class="slider-card-title">Pengelolaan Ekosistem Gambut</h3>
+          <a href="program-8.html" class="slider-card-btn" data-href="program-8.html" aria-label="Buka Halaman Ekosistem Gambut">
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Foto 9 -->
+      <div class="slider-card" data-href="program-9.html">
+        <img src="image/galeri-9.jpg" alt="Sedekah Jelantah SiMinah" class="slider-card-img"
+             onerror="this.src='image/section3.JPG'">
+        <div class="slider-card-overlay"></div>
+        <div class="slider-card-content">
+          <span class="slider-card-cat">SIRKULARITAS</span>
+          <h3 class="slider-card-title">Sedekah Jelantah SiMinah</h3>
+          <a href="program-9.html" class="slider-card-btn" data-href="program-9.html" aria-label="Buka Halaman Sedekah Jelantah">
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Foto 10 -->
+      <div class="slider-card" data-href="program-10.html">
+        <img src="image/galeri-10.jpg" alt="Inovasi Energi Bersih" class="slider-card-img"
+             onerror="this.src='aset360/kilang.jpg'">
+        <div class="slider-card-overlay"></div>
+        <div class="slider-card-content">
+          <span class="slider-card-cat">TRANSISI ENERGI</span>
+          <h3 class="slider-card-title">Energi Bersih Rendah Karbon</h3>
+          <a href="program-10.html" class="slider-card-btn" data-href="program-10.html" aria-label="Buka Halaman Energi Bersih">
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION PENYALURAN BANTUAN CSR (HOVER BIRU) -->
+<section class="sec-csr-aid" id="bantuan-csr">
+  <div class="wrap-content">
+    <!-- Header: Judul & Deskripsi + Tombol Selengkapnya -->
+    <div class="csr-aid-header">
+      <div class="csr-aid-header-left">
+        <span class="csr-aid-eyebrow">DAMPAK &amp; KEMANUSIAAN</span>
+        <h2 class="csr-aid-title">Penyaluran Bantuan CSR</h2>
+      </div>
+      <div class="csr-aid-header-right">
+        <p class="csr-aid-desc">
+          Sebagai wujud komitmen Tanggung Jawab Sosial dan Lingkungan (TJSL), Pertamina senantiasa menyalurkan bantuan terarah untuk pendidikan, kesehatan, fasilitas air bersih, serta kemandirian ekonomi masyarakat secara berkelanjutan.
+        </p>
+        <a href="#galeri" class="btn-csr-aid">
+          <span>Selengkapnya</span>
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Body: Foto Tim di Kiri & Kartu Bantuan di Kanan -->
+    <div class="csr-aid-body">
+      <!-- Foto Tim Lapangan CSR -->
+      <div class="csr-aid-photo-wrap">
+        <img src="image/pertamina-csr-team.jpg" alt="Tim Lapangan CSR Pertamina" class="csr-aid-photo"
+             onerror="this.src='aset360/tanjungpalas/tanjungpalas.jpg'">
+      </div>
+
+      <!-- Carousel Kartu Penyaluran Bantuan -->
+      <div class="csr-aid-carousel-wrapper">
+        <div class="csr-aid-track" id="csr-aid-track">
+          <!-- Kartu 1: Bantuan Pendidikan -->
+          <div class="csr-aid-card">
+            <div class="csr-aid-card-top">
+              <h3 class="csr-card-title">Bantuan Pendidikan</h3>
+              <div class="csr-card-line"></div>
+              <p class="csr-card-desc">
+                Penyaluran beasiswa berprestasi, renovasi ruang kelas sekolah dasar, serta pengadaan buku literasi dan perangkat komputer di wilayah sekitar operasi.
+              </p>
+            </div>
+            <div class="csr-card-arrow">
+              <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H9M17 7V15"/></svg>
+            </div>
+          </div>
+
+          <!-- Kartu 2: Bantuan Kesehatan -->
+          <div class="csr-aid-card">
+            <div class="csr-aid-card-top">
+              <h3 class="csr-card-title">Bantuan Kesehatan</h3>
+              <div class="csr-card-line"></div>
+              <p class="csr-card-desc">
+                Layanan pengobatan gratis keliling, program penurunan stunting anak usia dini, dan pemberian makanan tambahan gizi seimbang serta sarana posyandu.
+              </p>
+            </div>
+            <div class="csr-card-arrow">
+              <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H9M17 7V15"/></svg>
+            </div>
+          </div>
+
+          <!-- Kartu 3: Sarana Air Bersih (APO) -->
+          <div class="csr-aid-card">
+            <div class="csr-aid-card-top">
+              <h3 class="csr-card-title">Sarana Air Bersih (APO)</h3>
+              <div class="csr-card-line"></div>
+              <p class="csr-card-desc">
+                Pembangunan instalasi filtrasi air bersih, pengeboran sumur air tawar, serta jaringan pipa mandiri bagi ratusan kepala keluarga pesisir.
+              </p>
+            </div>
+            <div class="csr-card-arrow">
+              <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H9M17 7V15"/></svg>
+            </div>
+          </div>
+
+          <!-- Kartu 4: Pemberdayaan UMKM -->
+          <div class="csr-aid-card">
+            <div class="csr-aid-card-top">
+              <h3 class="csr-card-title">Pemberdayaan UMKM</h3>
+              <div class="csr-card-line"></div>
+              <p class="csr-card-desc">
+                Bantuan alat produksi bagi kelompok usaha wanita nelayan, pendampingan sertifikasi halal dan izin edar, serta akses pameran produk lokal.
+              </p>
+            </div>
+            <div class="csr-card-arrow">
+              <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H9M17 7V15"/></svg>
+            </div>
+          </div>
+
+          <!-- Kartu 5: Pelestarian Mangrove -->
+          <div class="csr-aid-card">
+            <div class="csr-aid-card-top">
+              <h3 class="csr-card-title">Pelestarian Mangrove</h3>
+              <div class="csr-card-line"></div>
+              <p class="csr-card-desc">
+                Penyaluran bibit mangrove unggul, pembuatan tanggul pemecah ombak ramah lingkungan, dan sarana penunjang kelompok tani hutan mangrove pesisir.
+              </p>
+            </div>
+            <div class="csr-card-arrow">
+              <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H9M17 7V15"/></svg>
+            </div>
+          </div>
+
+          <!-- Kartu 6: Bantuan Sosial & Bencana -->
+          <div class="csr-aid-card">
+            <div class="csr-aid-card-top">
+              <h3 class="csr-card-title">Tanggap Bencana &amp; Sembako</h3>
+              <div class="csr-card-line"></div>
+              <p class="csr-card-desc">
+                Distribusi bantuan sembako berkala untuk masyarakat pra-sejahtera dan respon cepat tanggap darurat logistik bagi wilayah terdampak musibah.
+              </p>
+            </div>
+            <div class="csr-card-arrow">
+              <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H9M17 7V15"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tombol Navigasi Bawah Kanan -->
+        <div class="csr-aid-nav">
+          <button class="btn-aid-nav" id="btn-aid-prev" type="button" aria-label="Geser bantuan ke kiri">
+            <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <button class="btn-aid-nav" id="btn-aid-next" type="button" aria-label="Geser bantuan ke kanan">
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION BERITA & ARTIKEL (BENTO GRID LINK ARTIKEL) -->
+<section class="sec-news-articles" id="berita">
+  <div class="wrap-content">
+    <!-- Filter Toggle Bar -->
+    <div class="news-top-bar">
+      <!-- Toggle News / Magazine -->
+      <div class="news-main-toggle">
+        <button class="btn-toggle-main active" type="button" data-toggle="news">News</button>
+        <button class="btn-toggle-main" type="button" data-toggle="magazine">Magazine</button>
+      </div>
+
+      <!-- Kategori Filter: Siaran Pers, Berita CSR, Berita Energia -->
+      <div class="news-category-pills">
+        <button class="btn-cat-pill active" type="button" data-cat="all">Siaran Pers</button>
+        <button class="btn-cat-pill" type="button" data-cat="csr">Berita CSR</button>
+        <button class="btn-cat-pill" type="button" data-cat="energia">Berita Energia</button>
+      </div>
+    </div>
+
+    <!-- Bento Grid 5 Artikel -->
+    <div class="news-bento-grid">
+      <!-- Artikel Utama (Featured - Besar di Kiri) -->
+      <a href="https://www.pertamina.com/id/news-room/news-release" target="_blank" rel="noopener" class="news-card news-card-featured">
+        <img src="https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?auto=format&fit=crop&w=1200&q=80"
+             alt="Maknai Sumpah Pemuda" class="news-card-img"
+             onerror="this.src='image/pertamina-csr-team.jpg'">
+        <div class="news-card-overlay"></div>
+        <div class="news-card-content">
+          <span class="news-card-tag">SIARAN PERS</span>
+          <h3 class="news-card-title">Maknai Sumpah Pemuda, Pertamina Dorong Anak Muda Jadi Penggerak Inovasi Indonesia</h3>
+          <span class="news-card-date">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            28 Oktober 2026
+          </span>
+        </div>
+      </a>
+
+      <!-- Artikel 2 (Kanan Atas 1) -->
+      <a href="https://www.pertamina.com/id/news-room/news-release" target="_blank" rel="noopener" class="news-card">
+        <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80"
+             alt="Pertemuan Dewan ASCOPE ke-51" class="news-card-img"
+             onerror="this.src='aset360/tanjungpalas/preview.JPG'">
+        <div class="news-card-overlay"></div>
+        <div class="news-card-content">
+          <span class="news-card-tag">SIARAN PERS</span>
+          <h3 class="news-card-title">Hadapi Tantangan Global, Pertemuan Dewan ASCOPE ke-51 Sepakati Penguatan Kerja Sama Energi Regional</h3>
+          <span class="news-card-date">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            28 Oktober 2026
+          </span>
+        </div>
+      </a>
+
+      <!-- Artikel 3 (Kanan Atas 2) -->
+      <a href="https://www.pertamina.com/id/news-room/news-release" target="_blank" rel="noopener" class="news-card">
+        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80"
+             alt="Kolaborasi Energi ASEAN" class="news-card-img"
+             onerror="this.src='aset360/mundam/previewAPO.JPG'">
+        <div class="news-card-overlay"></div>
+        <div class="news-card-content">
+          <span class="news-card-tag">SIARAN PERS</span>
+          <h3 class="news-card-title">Lewat ASCOPE ke-51, Pertamina Tekankan Pentingnya Kolaborasi Energi di ASEAN</h3>
+          <span class="news-card-date">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            27 Oktober 2026
+          </span>
+        </div>
+      </a>
+
+      <!-- Artikel 4 (Kanan Bawah 1) -->
+      <a href="https://www.pertamina.com/id/news-room/news-release" target="_blank" rel="noopener" class="news-card">
+        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80"
+             alt="Resiliensi Rantai Pasok Energi" class="news-card-img"
+             onerror="this.src='aset360/mundam/mundam.jpg'">
+        <div class="news-card-overlay"></div>
+        <div class="news-card-content">
+          <span class="news-card-tag">SIARAN PERS</span>
+          <h3 class="news-card-title">Perkokoh Ketahanan Energi Nasional, ASCOPE ke-51 di Bali Perkuat Resiliensi Rantai Pasok Energi Kawasan ASEAN</h3>
+          <span class="news-card-date">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            27 Oktober 2026
+          </span>
+        </div>
+      </a>
+
+      <!-- Artikel 5 (Kanan Bawah 2) -->
+      <a href="https://www.pertamina.com/id/news-room/news-release" target="_blank" rel="noopener" class="news-card">
+        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80"
+             alt="Penugasan Ketahanan Energi" class="news-card-img"
+             onerror="this.src='image/section3.JPG'">
+        <div class="news-card-overlay"></div>
+        <div class="news-card-content">
+          <span class="news-card-tag">SIARAN PERS</span>
+          <h3 class="news-card-title">Pertamina Siap Jalankan Penugasan Pemerintah untuk Perkuat Ketahanan Energi Nasional</h3>
+          <span class="news-card-date">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            26 Oktober 2026
+          </span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="wrap-content">
+    <!-- Brand Atas: Logo Pertamina & Alamat Resmi -->
+    <div class="footer-center-brand">
+      <img src="image/logo2.png" alt="Pertamina" class="footer-center-logo">
+      <p class="footer-info-line">
+        <strong>Address:</strong> Grha Pertamina, Jl. Medan Merdeka Timur No.11–13, Jakarta 10110 Indonesia
+      </p>
+      <p class="footer-info-line">
+        <strong>Email:</strong> <a href="mailto:infopublik@pertamina.com">infopublik@pertamina.com</a>
+      </p>
+    </div>
+
+    <!-- 5 Kolom Link Footer Sesuai Website Pertamina -->
+    <div class="footer-columns-grid">
+      <!-- Kolom 1: Announcement -->
+      <div class="footer-col">
+        <h4>Announcement</h4>
+        <a href="#galeri">Pertamina Info</a>
+        <a href="#galeri">Pengadaan Umum</a>
+        <a href="#galeri">Pengumuman</a>
+        <a href="#galeri">E-Procurement</a>
+        <a href="#galeri">Hubungan Investor</a>
+        <a href="#galeri">RUPS</a>
+        <a href="#galeri">Karir</a>
+      </div>
+
+      <!-- Kolom 2: Network -->
+      <div class="footer-col">
+        <h4>Network</h4>
+        <a href="#galeri">Subholding Upstream</a>
+        <a href="#galeri">Subholding Downstream</a>
+        <a href="#galeri">Subholding Power &amp; New Renewable Energy</a>
+        <a href="#galeri">Subholding Gas</a>
+        <a href="#galeri">Subholding Integrated Marine Logistics</a>
+      </div>
+
+      <!-- Kolom 3: AP & Services -->
+      <div class="footer-col">
+        <h4>AP &amp; Services</h4>
+        <a href="#galeri">PT Pertamina Bina Medika IHC</a>
+        <a href="#galeri">PT Pertamina Training &amp; Consulting</a>
+        <a href="#galeri">PT Patra Jasa</a>
+        <a href="#galeri">PT Pelita Air Service</a>
+        <a href="#galeri">PT Asuransi Tugu Pratama Indonesia Tbk</a>
+        <a href="#galeri">PT Pertamina Pedeve Indonesia</a>
+      </div>
+
+      <!-- Kolom 4: Tools -->
+      <div class="footer-col">
+        <h4>Tools</h4>
+        <a href="#galeri">i-Serv</a>
+        <a href="#galeri">Registrasi Lembaga Penyalur</a>
+        <a href="#galeri">Tata Kelola Perusahaan</a>
+        <a href="#galeri">Keterbukaan Informasi Publik</a>
+        <a href="#capaian-digital">Sistem Simon+ &amp; SiMinah</a>
+      </div>
+
+      <!-- Kolom 5: Kontak Kami -->
+      <div class="footer-col">
+        <h4>Kontak Kami</h4>
+        <div class="footer-contact-widgets">
+          <!-- Widget Call Center 135 -->
+          <a href="tel:135" class="widget-pcc">
+            <span class="widget-pcc-text">PERTAMINA<br>CALL CENTER</span>
+            <span class="widget-pcc-num">135</span>
+          </a>
+
+          <!-- Widget Whistle Blowing System -->
+          <a href="https://pertaminaclean.tipoffs.info/" target="_blank" rel="noopener" class="widget-wbs">
+            <div class="widget-wbs-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg>
+            </div>
+            <div class="widget-wbs-text">
+              <strong>Whistle Blowing System</strong>
+              <span>https://pertaminaclean.tipoffs.info/</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bar Bawah (Hak Cipta, Legalitas, dan Sosial Media) -->
+    <div class="footer-bottom-bar">
+      <div class="footer-bottom-left">
+        <span>&copy; Copyright PT Pertamina (Persero) 2026. All Right Reserved.</span>
+        <span>/</span>
+        <a href="#">Kebijakan Privasi</a>
+        <span>/</span>
+        <a href="#">Waspada Penipuan</a>
+      </div>
+      <div class="footer-social-icons">
+        <!-- Facebook -->
+        <a href="https://facebook.com/pertamina" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
+        </a>
+        <!-- X (Twitter) -->
+        <a href="https://twitter.com/pertamina" target="_blank" rel="noopener" aria-label="X (Twitter)">
+          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <!-- Instagram -->
+        <a href="https://instagram.com/pertamina" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <!-- LinkedIn -->
+        <a href="https://linkedin.com/company/pertamina" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+        </a>
+        <!-- TikTok -->
+        <a href="https://tiktok.com/@pertamina" target="_blank" rel="noopener" aria-label="TikTok">
+          <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.97v7.69c-.01 1.91-.6 3.84-1.78 5.34-2.04 2.64-5.49 3.9-8.79 3.2-3.17-.67-5.83-3.1-6.66-6.23-.97-3.66.45-7.66 3.51-9.76 1.74-1.19 3.86-1.67 5.92-1.39v4.14c-1.07-.3-2.24-.22-3.23.28-1.45.72-2.39 2.22-2.37 3.85.02 1.68 1.05 3.2 2.58 3.83 1.51.62 3.32.39 4.58-.62.88-.71 1.39-1.8 1.38-2.93V.02z"/></svg>
+        </a>
+        <!-- YouTube -->
+        <a href="https://youtube.com/pertamina" target="_blank" rel="noopener" aria-label="YouTube">
+          <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL POP UP PROGRAM -->
+<div id="modal">
+  <div class="box">
+    <img id="m-img" src="" alt="">
+    <h3 id="m-title"></h3>
+    <p id="m-desc"></p>
+    <button onclick="closeModal()">Tutup</button>
+  </div>
+</div>
+
+<script>
+/* ==========================================================================
+   1. DATA TEMPAT TUJUAN DI KILANG (DESTINATIONS)
+   Mudah ditambah: cukup tambahkan item baru ke array ini untuk menambah titik
+   ========================================================================== */
+const DESTINATIONS = [
+  {
+    id: 'dest-tanjungpalas',
+    label: 'Masuk ke Tanjung Palas',           // Teks pil putih di sebelah tombol
+    title: 'Tanjung Palas',                    // Judul kartu pratinjau
+    desc: 'Area konservasi mangrove dan lahan gambut.',
+    // Koordinat persis titik di Kilang (sesuai posisi gedung merah):
+    pitch: 1.69,
+    yaw: -127.20,
+    sceneTujuan: 'tanjungpalas',               // Scene yang dituju
+    gambarPreview: 'aset360/tanjungpalas/preview.JPG',    // Pratinjau di dalam folder lokasi
+    fallbackImg: 'aset360/tanjungpalas/tanjungpalas.jpg', // Fallback otomatis
+    hfovZoom: 25,                              // Tingkat zoom sebelum berpindah scene
+    // Sudut pandang awal saat masuk ke Tanjung Palas:
+    targetPitch: -5,
+    targetYaw: -170,
+    targetHfov: 100
+  },
+  {
+    id: 'dest-mundam',
+    label: 'Masuk ke Mundam',                  // Teks pil putih di sebelah tombol
+    title: 'Area Mundam',                      // Judul kartu pratinjau
+    desc: 'Area konservasi dan pemberdayaan masyarakat Mundam.',
+    // Koordinat persis titik di Kilang:
+    pitch: -1.19,
+    yaw: -10.95,
+    sceneTujuan: 'mundam',                     // Scene yang dituju
+    gambarPreview: 'aset360/mundam/previewAPO.JPG',       // Pratinjau Mundam
+    fallbackImg: 'aset360/mundam/mundam.jpg',  // Fallback otomatis
+    hfovZoom: 25,                              // Tingkat zoom sebelum berpindah scene
+    // Sudut pandang awal saat masuk ke Mundam:
+    targetPitch: -5,
+    targetYaw: -170,
+    targetHfov: 100
+  }
+];
+
+/* ==========================================================================
+   2. DATA PROGRAM (Pop Up Modal)
+   ========================================================================== */
+const PROGRAMS = {
+  mangrove: {
+    title: 'Program Mangrove',
+    desc: 'Isi deskripsi program mangrove di sini. Ganti teks ini sesuai data program.',
+    img: 'aset360/mangrove.jpg'
+  },
+  gambut: {
+    title: 'Program Lahan Gambut',
+    desc: 'Area konservasi dan restorasi ekosistem lahan gambut untuk menjaga keanekaragaman hayati dan mencegah kebakaran hutan.',
+    img: 'aset360/tanjungpalas/previewtanjungpalas1.jpg'
+  },
+  apo: {
+    title: 'Program APO',
+    desc: 'Program air bersih dan sanitasi masyarakat (APO) di wilayah Mundam.',
+    img: 'aset360/mundam/previewAPO.JPG'
+  }
+};
+
+/* ==========================================================================
+   3. TAB BAWAH (3 Titik Utama: Kilang -> Tanjung Palas -> Mundam)
+   ========================================================================== */
+const TABS = [
+  { label: 'Kilang',        scene: 'kilang',        pitch: 2.76, yaw: -127.02, hfov: 60  },
+  { label: 'Tanjung Palas', scene: 'tanjungpalas',  pitch: -5,   yaw: -170,   hfov: 100 },
+  { label: 'Mundam',        scene: 'mundam',        pitch: -5,   yaw: -170,   hfov: 100 }
+];
+
+/* ==========================================================================
+   4. MODAL POP UP PROGRAM
+   ========================================================================== */
+function openModal(key) {
+  const p = PROGRAMS[key];
+  if (!p) return;
+  document.getElementById('m-title').textContent = p.title;
+  document.getElementById('m-desc').textContent = p.desc;
+  const img = document.getElementById('m-img');
+  img.style.display = 'block';
+  img.onerror = () => { img.style.display = 'none'; };
+  img.src = p.img;
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+document.getElementById('modal').addEventListener('click', e => { if (e.target.id === 'modal') closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+/* ==========================================================================
+   5. TOOLTIP HOTSPOT BAWAAN (Door & Info)
+   ========================================================================== */
+function tip(div, label) {
+  const s = document.createElement('span');
+  s.textContent = label;
+  div.appendChild(s);
+}
+
+/* Tooltip pratinjau kartu program */
+function tipProgram(div, key) {
+  const p = PROGRAMS[key];
+  if (!p) {
+    tip(div, key);
+    return;
+  }
+
+  const card = document.createElement('div');
+  card.className = 'prog-tip-card';
+
+  if (p.img) {
+    const imgWrap = document.createElement('div');
+    imgWrap.className = 'prog-tip-img-wrap';
+    const img = document.createElement('img');
+    img.className = 'prog-tip-img';
+    img.alt = p.title;
+    img.onerror = () => { imgWrap.style.display = 'none'; };
+    img.src = p.img;
+    imgWrap.appendChild(img);
+    card.appendChild(imgWrap);
+  }
+
+  const textWrap = document.createElement('div');
+  textWrap.className = 'prog-tip-text';
+
+  const title = document.createElement('div');
+  title.className = 'prog-tip-title';
+  title.textContent = p.title;
+  textWrap.appendChild(title);
+
+  const sub = document.createElement('div');
+  sub.className = 'prog-tip-sub';
+  sub.textContent = 'Klik untuk melihat detail ➜';
+  textWrap.appendChild(sub);
+
+  card.appendChild(textWrap);
+  div.appendChild(card);
+}
+
+/* Tooltip & kartu pratinjau menuju Program Lahan Gambut dari Tanjung Palas */
+function createGambutPortalTooltip(div) {
+  const pill = document.createElement('div');
+  pill.className = 'dest-pill-label';
+  pill.textContent = 'Masuk ke Program Lahan Gambut';
+  div.appendChild(pill);
+
+  const card = document.createElement('div');
+  card.className = 'dest-card';
+
+  const imgWrap = document.createElement('div');
+  imgWrap.className = 'dest-card-img-wrap';
+  const img = document.createElement('img');
+  img.className = 'dest-card-img';
+  img.alt = 'Program Lahan Gambut';
+  img.src = 'aset360/tanjungpalas/previewtanjungpalas1.jpg';
+  imgWrap.appendChild(img);
+  card.appendChild(imgWrap);
+
+  const body = document.createElement('div');
+  body.className = 'dest-card-body';
+  const title = document.createElement('div');
+  title.className = 'dest-card-title';
+  title.textContent = 'Program Lahan Gambut';
+  body.appendChild(title);
+
+  const desc = document.createElement('div');
+  desc.className = 'dest-card-desc';
+  desc.textContent = 'Area konservasi ekosistem lahan gambut.';
+  body.appendChild(desc);
+
+  const action = document.createElement('div');
+  action.className = 'dest-card-action';
+  const hint = document.createElement('span');
+  hint.className = 'dest-card-hint';
+  hint.textContent = 'Klik untuk masuk ➜';
+  action.appendChild(hint);
+
+  body.appendChild(action);
+  card.appendChild(body);
+  div.appendChild(card);
+}
+
+/* Tooltip & kartu pratinjau menuju Mundam 1 dari Mundam */
+function createMundam1PortalTooltip(div) {
+  const pill = document.createElement('div');
+  pill.className = 'dest-pill-label';
+  pill.textContent = 'Masuk ke Mundam 1';
+  div.appendChild(pill);
+
+  const card = document.createElement('div');
+  card.className = 'dest-card';
+
+  const imgWrap = document.createElement('div');
+  imgWrap.className = 'dest-card-img-wrap';
+  const img = document.createElement('img');
+  img.className = 'dest-card-img';
+  img.alt = 'Mundam 1';
+
+  let triedReview = false;
+  img.onerror = () => {
+    if (!triedReview) {
+      triedReview = true;
+      img.src = 'aset360/mundam/reviewAPO.jpg';
+    } else {
+      imgWrap.style.display = 'none';
+    }
+  };
+  img.src = 'aset360/mundam/previewAPO.JPG';
+  imgWrap.appendChild(img);
+  card.appendChild(imgWrap);
+
+  const body = document.createElement('div');
+  body.className = 'dest-card-body';
+  const title = document.createElement('div');
+  title.className = 'dest-card-title';
+  title.textContent = 'Area Mundam 1';
+  body.appendChild(title);
+
+  const desc = document.createElement('div');
+  desc.className = 'dest-card-desc';
+  desc.textContent = 'Area lanjutan program pemberdayaan Mundam.';
+  body.appendChild(desc);
+
+  const action = document.createElement('div');
+  action.className = 'dest-card-action';
+  const hint = document.createElement('span');
+  hint.className = 'dest-card-hint';
+  hint.textContent = 'Klik untuk masuk ➜';
+  action.appendChild(hint);
+
+  body.appendChild(action);
+  card.appendChild(body);
+  div.appendChild(card);
+}
+
+/* Real pop-up 3D yang langsung muncul & melayang di koordinat titik */
+function createAutoPinnedPopup(div, key) {
+  const p = PROGRAMS[key] || {
+    title: 'Program Lahan Gambut',
+    desc: 'Area konservasi dan restorasi ekosistem lahan gambut untuk menjaga keanekaragaman hayati dan mencegah kebakaran hutan.',
+    img: 'aset360/tanjungpalas/previewtanjungpalas1.jpg'
+  };
+
+  const card = document.createElement('div');
+  card.className = 'pin-popup-card';
+
+  if (p.img) {
+    const imgWrap = document.createElement('div');
+    imgWrap.className = 'pin-popup-img-wrap';
+
+    const badge = document.createElement('div');
+    badge.className = 'pin-popup-badge';
+    badge.textContent = 'Program CSR';
+    imgWrap.appendChild(badge);
+
+    const img = document.createElement('img');
+    img.className = 'pin-popup-img';
+    img.alt = p.title;
+    img.onerror = () => {
+      if (img.src.indexOf('previewAPO.JPG') !== -1) {
+        img.src = 'aset360/mundam/reviewAPO.jpg';
+      } else {
+        imgWrap.style.display = 'none';
+      }
+    };
+    img.src = p.img;
+    imgWrap.appendChild(img);
+
+    card.appendChild(imgWrap);
+  }
+
+  const body = document.createElement('div');
+  body.className = 'pin-popup-body';
+
+  const title = document.createElement('div');
+  title.className = 'pin-popup-title';
+  title.textContent = p.title;
+  body.appendChild(title);
+
+  const desc = document.createElement('div');
+  desc.className = 'pin-popup-desc';
+  desc.textContent = p.desc;
+  body.appendChild(desc);
+
+  card.appendChild(body);
+  div.appendChild(card);
+}
+
+/* ==========================================================================
+   6. KARTU PRATINJAU & PIL LABEL TITIK KILANG (createTooltipFunc Pannellum)
+   ========================================================================== */
+function createDestTooltip(div, dest) {
+  // Label pil putih di sebelah tombol (SELALU TERLIHAT)
+  const pill = document.createElement('div');
+  pill.className = 'dest-pill-label';
+  pill.textContent = dest.label || ('Masuk ke ' + dest.title);
+  pill.addEventListener('click', e => {
+    e.stopPropagation();
+    navigateToDestination(dest);
+  });
+  div.appendChild(pill);
+
+  // Kartu pratinjau saat kursor diarahkan (hover) / ditekan di HP
+  const card = document.createElement('div');
+  card.className = 'dest-card';
+  card.id = 'card-' + dest.id;
+
+  const imgWrap = document.createElement('div');
+  imgWrap.className = 'dest-card-img-wrap';
+
+  const img = document.createElement('img');
+  img.className = 'dest-card-img';
+  img.alt = dest.title;
+
+  let fallbackAttempted = false;
+  img.onerror = () => {
+    if (!fallbackAttempted && dest.fallbackImg) {
+      fallbackAttempted = true;
+      img.src = dest.fallbackImg;
+    } else {
+      // Sembunyikan container gambar jika file gagal dimuat, kartu & tombol tetap tampil
+      imgWrap.style.display = 'none';
+    }
+  };
+  img.src = dest.gambarPreview;
+  imgWrap.appendChild(img);
+  card.appendChild(imgWrap);
+
+  const body = document.createElement('div');
+  body.className = 'dest-card-body';
+
+  const title = document.createElement('div');
+  title.className = 'dest-card-title';
+  title.textContent = dest.title;
+  body.appendChild(title);
+
+  if (dest.desc) {
+    const desc = document.createElement('div');
+    desc.className = 'dest-card-desc';
+    desc.textContent = dest.desc;
+    body.appendChild(desc);
+  }
+
+  const action = document.createElement('div');
+  action.className = 'dest-card-action';
+
+  const hint = document.createElement('span');
+  hint.className = 'dest-card-hint';
+  hint.textContent = 'Klik untuk masuk ➜';
+  action.appendChild(hint);
+
+  // Tombol "Masuk" untuk layar sentuh/HP
+  const btn = document.createElement('button');
+  btn.className = 'dest-card-btn';
+  btn.type = 'button';
+  btn.textContent = 'Masuk ➜';
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    navigateToDestination(dest);
+  });
+  action.appendChild(btn);
+
+  body.appendChild(action);
+  card.appendChild(body);
+  div.appendChild(card);
+}
+
+/* ==========================================================================
+   7. NAVIGASI ZOOM & TRANSISI KE TEMPAT TUJUAN
+   ========================================================================== */
+let isTransitioning = false;
+let lastKilangPitch = 2.76;
+let lastKilangYaw = -127.02;
+let lastKilangHfov = 60;
+
+function navigateToDestination(dest) {
+  if (isTransitioning) return;
+  isTransitioning = true;
+  document.body.classList.add('is-transitioning');
+
+  // Tutup semua kartu preview
+  document.querySelectorAll('.dest-card.show').forEach(c => c.classList.remove('show'));
+
+  // Simpan posisi pandang terakhir di kilang sebelum pindah
+  if (viewer.getScene() === 'kilang') {
+    lastKilangPitch = viewer.getPitch();
+    lastKilangYaw = viewer.getYaw();
+    lastKilangHfov = viewer.getHfov();
+  }
+
+  let sceneLoaded = false;
+  const finishZoomAndLoad = () => {
+    if (sceneLoaded) return;
+    sceneLoaded = true;
+
+    // Tampilkan overlay hitam dengan transisi opacity
+    const overlay = document.getElementById('tour-overlay');
+    overlay.classList.add('active');
+
+    setTimeout(() => {
+      viewer.loadScene(dest.sceneTujuan, dest.targetPitch, dest.targetYaw, dest.targetHfov);
+      setTimeout(() => {
+        overlay.classList.remove('active');
+        isTransitioning = false;
+        document.body.classList.remove('is-transitioning');
+      }, 500);
+    }, 250);
+  };
+
+  // Zoom dan putar kamera menuju titik tujuan (durasi 1500 ms)
+  const zoomHfov = dest.hfovZoom || 25;
+  viewer.lookAt(dest.pitch, dest.yaw, zoomHfov, 1500, finishZoomAndLoad);
+
+  // Safety fallback timeout
+  setTimeout(finishZoomAndLoad, 1650);
+}
+
+// Hotspot builder untuk scene Kilang
+function createDestHotspot(dest) {
+  return {
+    pitch: dest.pitch,
+    yaw: dest.yaw,
+    type: 'info', // Menggunakan info agar klik dikontrol sepenuhnya oleh JS
+    cssClass: 'hs dest-portal-hs',
+    createTooltipFunc: createDestTooltip,
+    createTooltipArgs: dest,
+    clickHandlerFunc: e => {
+      if (e && e.target && e.target.classList.contains('dest-card-btn')) return;
+
+      const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+      if (isTouch) {
+        const card = document.getElementById('card-' + dest.id);
+        if (card && !card.classList.contains('show')) {
+          // Pada HP: tap pertama menampilkan kartu pratinjau
+          document.querySelectorAll('.dest-card.show').forEach(c => c.classList.remove('show'));
+          card.classList.add('show');
+          return;
+        }
+      }
+      // Pada desktop (atau tap tombol/titik saat terbuka di HP): langsung mulai zoom & masuk
+      navigateToDestination(dest);
+    }
+  };
+}
+
+/* ==========================================================================
+   8. TOMBOL KEMBALI KE KILANG
+   ========================================================================== */
+function backToKilang() {
+  if (isTransitioning) return;
+  isTransitioning = true;
+  document.body.classList.add('is-transitioning');
+
+  const overlay = document.getElementById('tour-overlay');
+  overlay.classList.add('active');
+
+  setTimeout(() => {
+    // Kembali ke kilang dengan pitch, yaw, hfov terakhir saat meninggalkan kilang
+    viewer.loadScene('kilang', lastKilangPitch, lastKilangYaw, lastKilangHfov);
+    setTimeout(() => {
+      overlay.classList.remove('active');
+      isTransitioning = false;
+      document.body.classList.remove('is-transitioning');
+    }, 500);
+  }, 250);
+}
+
+function updateBackButton(sceneId) {
+  const btn = document.getElementById('btn-back-kilang');
+  // Tombol hanya muncul jika sedang berada di luar scene kilang
+  btn.style.display = (sceneId === 'kilang') ? 'none' : 'flex';
+}
+
+/* ==========================================================================
+   9. INISIALISASI PANNELLUM VIEWER 360
+   ========================================================================== */
+const viewer = pannellum.viewer('tour', {
+  default: {
+    firstScene: 'kilang', // Tampilan utama pertama kali dibuka
+    autoLoad: true,
+    sceneFadeDuration: 800
+  },
+  showControls: false,
+  hotSpotDebug: true,  // klik gambar -> lihat pitch & yaw di Console (F12). Ubah ke false setelah selesai.
+
+  scenes: {
+    /* SCENE UTAMA (MAP BESAR) */
+    kilang: {
+      type: 'equirectangular',
+      panorama: 'aset360/kilang.jpg',
+      pitch: 2.76,
+      yaw: -127.02,
+      hfov: 60,
+      hotSpots: DESTINATIONS.map(createDestHotspot)
+    },
+
+    /* SCENE TUJUAN (TANJUNG PALAS) */
+    tanjungpalas: {
+      type: 'equirectangular',
+      panorama: 'aset360/tanjungpalas/tanjungpalas.jpg',
+      pitch: -5, yaw: -170, hfov: 100,
+      hotSpots: [
+        /* Pintu masuk ke Program Lahan Gambut dengan preview */
+        { pitch: -4, yaw: -170, type: 'scene', sceneId: 'tanjungpalas1', cssClass: 'hs dest-portal-hs',
+          createTooltipFunc: createGambutPortalTooltip },
+
+        { pitch: -8.08, yaw: 82.95, type: 'info', cssClass: 'hs info-hs',
+          createTooltipFunc: tipProgram, createTooltipArgs: 'mangrove',
+          clickHandlerFunc: () => openModal('mangrove') }
+      ]
+    },
+
+    /* SCENE TANJUNG PALAS TITIK 2 (PROGRAM LAHAN GAMBUT) */
+    tanjungpalas1: {
+      type: 'equirectangular',
+      panorama: 'aset360/tanjungpalas/tanjungpalas1.jpg',
+      pitch: -5, yaw: -170, hfov: 100,
+      hotSpots: [
+        /* Pintu kembali ke Tanjung Palas Titik 1 */
+        { pitch: -4, yaw: 10, type: 'scene', sceneId: 'tanjungpalas', cssClass: 'hs door-hs',
+          createTooltipFunc: tip, createTooltipArgs: 'Kembali ke Titik Awal Tanjung Palas' },
+
+        /* Real Pop-up 3D yang langsung muncul mengikuti posisi titik */
+        { pitch: -1, yaw: -170, type: 'info', cssClass: 'pin-popup-hs',
+          createTooltipFunc: createAutoPinnedPopup, createTooltipArgs: 'gambut' }
+      ]
+    },
+
+    /* SCENE MUNDAM */
+    mundam: {
+      type: 'equirectangular',
+      panorama: 'aset360/mundam/mundam.jpg',
+      pitch: -5, yaw: -170, hfov: 100,
+      hotSpots: [
+        /* Titik menuju mundam1 dengan preview previewAPO.JPG */
+        { pitch: -4, yaw: -170, type: 'scene', sceneId: 'mundam1', cssClass: 'hs dest-portal-hs',
+          createTooltipFunc: createMundam1PortalTooltip }
+      ]
+    },
+
+    /* SCENE MUNDAM 1 (PROGRAM APO) */
+    mundam1: {
+      type: 'equirectangular',
+      panorama: 'aset360/mundam/mundam1.jpg',
+      pitch: -15, yaw: -5.46, hfov: 100,
+      hotSpots: [
+        /* Pintu kembali ke Mundam */
+        { pitch: -4, yaw: 10, type: 'scene', sceneId: 'mundam', cssClass: 'hs door-hs',
+          createTooltipFunc: tip, createTooltipArgs: 'Kembali ke Area Mundam' },
+
+        /* Real Pop-up 3D yang langsung muncul mengikuti posisi titik */
+        { pitch: -6.66, yaw: -18.52, type: 'info', cssClass: 'pin-popup-hs',
+          createTooltipFunc: createAutoPinnedPopup, createTooltipArgs: 'apo' }
+      ]
+    }
+  }
+});
+
+/* ==========================================================================
+   10. BANGUN TAB BAWAH + LOGIKA PINDAH & SINKRONISASI
+   ========================================================================== */
+const tabsEl = document.getElementById('tabs');
+let activeTab = 0;
+
+TABS.forEach((t, i) => {
+  const b = document.createElement('button');
+  b.className = 'tab' + (i === 0 ? ' active' : '');
+  b.innerHTML = '<div class="label"><span class="dot"></span>' + t.label + '</div><div class="line"></div>';
+  b.addEventListener('click', () => goTo(i));
+  tabsEl.appendChild(b);
+});
+
+function setActive(i) {
+  activeTab = i;
+  [...tabsEl.children].forEach((el, idx) => el.classList.toggle('active', idx === i));
+}
+
+function goTo(i) {
+  if (isTransitioning) return;
+  const t = TABS[i];
+  setActive(i);
+  const currentScene = viewer.getScene();
+
+  // Simpan posisi pandang kilang jika berpindah dari kilang lewat tab
+  if (currentScene === 'kilang' && t.scene !== 'kilang') {
+    lastKilangPitch = viewer.getPitch();
+    lastKilangYaw = viewer.getYaw();
+    lastKilangHfov = viewer.getHfov();
+  }
+
+  // Jika klik tab Kilang dari scene lain, kembali ke posisi pandang terakhir
+  if (t.scene === 'kilang' && currentScene !== 'kilang') {
+    viewer.loadScene('kilang', lastKilangPitch, lastKilangYaw, lastKilangHfov);
+    return;
+  }
+
+  if (currentScene === t.scene) {
+    viewer.lookAt(t.pitch, t.yaw, t.hfov, 1200);
+  } else {
+    viewer.loadScene(t.scene, t.pitch, t.yaw, t.hfov);
+  }
+}
+
+// Sinkronisasi tombol kembali & tab saat scene berpindah
+viewer.on('scenechange', id => {
+  updateBackButton(id);
+
+  // Petakan sub-scene ke scene utama tab
+  const tabSceneMap = {
+    'kilang': 'kilang',
+    'tanjungpalas': 'tanjungpalas',
+    'tanjungpalas1': 'tanjungpalas',
+    'mundam': 'mundam',
+    'mundam1': 'mundam'
+  };
+  const activeSceneKey = tabSceneMap[id] || id;
+  const targetIndex = TABS.findIndex(t => t.scene === activeSceneKey);
+  if (targetIndex !== -1) {
+    setActive(targetIndex);
+  }
+});
+
+// Tutup kartu pratinjau jika pengguna klik area kosong di layar sentuh
+document.addEventListener('click', e => {
+  if (!e.target.closest('.dest-portal-hs')) {
+    document.querySelectorAll('.dest-card.show').forEach(c => c.classList.remove('show'));
+  }
+});
+
+// Status awal tombol kembali
+updateBackButton('kilang');
+
+// Efek transisi navbar solid saat halaman di-scroll ke bawah
+window.addEventListener('scroll', () => {
+  const isScrolled = window.scrollY > 60;
+  const header = document.querySelector('header');
+  if (header) {
+    header.classList.toggle('scrolled', isScrolled);
+  }
+});
+
+// Animasi angka bergerak bertambah saat pertama kali di-scroll ke section SiMinah & Simon+
+(function initDigitalStatsCounter() {
+  const statSection = document.getElementById('capaian-digital');
+  if (!statSection) return;
+
+  let hasAnimated = false;
+
+  function runCounters() {
+    if (hasAnimated) return;
+    hasAnimated = true;
+
+    const counters = statSection.querySelectorAll('.stat-counter');
+    const duration = 2000; // 2 detik
+
+    counters.forEach(counter => {
+      const target = parseFloat(counter.getAttribute('data-target') || '0');
+      const isDecimal = counter.getAttribute('data-format') === 'decimal';
+      const decimals = parseInt(counter.getAttribute('data-decimals') || '1', 10);
+      const startTime = performance.now();
+
+      function step(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Easing out cubic: 1 - (1 - t)^3 untuk pergerakan angka yang halus
+        const ease = 1 - Math.pow(1 - progress, 3);
+        const currentVal = target * ease;
+
+        if (isDecimal) {
+          counter.textContent = currentVal.toFixed(decimals).replace('.', ',');
+        } else {
+          counter.textContent = Math.floor(currentVal).toLocaleString('id-ID');
+        }
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          // Hasil akhir presisi
+          if (isDecimal) {
+            counter.textContent = target.toFixed(decimals).replace('.', ',');
+          } else {
+            counter.textContent = Math.round(target).toLocaleString('id-ID');
+          }
+        }
+      }
+
+      requestAnimationFrame(step);
+    });
+  }
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          runCounters();
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.2,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    observer.observe(statSection);
+  } else {
+    runCounters();
+  }
+})();
+
+// Inisialisasi Slider Showcase 10 Foto (Drag to slide, tombol panah & animasi tipis saat ditekan)
+(function initShowcaseSlider() {
+  const track = document.getElementById('showcase-track');
+  const btnPrev = document.getElementById('slider-prev');
+  const btnNext = document.getElementById('slider-next');
+  if (!track) return;
+
+  // Tombol panah navigasi kiri & kanan
+  if (btnPrev && btnNext) {
+    btnPrev.addEventListener('click', () => {
+      const cardWidth = track.querySelector('.slider-card')?.offsetWidth || 300;
+      track.scrollBy({ left: -cardWidth * 2, behavior: 'smooth' });
+    });
+    btnNext.addEventListener('click', () => {
+      const cardWidth = track.querySelector('.slider-card')?.offsetWidth || 300;
+      track.scrollBy({ left: cardWidth * 2, behavior: 'smooth' });
+    });
+  }
+
+  // Interaksi drag mouse untuk slide ke samping
+  let isDown = false;
+  let startX = 0;
+  let scrollLeft = 0;
+  let isDragging = false;
+
+  track.addEventListener('mousedown', (e) => {
+    isDown = true;
+    isDragging = false;
+    track.classList.add('is-dragging');
+    startX = e.pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (!isDown) return;
+    isDown = false;
+    track.classList.remove('is-dragging');
+  });
+
+  track.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - track.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    if (Math.abs(walk) > 5) {
+      isDragging = true;
+    }
+    track.scrollLeft = scrollLeft - walk;
+  });
+
+  // Animasi tipis pada tanda panah saat ditekan/diklik dan navigasi ke halaman program
+  const cardButtons = track.querySelectorAll('.slider-card-btn');
+  cardButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      btn.classList.add('is-pressed');
+      const href = btn.getAttribute('data-href') || btn.closest('.slider-card')?.getAttribute('data-href');
+      setTimeout(() => {
+        btn.classList.remove('is-pressed');
+        if (href) {
+          window.location.href = href;
+        }
+      }, 180);
+    });
+  });
+
+  // Klik kartu membuka halaman program jika tidak sedang mendrag
+  const cards = track.querySelectorAll('.slider-card');
+  cards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (isDragging) return;
+      const href = card.getAttribute('data-href');
+      if (href) {
+        window.location.href = href;
+      }
+    });
+  });
+})();
+
+// Navigasi & Drag Slider Bantuan CSR
+(function initCsrAidSlider() {
+  const track = document.getElementById('csr-aid-track');
+  const btnPrev = document.getElementById('btn-aid-prev');
+  const btnNext = document.getElementById('btn-aid-next');
+  if (!track) return;
+
+  if (btnPrev && btnNext) {
+    btnPrev.addEventListener('click', () => {
+      const cardWidth = track.querySelector('.csr-aid-card')?.offsetWidth || 280;
+      track.scrollBy({ left: -(cardWidth + 20), behavior: 'smooth' });
+    });
+    btnNext.addEventListener('click', () => {
+      const cardWidth = track.querySelector('.csr-aid-card')?.offsetWidth || 280;
+      track.scrollBy({ left: (cardWidth + 20), behavior: 'smooth' });
+    });
+  }
+
+  let isDown = false;
+  let startX = 0;
+  let scrollLeft = 0;
+
+  track.addEventListener('mousedown', (e) => {
+    isDown = true;
+    track.classList.add('is-dragging');
+    startX = e.pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (!isDown) return;
+    isDown = false;
+    track.classList.remove('is-dragging');
+  });
+
+  track.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - track.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    track.scrollLeft = scrollLeft - walk;
+  });
+})();
+
+// Filter tab interaktif untuk Berita & Artikel
+(function initNewsFilters() {
+  const toggleButtons = document.querySelectorAll('.btn-toggle-main');
+  toggleButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      toggleButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  const catPills = document.querySelectorAll('.btn-cat-pill');
+  catPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      catPills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+    });
+  });
+})();
+</script>
+</body>
+</html>
