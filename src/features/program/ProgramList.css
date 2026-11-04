@@ -2,7 +2,7 @@
 .sec-showcase-slider {
   position: relative;
   width: 100%;
-  background: #000000;
+  background: #ffffff;
   overflow: hidden;
   font-family: 'Montserrat', "Segoe UI", Arial, sans-serif;
   margin: 0;
@@ -59,7 +59,7 @@
   padding: 0 !important;
   cursor: pointer;
   box-sizing: border-box;
-  background: #111111;
+  background: #ffffff;
   display: block;
 }
 .slider-card-img {
