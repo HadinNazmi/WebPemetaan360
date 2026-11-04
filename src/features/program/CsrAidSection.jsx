@@ -110,10 +110,10 @@ export default function CsrAidSection() {
               />
             ))}
             
-            <div className="csr-aid-photo-badge">
+            {/* <div className="csr-aid-photo-badge">
               <span className="badge-dot" />
               <span>{activeItem.title || 'Program Unggulan'}</span>
-            </div>
+            </div> */}
           </div>
 
           {/* Carousel Kartu Penyaluran Bantuan */}

@@ -8,7 +8,7 @@ export const mockShowcasePrograms = [
     href: 'program-1.html',
     title: 'Layanan Informasi Publik',
     category: 'PROFIL PPID',
-    img: 'image/galeri-1.jpg',
+    img: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80',
     fallbackImg: PLACEHOLDER_IMG,
   },
   {
@@ -17,7 +17,7 @@ export const mockShowcasePrograms = [
     href: 'program-2.html',
     title: 'Harga BBM Pertamina',
     category: 'INFORMASI',
-    img: 'image/galeri-2.jpg',
+    img: 'https://images.unsplash.com/photo-1545459720-aac8509eb02c?auto=format&fit=crop&w=800&q=80',
     fallbackImg: PLACEHOLDER_IMG,
   },
   {
@@ -26,7 +26,7 @@ export const mockShowcasePrograms = [
     href: 'program-3.html',
     title: 'Tata Kelola Perseroan',
     category: 'GCG',
-    img: 'image/galeri-3.jpg',
+    img: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80',
     fallbackImg: PLACEHOLDER_IMG,
   },
   {
@@ -35,7 +35,7 @@ export const mockShowcasePrograms = [
     href: 'program-4.html',
     title: 'Menjadi Perwira Pertamina',
     category: 'REKRUTMEN',
-    img: 'image/galeri-4.jpg',
+    img: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
     fallbackImg: PLACEHOLDER_IMG,
   },
   {
@@ -44,7 +44,7 @@ export const mockShowcasePrograms = [
     href: 'program-5.html',
     title: 'Restorasi Hutan Mangrove',
     category: 'KEBERLANJUTAN',
-    img: 'image/galeri-5.jpg',
+    img: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80',
     fallbackImg: PLACEHOLDER_IMG,
   },
   {
@@ -53,7 +53,7 @@ export const mockShowcasePrograms = [
     href: 'program-6.html',
     title: 'Kemandirian Komunitas Pesisir',
     category: 'PEMBERDAYAAN',
-    img: 'image/galeri-6.jpg',
+    img: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80',
     fallbackImg: PLACEHOLDER_IMG,
   },
   {
@@ -62,7 +62,7 @@ export const mockShowcasePrograms = [
     href: 'program-7.html',
     title: 'Akses Air Bersih Sehat (APO)',
     category: 'SARANA AIR BERSIH',
-    img: 'image/galeri-7.jpg',
+    img: 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=800&q=80',
     fallbackImg: PLACEHOLDER_IMG,
   },
   {
@@ -71,7 +71,7 @@ export const mockShowcasePrograms = [
     href: 'program-8.html',
     title: 'Pengelolaan Ekosistem Gambut',
     category: 'LAHAN GAMBUT',
-    img: 'image/galeri-8.jpg',
+    img: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&q=80',
     fallbackImg: PLACEHOLDER_IMG,
   },
   {
@@ -80,7 +80,7 @@ export const mockShowcasePrograms = [
     href: 'program-9.html',
     title: 'Sedekah Jelantah SiMinah',
     category: 'SIRKULARITAS',
-    img: 'image/galeri-9.jpg',
+    img: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=800&q=80',
     fallbackImg: PLACEHOLDER_IMG,
   },
   {
@@ -89,7 +89,7 @@ export const mockShowcasePrograms = [
     href: 'program-10.html',
     title: 'Energi Bersih Rendah Karbon',
     category: 'TRANSISI ENERGI',
-    img: 'image/galeri-10.jpg',
+    img: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=800&q=80',
     fallbackImg: PLACEHOLDER_IMG,
   },
 ];
