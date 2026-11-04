@@ -27,7 +27,10 @@ export default function ProgramDetailPage() {
 
       if (progRes?.success) {
         setProgram(progRes.data);
+      } else {
+        setProgram(null);
       }
+
       if (artRes?.success) {
         setArticles(artRes.data);
       }
@@ -37,13 +40,36 @@ export default function ProgramDetailPage() {
     loadData();
   }, [slug]);
 
-  if (loading || !program) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50 text-slate-500">
         <div className="flex flex-col items-center gap-3">
           <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
-          <span className="text-sm">Memuat informasi program...</span>
+          <span className="text-sm">Memuat informasi program dari database...</span>
         </div>
+      </div>
+    );
+  }
+
+  if (!program) {
+    return (
+      <div className="min-h-screen bg-[#f8fafc] text-slate-800 flex flex-col font-sans">
+        <Navbar />
+        <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
+          <div className="max-w-md bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+            <h2 className="text-xl font-bold text-slate-800 mb-2">Program Tidak Ditemukan</h2>
+            <p className="text-sm text-slate-500 mb-6">
+              Data program dengan slug <code className="bg-slate-100 px-2 py-0.5 rounded text-red-600 font-mono">"{slug}"</code> belum terdaftar di database.
+            </p>
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700 transition"
+            >
+              <ArrowLeft size={16} /> Kembali ke Beranda
+            </Link>
+          </div>
+        </div>
+        <Footer />
       </div>
     );
   }
@@ -59,64 +85,64 @@ export default function ProgramDetailPage() {
       {/* 1. Header / Navbar Utama */}
       <Navbar />
 
-      {/* 2. Reusable Hero Banner */}
+      {/* 2. Hero Header Sub-Halaman */}
       <PageHero
         breadcrumbs={breadcrumbs}
         title={program.page_title || program.judul_program}
-        subtitle={program.sub_title || program.kategori}
-        backgroundImage={program.banner || program.fallbackImg}
+        category={program.sub_title || program.kategori}
+        badge="PROGRAM CSR UNGGULAN"
+        backgroundImage={program.banner}
+        fallbackImage={program.fallbackImg}
       />
 
-      {/* 3. Reusable 2-Column Detail Layout */}
-      <DetailLayout
-        sidebar={
-          <div className="space-y-6">
-            {/* Tombol Kembali Cepat ke Beranda */}
-            <Link
-              to="/#galeri"
-              className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600 hover:text-blue-700 transition-colors py-1.5 px-3 rounded-lg bg-slate-100 hover:bg-slate-200/80 border border-slate-200"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Kembali ke Jelajah Program</span>
-            </Link>
+      {/* 3. Main Two-Column Layout */}
+      <main className="flex-1">
+        <DetailLayout
+          content={
+            <div className="space-y-6">
+              {/* Back to Home pill */}
+              <div>
+                <Link
+                  to="/"
+                  className="inline-flex items-center gap-2 text-xs font-semibold text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-full transition"
+                >
+                  <ArrowLeft size={14} /> Kembali ke Beranda
+                </Link>
+              </div>
 
-            {/* Reusable Sidebar Widget Persis Referensi */}
-            <SidebarArticlesWidget
-              headerTitle="Publikasi & Informasi Terkait"
-              items={articles}
-              activeSlug={slug}
-            />
-          </div>
-        }
-      >
-        {/* Konten Utama Detail Program */}
-        <article className="prose prose-slate max-w-none">
-          {/* Judul Artikel / Detail */}
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-6">
-            {program.judul_program}
-          </h2>
+              {/* Rich text body dari database */}
+              {program.konten_lengkap ? (
+                <div
+                  className="prose prose-slate max-w-none text-slate-700 leading-relaxed [&>p]:mb-4 [&>h3]:text-xl [&>h3]:font-bold [&>h3]:text-slate-900 [&>h3]:mt-6 [&>h3]:mb-3"
+                  dangerouslySetInnerHTML={{ __html: program.konten_lengkap }}
+                />
+              ) : (
+                <p className="text-slate-500 italic">Belum ada rincian deskripsi untuk program ini.</p>
+              )}
+            </div>
+          }
+          sidebar={
+            <div className="space-y-6">
+              {/* Widget Tabel Metadata Program */}
+              {program.metadata && program.metadata.length > 0 && (
+                <InfoTableWidget
+                  title={`Informasi ${program.page_title || program.judul_program}`}
+                  items={program.metadata}
+                />
+              )}
 
-          {/* Isi Rich Text / Paragraf */}
-          <div
-            className="text-slate-600 leading-relaxed text-sm md:text-base space-y-4"
-            dangerouslySetInnerHTML={{
-              __html:
-                program.konten_lengkap ||
-                `<p>${program.ringkasan || 'Informasi lengkap program sedang diperbarui.'}</p>`,
-            }}
-          />
+              {/* Widget Artikel Berita Terkait */}
+              <SidebarArticlesWidget
+                title="Publikasi Terkait"
+                articles={articles}
+                limit={4}
+              />
+            </div>
+          }
+        />
+      </main>
 
-          {/* Reusable Key-Value Info Table Widget */}
-          {program.metadata && (
-            <InfoTableWidget
-              items={program.metadata}
-              title="Informasi Kontak & Layanan"
-            />
-          )}
-        </article>
-      </DetailLayout>
-
-      {/* 4. Footer Utama Pertamina */}
+      {/* 4. Footer Portal */}
       <Footer />
     </div>
   );

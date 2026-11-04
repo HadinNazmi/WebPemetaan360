@@ -1,69 +1,152 @@
-import { mockImpactMetrics } from '../mocks/impactMetrics';
-import { mockShowcasePrograms, mockCsrAidPrograms } from '../mocks/programs';
-import { mockArticles } from '../mocks/articles';
+import { apiClient } from './api';
 
-const USE_MOCK = import.meta.env.VITE_USE_MOCK !== 'false';
+const DEFAULT_HERO_IMAGE = 'https://www.pertamina.com/file/files/2025/05/publikasi-laporan-tahunan-hero-alt.webp';
+
+function normalizeProgram(p) {
+  if (!p) return null;
+  return {
+    id: p.id,
+    slug: p.slug,
+    href: p.link_eksternal || `/program/${p.slug}`,
+    target: p.link_eksternal ? '_blank' : '_self',
+    judul_program: p.nama_program || p.judul_program,
+    kategori: p.pilar_kategori || p.kategori,
+    banner: p.gambar_cover || p.banner || DEFAULT_HERO_IMAGE,
+    fallbackImg: p.gambar_cover || p.banner || DEFAULT_HERO_IMAGE,
+    page_title: p.nama_program || p.page_title,
+    sub_title: p.pilar_kategori || p.sub_title,
+    konten_lengkap: p.deskripsi_lengkap || p.konten_lengkap || '',
+    ringkasan: p.ringkasan || '',
+    metadata: Array.isArray(p.metadata) && p.metadata.length > 0
+      ? p.metadata
+      : [
+          ...(p.lokasi ? [{ label: 'Lokasi Wilayah', value: p.lokasi }] : []),
+          ...(p.link_eksternal ? [{ label: 'Tautan Resmi', value: p.link_eksternal }] : []),
+        ],
+  };
+}
 
 export const programService = {
-  // Ambil metrik dampak SiMinah & Simon+
+  // 1. Ambil metrik dampak SiMinah & Simon+ murni dari database
   async getImpactMetrics() {
-    if (USE_MOCK) {
-      return {
-        success: true,
-        message: 'Data metrik dampak berhasil dimuat (mock)',
-        data: mockImpactMetrics,
-      };
+    try {
+      const response = await apiClient.get('/metrik-dampak');
+      const resData = response.data?.data;
+      const list = resData?.metrik_list || (Array.isArray(resData) ? resData : []);
+
+      const normalized = (list || []).map((m) => ({
+        id: m.id,
+        nama_metrik: m.nama_metrik,
+        kategori: m.kategori_label || m.kategori || m.nama_metrik?.toUpperCase(),
+        nilai_angka: parseFloat(m.nilai_cached ?? m.nilai_angka ?? 0),
+        satuan: m.satuan || '',
+        sub_satuan: m.sub_satuan || null,
+        suffix: m.suffix || '',
+        format_angka: m.format_angka || 'integer',
+        deskripsi: m.deskripsi || '',
+        urutan: m.urutan || 0,
+      }));
+
+      return { success: true, data: normalized };
+    } catch (error) {
+      console.error('Error mengambil metrik dampak dari database:', error);
+      return { success: false, data: [], error: error.message };
     }
   },
 
-  // Ambil program showcase 4 foto
+  // 2. Ambil program showcase murni dari database
   async getShowcasePrograms() {
-    if (USE_MOCK) {
-      return {
-        success: true,
-        message: 'Data showcase berhasil dimuat (mock)',
-        data: mockShowcasePrograms,
-      };
+    try {
+      const response = await apiClient.get('/program');
+      const list = response.data?.data || [];
+      const normalized = Array.isArray(list) ? list.map(normalizeProgram) : [];
+
+      return { success: true, data: normalized };
+    } catch (error) {
+      console.error('Error mengambil program dari database:', error);
+      return { success: false, data: [], error: error.message };
     }
   },
 
-  // Ambil detail program berdasarkan slug
+  // 3. Ambil detail program berdasarkan slug murni dari database
   async getProgramBySlug(slug) {
-    if (USE_MOCK) {
-      const found = mockShowcasePrograms.find((p) => p.slug === slug);
-      if (found) {
-        return {
-          success: true,
-          data: found,
-        };
+    try {
+      const response = await apiClient.get(`/program/${slug}`);
+      if (response.data?.success && response.data?.data) {
+        return { success: true, data: normalizeProgram(response.data.data) };
       }
-      // Jika tidak ditemukan langsung, gunakan item pertama sebagai fallback yang aman
       return {
-        success: true,
-        data: mockShowcasePrograms[0],
+        success: false,
+        data: null,
+        message: response.data?.message || 'Program tidak ditemukan di database.',
       };
+    } catch (error) {
+      console.error(`Error mengambil detail program "${slug}" dari database:`, error);
+      return { success: false, data: null, error: error.message };
     }
   },
 
-  // Ambil kartu bantuan CSR
+  // 4. Ambil kartu bantuan CSR murni dari database
   async getCsrAidPrograms() {
-    if (USE_MOCK) {
-      return {
-        success: true,
-        message: 'Data bantuan CSR berhasil dimuat (mock)',
-        data: mockCsrAidPrograms,
-      };
+    try {
+      const response = await apiClient.get('/bantuan');
+      const list = response.data?.data || [];
+
+      const normalized = (Array.isArray(list) ? list : []).map((b) => ({
+        id: b.id,
+        title: b.judul_bantuan || b.title,
+        desc: b.penjelasan_bantuan || b.desc,
+        gambar_cover: b.gambar_cover || DEFAULT_HERO_IMAGE,
+      }));
+
+      return { success: true, data: normalized };
+    } catch (error) {
+      console.error('Error mengambil data bantuan CSR dari database:', error);
+      return { success: false, data: [], error: error.message };
     }
   },
 
-  // Ambil artikel berita
+  // 5. Ambil artikel berita murni dari database
   async getArticles() {
-    if (USE_MOCK) {
-      return {
-        success: true,
-        message: 'Data artikel berita berhasil dimuat (mock)',
-        data: mockArticles,
-      };
+    try {
+      const response = await apiClient.get('/artikel');
+      const list = response.data?.data || [];
+
+      const normalized = (Array.isArray(list) ? list : []).map((a) => ({
+        id: a.id,
+        featured: Boolean(a.is_featured ?? a.featured),
+        tipe: 'news',
+        kategori_tag: a.kategori_tag || 'SIARAN PERS',
+        kategori_filter: 'all',
+        judul: a.judul_artikel || a.judul,
+        slug: a.slug || `artikel-${a.id}`,
+        gambar: a.gambar_cover || a.gambar || DEFAULT_HERO_IMAGE,
+        fallbackImg: DEFAULT_HERO_IMAGE,
+        published_at: a.tanggal_publikasi
+          ? new Date(a.tanggal_publikasi).toLocaleDateString('id-ID', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            })
+          : (a.published_at || 'Terbaru'),
+        url: a.url_media || a.url || '#',
+      }));
+
+      return { success: true, data: normalized };
+    } catch (error) {
+      console.error('Error mengambil artikel dari database:', error);
+      return { success: false, data: [], error: error.message };
+    }
+  },
+
+  // 6. Ambil data Visi & Misi CSR murni dari database
+  async getVisiMisi() {
+    try {
+      const response = await apiClient.get('/visi-misi');
+      return response.data;
+    } catch (error) {
+      console.error('Error mengambil visi misi dari database:', error);
+      return { success: false, data: null, error: error.message };
     }
   },
 };

@@ -97,41 +97,49 @@ export default function CsrAidSection() {
               onMouseUp={handleMouseUpOrLeave}
               onMouseLeave={handleMouseUpOrLeave}
             >
-              {items.map((item) => (
-                <div key={item.id} className="csr-aid-card">
-                  <div className="csr-aid-card-top">
-                    <h3 className="csr-card-title">{item.title}</h3>
-                    <div className="csr-card-line"></div>
-                    <p className="csr-card-desc">{item.desc}</p>
-                  </div>
-                  <div className="csr-card-arrow">
-                    <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H9M17 7V15"/></svg>
-                  </div>
+              {items.length === 0 ? (
+                <div className="text-slate-400 text-sm py-8 px-4">
+                  Belum ada data penyaluran bantuan di database.
                 </div>
-              ))}
+              ) : (
+                items.map((item) => (
+                  <div key={item.id} className="csr-aid-card">
+                    <div className="csr-aid-card-top">
+                      <h3 className="csr-card-title">{item.title}</h3>
+                      <div className="csr-card-line"></div>
+                      <p className="csr-card-desc">{item.desc}</p>
+                    </div>
+                    <div className="csr-card-arrow">
+                      <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H9M17 7V15"/></svg>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
 
             {/* Tombol Navigasi Bawah Kanan */}
-            <div className="csr-aid-nav">
-              <button
-                className="btn-aid-nav"
-                id="btn-aid-prev"
-                type="button"
-                aria-label="Geser bantuan ke kiri"
-                onClick={slidePrev}
-              >
-                <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-              </button>
-              <button
-                className="btn-aid-nav"
-                id="btn-aid-next"
-                type="button"
-                aria-label="Geser bantuan ke kanan"
-                onClick={slideNext}
-              >
-                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </button>
-            </div>
+            {items.length > 0 && (
+              <div className="csr-aid-nav">
+                <button
+                  className="btn-aid-nav"
+                  id="btn-aid-prev"
+                  type="button"
+                  aria-label="Geser bantuan ke kiri"
+                  onClick={slidePrev}
+                >
+                  <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                </button>
+                <button
+                  className="btn-aid-nav"
+                  id="btn-aid-next"
+                  type="button"
+                  aria-label="Geser bantuan ke kanan"
+                  onClick={slideNext}
+                >
+                  <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
