@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { programService } from '../../services/programService';
 
 export default function ProgramList() {
@@ -15,18 +16,29 @@ export default function ProgramList() {
   }, []);
 
   return (
-    <div className="w-full relative bg-transparent">
+    <div className="w-full relative bg-transparent" id="galeri">
       <div className="relative w-full mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 md:max-w-full">
-        {items.map((item) => (
-          <a
-            key={item.id}
-            href={item.href}
-            target={item.target}
-            rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
-            title={item.judul_program}
-            aria-label={item.judul_program}
-            className="group relative w-full px-4 md:px-6 py-8 md:py-10 text-white h-[380px] md:h-[560px] block overflow-hidden"
-          >
+        {items.map((item) => {
+          const isExternal = item.href && item.href.startsWith('http');
+          const CardTag = isExternal ? 'a' : Link;
+          const linkProps = isExternal
+            ? {
+                href: item.href,
+                target: item.target || '_blank',
+                rel: 'noopener noreferrer',
+              }
+            : {
+                to: item.href || `/program/${item.slug}`,
+              };
+
+          return (
+            <CardTag
+              key={item.id}
+              {...linkProps}
+              title={item.judul_program}
+              aria-label={item.judul_program}
+              className="group relative w-full px-4 md:px-6 py-8 md:py-10 text-white h-[380px] md:h-[560px] block overflow-hidden cursor-pointer"
+            >
             {/* Background Image Container */}
             <div className="absolute w-full h-full overflow-hidden top-0 left-0 right-0 bottom-0 z-0">
               <picture>

@@ -27,6 +27,24 @@ export const programService = {
     }
   },
 
+  // Ambil detail program berdasarkan slug
+  async getProgramBySlug(slug) {
+    if (USE_MOCK) {
+      const found = mockShowcasePrograms.find((p) => p.slug === slug);
+      if (found) {
+        return {
+          success: true,
+          data: found,
+        };
+      }
+      // Jika tidak ditemukan langsung, gunakan item pertama sebagai fallback yang aman
+      return {
+        success: true,
+        data: mockShowcasePrograms[0],
+      };
+    }
+  },
+
   // Ambil kartu bantuan CSR
   async getCsrAidPrograms() {
     if (USE_MOCK) {
