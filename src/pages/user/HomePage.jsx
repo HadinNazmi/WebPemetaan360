@@ -15,11 +15,11 @@ export default function HomePage() {
       {/* 1. HEADER / NAVBAR PERTAMINA (Fixed Header - Selalu Tampil) */}
       <Navbar />
 
-      {/* 2. SECTION HERO / VIRTUAL TOUR 360 & TABS (Tampilan Asli Tetap Sama + Transisi Parallax GSAP) */}
+      {/* 2. SECTION HERO / VIRTUAL TOUR 360 & TABS (100vh Sesuai Standar Nature-GSAP & Referensi) */}
       <AnimatedSection id="hero" isHero={true}>
         <div style={{
-          paddingTop: '140px',
-          minHeight: '480px',
+          paddingTop: '100px',
+          minHeight: 'calc(100vh - 80px)',
           background: '#0f172a',
           color: '#64748b',
           display: 'flex',
@@ -27,24 +27,17 @@ export default function HomePage() {
           alignItems: 'center',
           justifyContent: 'center',
           borderBottom: '1px dashed #334151',
-          gap: '8px'
+          gap: '12px'
         }}>
-          <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#94a3b8' }}>
+          <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#94a3b8' }}>
             [ SECTION HERO / VIRTUAL TOUR 360 & TABS ]
           </div>
-          <div style={{ fontSize: '13px' }}>Posisi Scene 360 Panorama & Tab Pemilihan Wilayah</div>
+          <div style={{ fontSize: '14px' }}>Posisi Scene 360 Panorama & Tab Pemilihan Wilayah</div>
         </div>
       </AnimatedSection>
 
-      {/* 3. SECTION VISI & MISI CSR + SEKILAS PERTAMINA (Transisi Masuk Stagger Media & Konten) */}
-      <AnimatedSection
-        id="visi-misi"
-        staggerTarget=".energizing-media, .energizing-content, .banner-content"
-        stagger={0.15}
-        yOffset={75}
-      >
-        <VisiMisiSection />
-      </AnimatedSection>
+      {/* 3. SECTION VISI & MISI CSR + SEKILAS PERTAMINA (Masing-masing terhubung GSAP ScrollTrigger) */}
+      <VisiMisiSection />
 
       {/* 4. SECTION DIGITAL IMPACT / STATS (Transisi Masuk Stagger 4 Kolom Angka Siminah & Simon+) */}
       <AnimatedSection

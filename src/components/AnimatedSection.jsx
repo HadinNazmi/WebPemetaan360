@@ -7,23 +7,23 @@ gsap.registerPlugin(ScrollTrigger);
 
 /**
  * AnimatedSection:
- * Mengadopsi prinsip animasi transisi dari referensi nature-gsap untuk SEMUA section:
- * 1. Scrubbing 2 arah mengikuti posisi scroll (scrub: 1)
- * 2. Parallax judul / header saat masuk viewport
- * 3. Staggered card reveal (translateY 80px -> 0, opacity 0 -> 1, stagger: 0.12s - 0.15s)
- * 4. Fade-in deskripsi dan tombol pelengkap
- * 5. Outgoing parallax & subtle fade saat berpindah antar-section
- * 6. Responsif mobile & ramah prefers-reduced-motion
- * 7. Mendukung konten dinamis (MutationObserver) agar kartu yang di-load async tetap teranimasi
+ * Sistem transisi scroll-driven sinematik mengadopsi standar referensi nature-gsap:
+ * 1. Hero Pinning dengan Parallax Lift & Darkening Fade (persis nature-gsap hero)
+ * 2. Scrubbing 2 arah responsif terhadap scrollbar (scrub: 1.2)
+ * 3. Staggered Card Entrance dengan Scale (0.92 -> 1), Blur Halus, dan TranslateY (100px -> 0)
+ * 4. Parallax Heading & Badge yang mendahului kartu
+ * 5. Outgoing Softening & Parallax saat berganti section
+ * 6. Kompatibel penuh dengan prefers-reduced-motion & mobile
+ * 7. MutationObserver otomatis untuk data yang di-fetch secara async
  */
 export default function AnimatedSection({
   children,
   className = '',
   id,
   staggerTarget,
-  stagger = 0.14,
-  scrub = 1,
-  yOffset = 70,
+  stagger = 0.16,
+  scrub = 1.2,
+  yOffset = 95,
   parallax = true,
   isHero = false,
 }) {
@@ -36,7 +36,7 @@ export default function AnimatedSection({
     const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (isReduced) {
       if (domRef.current) {
-        gsap.set(domRef.current, { opacity: 1, y: 0 });
+        gsap.set(domRef.current, { opacity: 1, y: 0, scale: 1, filter: 'none' });
       }
       return;
     }
@@ -45,8 +45,9 @@ export default function AnimatedSection({
     if (!element) return;
 
     const isMobile = window.innerWidth <= 768;
-    const effectiveY = isMobile ? Math.min(yOffset, 32) : yOffset;
-    const effectiveStagger = isMobile ? stagger * 0.65 : stagger;
+    const effectiveY = isMobile ? Math.min(yOffset, 40) : yOffset;
+    const effectiveStagger = isMobile ? stagger * 0.6 : stagger;
+    const initialScale = isMobile ? 0.96 : 0.92;
 
     let ctx = null;
 
@@ -54,30 +55,51 @@ export default function AnimatedSection({
       if (ctx) ctx.revert();
 
       ctx = gsap.context(() => {
-        // === A. SECTION HERO (Hanya Outgoing Transition saat scroll ke bawah) ===
+        // =========================================================================
+        // A. SECTION HERO (PINNING + PARALLAX LIFT DUA ARAH PERSIS NATURE-GSAP)
+        // =========================================================================
         if (isHero) {
-          gsap.to(element, {
+          const heroInner = element.firstElementChild || element;
+          const heroTl = gsap.timeline({
             scrollTrigger: {
               trigger: element,
               start: 'top top',
-              end: 'bottom top',
-              scrub: scrub === true ? 1 : scrub,
+              end: '+=70%',
+              scrub: scrub === true ? 1.2 : scrub,
+              pin: true,
+              anticipatePin: 1,
               invalidateOnRefresh: true,
             },
-            y: isMobile ? -35 : -70,
-            opacity: 0.15,
-            ease: 'power2.out',
+            defaults: {
+              ease: 'power2.out',
+            },
           });
+
+          // Konten teks hero meluncur naik dengan parallax dan fade out
+          heroTl.to(heroInner.children, {
+            y: isMobile ? -50 : -110,
+            opacity: 0,
+            stagger: 0.08,
+            duration: 1.0,
+          }, 0)
+          // Background hero meredup perlahan
+          .to(heroInner, {
+            backgroundColor: '#040810',
+            duration: 1.0,
+          }, 0);
+
           return;
         }
 
-        // === B. INCOMING TRANSITION UNTUK SEMUA SECTION (Persis nature-gsap) ===
+        // =========================================================================
+        // B. INCOMING TRANSITION UNTUK SETIAP SECTION (PERSIS KARTU W-E-S-T)
+        // =========================================================================
         const enterTl = gsap.timeline({
           scrollTrigger: {
             trigger: element,
-            start: 'top 92%',
-            end: 'top 30%',
-            scrub: scrub === true ? 1 : scrub,
+            start: 'top 86%',
+            end: 'top 20%',
+            scrub: scrub === true ? 1.2 : scrub,
             invalidateOnRefresh: true,
           },
           defaults: {
@@ -85,28 +107,28 @@ export default function AnimatedSection({
           },
         });
 
-        // 1. Container section fade-in & translate halus
+        // 1. Container section meluncur naik & memudar masuk
         enterTl.fromTo(
           element,
-          { opacity: 0.1, y: effectiveY * 0.7 },
+          { opacity: 0.15, y: effectiveY * 0.35 },
           { opacity: 1, y: 0, duration: 0.8 },
           0
         );
 
-        // 2. Parallax Judul & Eyebrow Badge
+        // 2. Parallax Judul & Eyebrow Badge (Bergerak mendahului kartu)
         if (parallax) {
-          const headers = element.querySelectorAll('h2, .eyebrow, .banner-eyebrow, .stat-badge, .csr-aid-badge, .news-top-bar');
+          const headers = element.querySelectorAll('h2, .eyebrow, .banner-eyebrow, .stat-badge, .csr-aid-badge, .news-top-bar, .stat-main-title');
           if (headers.length > 0) {
             enterTl.fromTo(
               headers,
-              { y: effectiveY * 0.6, opacity: 0.2 },
-              { y: 0, opacity: 1, duration: 0.7, stagger: 0.06 },
+              { y: effectiveY * 0.65, opacity: 0 },
+              { y: 0, opacity: 1, duration: 0.75, stagger: 0.08 },
               0.05
             );
           }
         }
 
-        // 3. Staggered Cards Entrance (Persis 4 kartu WEST di nature-gsap: translateY 80px -> 0, opacity 0 -> 1)
+        // 3. Staggered Cards Entrance (Scale + Blur + TranslateY + Stagger khas GSAP!)
         let cards = [];
         if (staggerTarget) {
           cards = element.querySelectorAll(staggerTarget);
@@ -119,35 +141,49 @@ export default function AnimatedSection({
         if (cards.length > 0) {
           enterTl.fromTo(
             cards,
-            { y: effectiveY, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.9, stagger: effectiveStagger },
-            0.12
+            {
+              y: effectiveY,
+              opacity: 0,
+              scale: initialScale,
+              filter: isMobile ? 'none' : 'blur(4px)',
+              transformOrigin: '50% 100%',
+            },
+            {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              filter: 'blur(0px)',
+              duration: 1.0,
+              stagger: effectiveStagger,
+            },
+            0.15
           );
         }
 
-        // 4. Paragraf Deskripsi & Tombol Aksi fade-in setelah kartu
-        const subItems = element.querySelectorAll('.stat-main-desc, .banner-desc, .banner-actions, .news-category-pills, .btn-more, .slider-nav-btn');
+        // 4. Paragraf Deskripsi & Tombol Aksi fade-in halus setelah kartu muncul
+        const subItems = element.querySelectorAll('.stat-main-desc, .banner-desc, .banner-actions, .news-category-pills, .btn-more, .slider-nav-btn, .stat-unit');
         if (subItems.length > 0) {
           enterTl.fromTo(
             subItems,
-            { y: isMobile ? 10 : 20, opacity: 0.2 },
-            { opacity: 1, y: 0, duration: 0.55 },
+            { y: isMobile ? 12 : 24, opacity: 0 },
+            { opacity: 1, y: 0, duration: 0.6 },
             '>-0.12'
           );
         }
 
-        // === C. OUTGOING TRANSITION (Transisi Halus Menuju Section Berikutnya) ===
-        // Saat user scroll melewati section ini menuju section selanjutnya,
-        // konten bergerak naik dengan subtle parallax & softening
+        // =========================================================================
+        // C. OUTGOING TRANSITION (PARALLAX KELUAR MENUJU SECTION SELANJUTNYA)
+        // =========================================================================
         gsap.to(element, {
           scrollTrigger: {
             trigger: element,
-            start: 'bottom 72%',
-            end: 'bottom 15%',
-            scrub: scrub === true ? 1 : scrub,
+            start: 'bottom 35%',
+            end: 'bottom top',
+            scrub: scrub === true ? 1.2 : scrub,
             invalidateOnRefresh: true,
           },
-          y: isMobile ? -20 : -45,
+          y: isMobile ? -25 : -55,
+          scale: isMobile ? 0.98 : 0.96,
           opacity: 0.35,
           ease: 'power2.out',
         });
@@ -155,11 +191,11 @@ export default function AnimatedSection({
       }, domRef);
     };
 
-    // Jalankan build awal
+    // Build timeline awal
     initAnimation();
 
-    // Pantau perubahan DOM (MutationObserver) agar kartu yang di-fetch secara async
-    // (misal Stats, ProgramList, CsrAid, News) langsung otomatis terdeteksi & teranimasi
+    // Pantau perubahan DOM via MutationObserver agar data kartu async (Stats, Slider, Berita)
+    // otomatis terikat dengan GSAP timeline begitu di-render oleh React
     let debounceTimer = null;
     const observer = new MutationObserver(() => {
       clearTimeout(debounceTimer);
