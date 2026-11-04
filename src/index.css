@@ -1,1 +1,33 @@
 @import "tailwindcss";
+
+/* ===== SCROLL-DRIVEN BIDIRECTIONAL ANIMATION ===== */
+.scroll-section {
+  opacity: 0.2;
+  transform: translateY(28px);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+/* Saat section aktif di viewport (dua arah: scroll ke bawah maupun scroll balik ke atas) */
+.scroll-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Optimasi mobile agar transisi lebih cepat & halus tanpa lagging */
+@media (max-width: 768px) {
+  .scroll-section {
+    transform: translateY(16px);
+    transition-duration: 0.45s;
+  }
+}
+
+/* Hormati preferensi pengguna prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-section {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
