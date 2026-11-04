@@ -1,0 +1,214 @@
+/* ===== SECTION SHOWCASE SLIDER 10 FOTO HORIZONTAL DARI REFERENSI ===== */
+.sec-showcase-slider {
+  position: relative;
+  width: 100%;
+  background: #000000;
+  overflow: hidden;
+  font-family: 'Montserrat', "Segoe UI", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+.slider-outer {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+.slider-track {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 0 !important;
+  width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  cursor: grab;
+  user-select: none;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+}
+.slider-track::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+.slider-track.is-dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+}
+.slider-card {
+  flex: 0 0 25% !important;
+  min-width: 25% !important;
+  max-width: 25% !important;
+  width: 25% !important;
+  height: 520px;
+  position: relative;
+  overflow: hidden;
+  scroll-snap-align: start;
+  border: none !important;
+  outline: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  cursor: pointer;
+  box-sizing: border-box;
+  background: #111111;
+  display: block;
+}
+.slider-card-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1);
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.slider-card:hover .slider-card-img {
+  transform: scale(1.06);
+}
+.slider-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.52) 42%, rgba(0, 0, 0, 0.08) 75%, transparent 100%);
+  pointer-events: none;
+  transition: background 0.3s ease;
+}
+.slider-card:hover .slider-card-overlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.96) 0%, rgba(0, 0, 0, 0.6) 46%, rgba(0, 0, 0, 0.15) 80%, transparent 100%);
+}
+.slider-card-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 30px 28px 36px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+.slider-card-cat {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 8px;
+}
+.slider-card-title {
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.32;
+  color: #ffffff;
+  margin: 0 0 22px 0;
+  letter-spacing: -0.2px;
+}
+.slider-card-btn {
+  pointer-events: auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: pointer;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+.slider-card-btn svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  transition: transform 0.25s ease;
+}
+.slider-card:hover .slider-card-btn,
+.slider-card-btn:hover {
+  background: #e4002b;
+  border-color: #e4002b;
+  color: #ffffff;
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(228, 0, 43, 0.45);
+}
+.slider-card-btn:active {
+  transform: scale(0.92);
+}
+
+/* Navigasi Panah Slider Melayang */
+.slider-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+.slider-nav-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  fill: none;
+}
+.slider-nav-btn:hover {
+  background: #e4002b;
+  border-color: #e4002b;
+  transform: translateY(-50%) scale(1.08);
+}
+.slider-nav-prev { left: 18px; }
+.slider-nav-next { right: 18px; }
+
+@media (max-width: 1100px) {
+  .slider-card {
+    flex: 0 0 33.333% !important;
+    min-width: 33.333% !important;
+    max-width: 33.333% !important;
+    width: 33.333% !important;
+  }
+}
+@media (max-width: 650px) {
+  .slider-card {
+    flex: 0 0 85% !important;
+    min-width: 85% !important;
+    max-width: 85% !important;
+    width: 85% !important;
+    height: 440px;
+  }
+  .slider-card-content {
+    padding: 24px 20px 28px;
+  }
+  .slider-card-title {
+    font-size: 18px;
+  }
+}

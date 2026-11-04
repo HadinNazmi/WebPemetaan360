@@ -8,10 +8,9 @@ export default function Footer() {
         {/* Brand Atas: Logo Pertamina & Alamat Resmi */}
         <div className="footer-center-brand">
           <img
-            src="/images/Pertamina_Logo.svg"
+            src="/images/Pertamina_Logo_Dark.svg"
             alt="Pertamina"
             className="footer-center-logo"
-            style={{ filter: 'invert(1) hue-rotate(180deg)' }}
           />
           <p className="footer-info-line">
             <strong>Address:</strong> Grha Pertamina, Jl. Medan Merdeka Timur No.11–13, Jakarta 10110 Indonesia
@@ -126,4 +125,3 @@ export default function Footer() {
     </footer>
   );
 }
-
