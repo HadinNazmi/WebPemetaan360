@@ -1,48 +1,86 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { programService } from '../services/programService';
+import { getFullImageUrl } from '../utils/imageUrl';
 import './VisiMisiSection.css';
 
 const PLACEHOLDER_IMG = 'https://www.pertamina.com/file/files/2025/05/publikasi-laporan-tahunan-hero-alt.webp';
 
 export default function VisiMisiSection() {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadVisiMisi() {
+      try {
+        const res = await programService.getVisiMisi();
+        if (res?.success && res?.data) {
+          setData(res.data);
+        }
+      } catch (err) {
+        console.error('Gagal memuat visi misi dari database:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadVisiMisi();
+  }, []);
+
+  const logoSrc = data?.logo_url ? getFullImageUrl(data.logo_url) : '/image/logocsr.jpeg';
+
   return (
     <>
-      {/* 1. SEKSI VISI & MISI CSR (sec-energizing) */}
-      <section className="sec-energizing" id="visi-misi">
-        <div className="wrap-content">
-          <div className="energizing-grid">
-            {/* Kolom Kiri: Logo Pertamina Patra Niaga CSR */}
-            <div className="energizing-media">
-              <img
-                src="/image/logocsr.jpeg"
-                alt="Logo CSR PT Pertamina Patra Niaga"
-                className="energizing-art"
-                onError={(e) => {
-                  e.currentTarget.src = PLACEHOLDER_IMG;
-                }}
-              />
-            </div>
+      {/* 1. SEKSI VISI & MISI CSR (sec-energizing) - MURNI DINAMIS DARI DATABASE */}
+      {(!data && !loading) ? null : (
+        <section className="sec-energizing" id="visi-misi">
+          <div className="wrap-content">
+            <div className="energizing-grid">
+              {/* Kolom Kiri: Logo Pertamina Patra Niaga CSR */}
+              <div className="energizing-media">
+                <img
+                  src={logoSrc}
+                  alt={data?.judul_utama || 'Logo CSR PT Pertamina Patra Niaga'}
+                  className="energizing-art"
+                  onError={(e) => {
+                    e.currentTarget.src = PLACEHOLDER_IMG;
+                  }}
+                />
+              </div>
 
-            {/* Kolom Kanan: Teks Visi & Misi */}
-            <div className="energizing-content">
-              <span className="eyebrow">VISI &amp; MISI CSR</span>
-              <h2>Komitmen Keberlanjutan &amp; Pemberdayaan Masyarakat</h2>
-              <p>
-                Sebagai wujud nyata Tanggung Jawab Sosial dan Lingkungan (TJSL), PT Pertamina Patra Niaga senantiasa berkontribusi aktif dalam meningkatkan kualitas hidup masyarakat serta menjaga kelestarian lingkungan hidup secara berkelanjutan.
-              </p>
-              <p>
-                <strong>Visi:</strong> Menjadi pelopor terdepan dalam pemberdayaan masyarakat dan pelestarian lingkungan yang berkelanjutan, guna mendorong kemandirian energi dan pertumbuhan ekonomi masyarakat yang inklusif.
-              </p>
-              <p>
-                <strong>Misi:</strong> Menjalankan program pemberdayaan ekonomi melalui pengembangan UMKM dan penguatan potensi lokal, melestarikan keanekaragaman hayati dan ekosistem pesisir, serta meningkatkan kualitas hidup masyarakat sekitar melalui pemenuhan fasilitas air bersih, kesehatan, dan pendidikan berkelanjutan.
-              </p>
-              <a href="#galeri" className="btn-more">
-                <span>Selengkapnya</span>
-                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </a>
+              {/* Kolom Kanan: Teks Visi & Misi Dinamis */}
+              <div className="energizing-content">
+                <span className="eyebrow">{data?.eyebrow || 'VISI & MISI CSR'}</span>
+                <h2>{data?.judul_utama || 'Komitmen Keberlanjutan & Pemberdayaan Masyarakat'}</h2>
+
+                {data?.deskripsi_pengantar && (
+                  <p>{data.deskripsi_pengantar}</p>
+                )}
+
+                {data?.visi && (
+                  <p>
+                    <strong>Visi:</strong> {data.visi}
+                  </p>
+                )}
+
+                {data?.misi && (
+                  <div className="space-y-1">
+                    <p>
+                      <strong>Misi:</strong>
+                    </p>
+                    <div className="whitespace-pre-line text-slate-700 leading-relaxed pl-1">
+                      {data.misi}
+                    </div>
+                  </div>
+                )}
+
+                <a href={data?.url_selengkapnya || '#galeri'} className="btn-more">
+                  <span>Selengkapnya</span>
+                  <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* 2. SEKSI SEKILAS PERTAMINA (sec-about-banner) */}
       <section

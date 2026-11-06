@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { adminService } from '../../services/adminService';
+import AdminImagePicker from '../../components/admin/AdminImagePicker';
 
 export default function HeroVisiMisiPage() {
   const [formData, setFormData] = useState({
@@ -203,20 +204,13 @@ export default function HeroVisiMisiPage() {
         </div>
 
         {/* URL Logo & Tautan Selengkapnya */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-slate-100">
-          <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-              URL Logo / Ilustrasi
-            </label>
-            <input
-              type="text"
-              name="logo_url"
-              value={formData.logo_url}
-              onChange={handleChange}
-              placeholder="https://... / path logo"
-              className="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#00529C] transition"
-            />
-          </div>
+        <div className="pt-2 border-t border-slate-100 flex flex-col gap-4">
+          <AdminImagePicker
+            label="Logo / Ilustrasi Hero"
+            value={formData.logo_url}
+            onChange={(val) => setFormData((prev) => ({ ...prev, logo_url: val }))}
+            folder="hero"
+          />
           <div>
             <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
               Tautan Selengkapnya

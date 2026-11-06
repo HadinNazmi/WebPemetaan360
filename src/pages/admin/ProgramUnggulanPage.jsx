@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { adminService } from '../../services/adminService';
 import AdminModal from '../../components/admin/AdminModal';
+import AdminImagePicker from '../../components/admin/AdminImagePicker';
+import { getFullImageUrl } from '../../utils/imageUrl';
 
 export default function ProgramUnggulanPage() {
   const [programs, setPrograms] = useState([]);
@@ -164,7 +166,7 @@ export default function ProgramUnggulanPage() {
                     </td>
                     <td className="py-3.5 px-4">
                       <img
-                        src={item.gambar_cover}
+                        src={getFullImageUrl(item.gambar_cover)}
                         alt={item.nama_program}
                         className="w-14 h-10 object-cover rounded-lg border border-slate-200 shadow-2xs"
                         onError={(e) => {
@@ -294,19 +296,13 @@ export default function ProgramUnggulanPage() {
             </div>
           </div>
 
-          <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-              URL Gambar Cover / Banner *
-            </label>
-            <input
-              type="text"
-              required
-              value={formState.gambar_cover}
-              onChange={(e) => setFormState({ ...formState, gambar_cover: e.target.value })}
-              placeholder="https://... / path file cover"
-              className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-[#00529C] outline-none"
-            />
-          </div>
+          <AdminImagePicker
+            label="Foto Cover / Banner Program *"
+            value={formState.gambar_cover}
+            onChange={(val) => setFormState({ ...formState, gambar_cover: val })}
+            folder="program"
+            helperText="Rasio ideal landscape 16:9 atau 4:3 (Maks. 10MB)"
+          />
 
           <div>
             <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">

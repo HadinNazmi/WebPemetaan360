@@ -1,9 +1,11 @@
 import { apiClient } from './api';
+import { getFullImageUrl } from '../utils/imageUrl';
 
 const DEFAULT_HERO_IMAGE = 'https://www.pertamina.com/file/files/2025/05/publikasi-laporan-tahunan-hero-alt.webp';
 
 function normalizeProgram(p) {
   if (!p) return null;
+  const imageSource = getFullImageUrl(p.gambar_cover) || DEFAULT_HERO_IMAGE;
   return {
     id: p.id,
     slug: p.slug,
@@ -11,8 +13,8 @@ function normalizeProgram(p) {
     target: p.link_eksternal ? '_blank' : '_self',
     judul_program: p.nama_program || p.judul_program,
     kategori: p.pilar_kategori || p.kategori,
-    banner: p.gambar_cover || p.banner || DEFAULT_HERO_IMAGE,
-    fallbackImg: p.gambar_cover || p.banner || DEFAULT_HERO_IMAGE,
+    banner: imageSource,
+    fallbackImg: imageSource,
     page_title: p.nama_program || p.page_title,
     sub_title: p.pilar_kategori || p.sub_title,
     konten_lengkap: p.deskripsi_lengkap || p.konten_lengkap || '',
@@ -96,7 +98,7 @@ export const programService = {
         id: b.id,
         title: b.judul_bantuan || b.title,
         desc: b.penjelasan_bantuan || b.desc,
-        gambar_cover: b.gambar_cover || DEFAULT_HERO_IMAGE,
+        gambar_cover: getFullImageUrl(b.gambar_cover) || DEFAULT_HERO_IMAGE,
       }));
 
       return { success: true, data: normalized };
@@ -120,7 +122,7 @@ export const programService = {
         kategori_filter: 'all',
         judul: a.judul_artikel || a.judul,
         slug: a.slug || `artikel-${a.id}`,
-        gambar: a.gambar_cover || a.gambar || DEFAULT_HERO_IMAGE,
+        gambar: getFullImageUrl(a.gambar_cover) || DEFAULT_HERO_IMAGE,
         fallbackImg: DEFAULT_HERO_IMAGE,
         published_at: a.tanggal_publikasi
           ? new Date(a.tanggal_publikasi).toLocaleDateString('id-ID', {

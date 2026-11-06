@@ -61,6 +61,9 @@ Route::prefix('v1')->group(function () {
         Route::get('/users', [AdminContentController::class, 'getUsers']);
         Route::post('/users', [AdminContentController::class, 'storeUser']);
         Route::delete('/users/{id}', [AdminContentController::class, 'deleteUser']);
+
+        // 7. Upload Media (Standar Shared Hosting)
+        Route::post('/upload', [AdminContentController::class, 'uploadImage']);
     });
 });
 

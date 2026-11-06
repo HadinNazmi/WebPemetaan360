@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { adminService } from '../../services/adminService';
 import AdminModal from '../../components/admin/AdminModal';
+import AdminImagePicker from '../../components/admin/AdminImagePicker';
+import { getFullImageUrl } from '../../utils/imageUrl';
 
 export default function PublikasiPage() {
   const [articles, setArticles] = useState([]);
@@ -170,7 +172,7 @@ export default function PublikasiPage() {
                   <tr key={item.id} className="hover:bg-slate-50/50 transition">
                     <td className="py-3.5 px-4">
                       <img
-                        src={item.gambar_cover}
+                        src={getFullImageUrl(item.gambar_cover)}
                         alt={item.judul_artikel}
                         className="w-16 h-10 object-cover rounded-lg border border-slate-200 shadow-2xs"
                         onError={(e) => {
@@ -304,19 +306,13 @@ export default function PublikasiPage() {
             </div>
           </div>
 
-          <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-              URL Gambar Cover / Thumbnail *
-            </label>
-            <input
-              type="text"
-              required
-              value={formState.gambar_cover}
-              onChange={(e) => setFormState({ ...formState, gambar_cover: e.target.value })}
-              placeholder="https://... / path cover foto berita"
-              className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-[#00529C] outline-none"
-            />
-          </div>
+          <AdminImagePicker
+            label="Foto Cover / Thumbnail Berita *"
+            value={formState.gambar_cover}
+            onChange={(val) => setFormState({ ...formState, gambar_cover: val })}
+            folder="artikel"
+            helperText="Rasio ideal landscape 16:9 (Maks. 10MB)"
+          />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>

@@ -69,7 +69,7 @@ export default function AdminSidebar() {
         </div>
         <div className="mt-1">
           <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-50 text-[#00529C] tracking-wide border border-blue-100">
-            Pertamina x Politeknik Caltex Riau
+            Pertamina
           </span>
         </div>
       </div>

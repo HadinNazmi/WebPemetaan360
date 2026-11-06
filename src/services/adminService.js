@@ -102,6 +102,19 @@ export const adminService = {
     const res = await apiClient.delete(`/admin/users/${id}`);
     return res.data;
   },
+
+  // 8. Upload File Gambar Lokal (Standar Shared Hosting)
+  async uploadImage(file, folder = 'general') {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('folder', folder);
+    const res = await apiClient.post('/admin/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return res.data;
+  },
 };
 
 export default adminService;

@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\VisiMisiCsr;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -429,6 +430,43 @@ class AdminContentController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Pengguna admin berhasil dihapus.',
+        ]);
+    }
+
+    // ==========================================
+    // 8. UPLOAD MEDIA (STANDAR SHARED HOSTING)
+    // ==========================================
+    public function uploadImage(Request $request): JsonResponse
+    {
+        $request->validate([
+            'file' => 'required|file|image|mimes:jpeg,png,jpg,webp,svg,gif|max:10240', // maks 10MB
+            'folder' => 'nullable|string|alpha_dash|max:50',
+        ]);
+
+        $file = $request->file('file');
+        $folder = $request->input('folder', 'general');
+
+        $targetDir = public_path('uploads/'.$folder);
+        if (! File::isDirectory($targetDir)) {
+            File::makeDirectory($targetDir, 0755, true, true);
+        }
+
+        $extension = $file->getClientOriginalExtension() ?: 'jpg';
+        $safeName = time().'_'.Str::random(8).'.'.$extension;
+
+        $file->move($targetDir, $safeName);
+
+        $relativePath = '/uploads/'.$folder.'/'.$safeName;
+        $fullUrl = url($relativePath);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Foto berhasil diunggah.',
+            'data' => [
+                'path' => $relativePath,
+                'url' => $fullUrl,
+                'filename' => $safeName,
+            ],
         ]);
     }
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { adminService } from '../../services/adminService';
 import AdminModal from '../../components/admin/AdminModal';
+import AdminImagePicker from '../../components/admin/AdminImagePicker';
 
 export default function PenyaluranBantuanPage() {
   const [bantuanList, setBantuanList] = useState([]);
@@ -239,6 +240,13 @@ export default function PenyaluranBantuanPage() {
               className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-[#00529C] outline-none"
             />
           </div>
+
+          <AdminImagePicker
+            label="Foto / Ilustrasi Bantuan (Opsional)"
+            value={formState.gambar_cover}
+            onChange={(val) => setFormState({ ...formState, gambar_cover: val })}
+            folder="bantuan"
+          />
 
           <div className="flex items-center gap-2 pt-2">
             <input
