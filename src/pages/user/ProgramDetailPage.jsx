@@ -98,29 +98,6 @@ export default function ProgramDetailPage() {
       {/* 3. Main Two-Column Layout */}
       <main className="flex-1">
         <DetailLayout
-          content={
-            <div className="space-y-6">
-              {/* Back to Home pill */}
-              <div>
-                <Link
-                  to="/"
-                  className="inline-flex items-center gap-2 text-xs font-semibold text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-full transition"
-                >
-                  <ArrowLeft size={14} /> Kembali ke Beranda
-                </Link>
-              </div>
-
-              {/* Rich text body dari database */}
-              {program.konten_lengkap ? (
-                <div
-                  className="prose prose-slate max-w-none text-slate-700 leading-relaxed [&>p]:mb-4 [&>h3]:text-xl [&>h3]:font-bold [&>h3]:text-slate-900 [&>h3]:mt-6 [&>h3]:mb-3"
-                  dangerouslySetInnerHTML={{ __html: program.konten_lengkap }}
-                />
-              ) : (
-                <p className="text-slate-500 italic">Belum ada rincian deskripsi untuk program ini.</p>
-              )}
-            </div>
-          }
           sidebar={
             <div className="space-y-6">
               {/* Widget Tabel Metadata Program */}
@@ -139,7 +116,29 @@ export default function ProgramDetailPage() {
               />
             </div>
           }
-        />
+        >
+          <div className="space-y-6">
+            {/* Back to Home pill */}
+            <div>
+              <Link
+                to="/"
+                className="inline-flex items-center gap-2 text-xs font-semibold text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-full transition"
+              >
+                <ArrowLeft size={14} /> Kembali ke Beranda
+              </Link>
+            </div>
+
+            {/* Rich text body dari database */}
+            {program.konten_lengkap ? (
+              <div
+                className="prose prose-slate max-w-none text-slate-700 leading-relaxed break-words whitespace-pre-line [&>p]:mb-4 [&>h3]:text-xl [&>h3]:font-bold [&>h3]:text-slate-900 [&>h3]:mt-6 [&>h3]:mb-3"
+                dangerouslySetInnerHTML={{ __html: program.konten_lengkap }}
+              />
+            ) : (
+              <p className="text-slate-500 italic">Belum ada rincian deskripsi untuk program ini.</p>
+            )}
+          </div>
+        </DetailLayout>
       </main>
 
       {/* 4. Footer Portal */}
