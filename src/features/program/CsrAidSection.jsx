@@ -6,34 +6,50 @@ const PLACEHOLDER_IMG = 'https://www.pertamina.com/file/files/2025/05/publikasi-
 
 export default function CsrAidSection() {
   const [items, setItems] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(0);
   const trackRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
-  const dragInfo = useRef({ isDown: false, startX: 0, scrollLeft: 0 });
+  const dragInfo = useRef({ isDown: false, startX: 0, scrollLeft: 0, moved: false });
 
   useEffect(() => {
     async function loadCsrAid() {
       const res = await programService.getCsrAidPrograms();
-      if (res.success) {
+      if (res && res.success) {
         setItems(res.data);
       }
     }
     loadCsrAid();
   }, []);
 
-  const slidePrev = () => {
-    if (!trackRef.current) return;
+  // Geser ke kartu berikutnya & ubah foto di kiri
+  const slideNext = () => {
+    if (!trackRef.current || items.length === 0) return;
+    const nextIdx = (activeIndex + 1) % items.length;
+    setActiveIndex(nextIdx);
     const cardWidth = trackRef.current.querySelector('.csr-aid-card')?.offsetWidth || 270;
-    trackRef.current.scrollBy({ left: -(cardWidth + 20), behavior: 'smooth' });
+    trackRef.current.scrollTo({ left: nextIdx * (cardWidth + 20), behavior: 'smooth' });
   };
 
-  const slideNext = () => {
-    if (!trackRef.current) return;
+  // Geser ke kartu sebelumnya & ubah foto di kiri
+  const slidePrev = () => {
+    if (!trackRef.current || items.length === 0) return;
+    const prevIdx = (activeIndex - 1 + items.length) % items.length;
+    setActiveIndex(prevIdx);
     const cardWidth = trackRef.current.querySelector('.csr-aid-card')?.offsetWidth || 270;
-    trackRef.current.scrollBy({ left: cardWidth + 20, behavior: 'smooth' });
+    trackRef.current.scrollTo({ left: prevIdx * (cardWidth + 20), behavior: 'smooth' });
+  };
+
+  // Klik kartu untuk memilih langsung
+  const handleCardClick = (idx) => {
+    if (dragInfo.current.moved) return;
+    setActiveIndex(idx);
+    const cardWidth = trackRef.current.querySelector('.csr-aid-card')?.offsetWidth || 270;
+    trackRef.current.scrollTo({ left: idx * (cardWidth + 20), behavior: 'smooth' });
   };
 
   const handleMouseDown = (e) => {
     dragInfo.current.isDown = true;
+    dragInfo.current.moved = false;
     dragInfo.current.startX = e.pageX - trackRef.current.offsetLeft;
     dragInfo.current.scrollLeft = trackRef.current.scrollLeft;
     setIsDragging(true);
@@ -44,6 +60,9 @@ export default function CsrAidSection() {
     e.preventDefault();
     const x = e.pageX - trackRef.current.offsetLeft;
     const walk = (x - dragInfo.current.startX) * 1.3;
+    if (Math.abs(walk) > 4) {
+      dragInfo.current.moved = true;
+    }
     trackRef.current.scrollLeft = dragInfo.current.scrollLeft - walk;
   };
 
@@ -72,18 +91,22 @@ export default function CsrAidSection() {
           </div>
         </div>
 
-        {/* Body: Foto Tim di Kiri & Kartu Bantuan di Kanan */}
+        {/* Body: Foto Utama Dinamis di Kiri & Kartu Bantuan di Kanan */}
         <div className="csr-aid-body">
-          {/* Foto Tim Lapangan CSR */}
+          {/* Foto di Kiri: Berganti otomatis saat tombol panah / kartu diklik */}
           <div className="csr-aid-photo-wrap">
-            <img
-              src="/image/pertamina-csr-team.jpg"
-              alt="Tim Lapangan CSR Pertamina"
-              className="csr-aid-photo"
-              onError={(e) => {
-                e.currentTarget.src = PLACEHOLDER_IMG;
-              }}
-            />
+            {items.map((item, idx) => (
+              <img
+                key={item.id}
+                src={item.gambar_cover}
+                alt={item.title}
+                className={`csr-aid-photo ${idx === activeIndex ? 'is-active' : ''}`}
+                loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.src = PLACEHOLDER_IMG;
+                }}
+              />
+            ))}
           </div>
 
           {/* Carousel Kartu Penyaluran Bantuan */}
@@ -102,18 +125,30 @@ export default function CsrAidSection() {
                   Belum ada data penyaluran bantuan di database.
                 </div>
               ) : (
-                items.map((item) => (
-                  <div key={item.id} className="csr-aid-card">
-                    <div className="csr-aid-card-top">
-                      <h3 className="csr-card-title">{item.title}</h3>
-                      <div className="csr-card-line"></div>
-                      <p className="csr-card-desc">{item.desc}</p>
+                items.map((item, idx) => {
+                  const isActive = idx === activeIndex;
+                  return (
+                    <div
+                      key={item.id}
+                      className={`csr-aid-card ${isActive ? 'is-active' : ''}`}
+                      onClick={() => handleCardClick(idx)}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') handleCardClick(idx);
+                      }}
+                    >
+                      <div className="csr-aid-card-top">
+                        <h3 className="csr-card-title">{item.title}</h3>
+                        <div className="csr-card-line"></div>
+                        <p className="csr-card-desc">{item.desc}</p>
+                      </div>
+                      <div className="csr-card-arrow">
+                        <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H9M17 7V15"/></svg>
+                      </div>
                     </div>
-                    <div className="csr-card-arrow">
-                      <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H9M17 7V15"/></svg>
-                    </div>
-                  </div>
-                ))
+                  );
+                })
               )}
             </div>
 

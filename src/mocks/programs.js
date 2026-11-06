@@ -1,6 +1,6 @@
-// Mock data program CSR sesuai PRD Bagian 2.5
-// Menggunakan URL placeholder yang diberikan user
+// Mock data Program CSR Showcase Slider
 const DEFAULT_HERO_IMAGE = 'https://www.pertamina.com/file/files/2025/05/publikasi-laporan-tahunan-hero-alt.webp';
+const PLACEHOLDER_IMG = DEFAULT_HERO_IMAGE;
 
 export const mockShowcasePrograms = [
   {
@@ -8,8 +8,11 @@ export const mockShowcasePrograms = [
     slug: 'ppid',
     href: '/program/ppid',
     target: '_self',
+    title: 'Layanan Informasi Publik (PPID)',
     judul_program: 'Layanan Informasi Publik (PPID)',
+    category: 'PROFIL PPID',
     kategori: 'PROFIL PPID',
+    img: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80',
     banner: 'https://www.pertamina.com/file/files/2025/05/banner-ppid.webp',
     fallbackImg: DEFAULT_HERO_IMAGE,
     page_title: 'PPID',
@@ -22,23 +25,7 @@ export const mockShowcasePrograms = [
         <li><strong>Vice President Corporate Communication PT Pertamina (Persero)</strong> sebagai Pejabat Pengelola Informasi dan Dokumentasi (PPID)</li>
         <li><strong>Manager Media Communication PT Pertamina (Persero)</strong> sebagai PPID Pelaksana</li>
       </ol>
-      <p>Sebagai Badan Publik, Pertamina berkomitmen terhadap keterbukaan informasi publik, mengacu kepada Peraturan Komisi Informasi Pusat RI No. 1 Tahun 2021 Tentang Standard Layanan Informasi Publik. Dalam pelaksanaannya, Pertamina telah terintegrasi dengan PPID seluruh Subholding dan Anak Perusahaan Pertamina Group, sesuai keputusan pimpinan tertinggi Badan Publik Pertamina. Diantaranya PPID Subholding PT Pertamina Hulu Energi, PT Pertamina International Shipping, PT Kilang Pertamina Internasional, PT Pertamina Power Indonesia, PT Pertamina Gas Negara, PT Pertamina Patra Niaga dan anak perusahaan services Pertamina.</p>
-      
-      <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">Daftar Informasi Publik</h3>
-      <div class="space-y-4">
-        <div>
-          <h4 class="font-bold text-slate-900 text-sm">Informasi Wajib Diumumkan Berkala</h4>
-          <p class="text-slate-600 text-sm mt-1">Informasi wajib diumumkan berkala merupakan Informasi Publik yang wajib diumumkan secara rutin, teratur dan dalam jangka waktu tertentu.</p>
-        </div>
-        <div>
-          <h4 class="font-bold text-slate-900 text-sm">Informasi Wajib Diumumkan Serta Merta</h4>
-          <p class="text-slate-600 text-sm mt-1">Informasi wajib diumumkan serta merta merupakan informasi publik yang wajib diumumkan secara spontan pada saat itu juga, yang bila tidak diumumkan akan mengancam hajat hidup orang banyak dan ketertiban umum.</p>
-        </div>
-        <div>
-          <h4 class="font-bold text-slate-900 text-sm">Informasi Wajib Tersedia Setiap Saat</h4>
-          <p class="text-slate-600 text-sm mt-1">Informasi wajib tersedia setiap saat merupakan informasi yang bersifat terbuka, dan wajib disediakan ketika ada permintaan.</p>
-        </div>
-      </div>
+      <p>Sebagai Badan Publik, Pertamina berkomitmen terhadap keterbukaan informasi publik, mengacu kepada Peraturan Komisi Informasi Pusat RI No. 1 Tahun 2021 Tentang Standard Layanan Informasi Publik. Dalam pelaksanaannya, Pertamina telah terintegrasi dengan PPID seluruh Subholding dan Anak Perusahaan Pertamina Group.</p>
     `,
     metadata: [
       {
@@ -64,34 +51,39 @@ export const mockShowcasePrograms = [
   },
   {
     id: 2,
-    slug: 'harga-bbm',
-    href: 'https://mypertamina.id/about/product-price',
-    target: '_blank',
+    slug: 'harga-bbm-pertamina',
+    href: '/program/harga-bbm-pertamina',
+    target: '_self',
+    title: 'Harga BBM Pertamina',
     judul_program: 'Harga BBM Pertamina',
+    category: 'INFORMASI',
     kategori: 'INFORMASI',
-    banner: 'https://www.pertamina.com/file/files/2025/05/banner-bbm.webp',
-    fallbackImg: DEFAULT_HERO_IMAGE,
+    img: 'https://images.unsplash.com/photo-1545459720-aac8509eb02c?auto=format&fit=crop&w=800&q=80',
+    banner: 'https://images.unsplash.com/photo-1545459720-aac8509eb02c?auto=format&fit=crop&w=800&q=80',
+    fallbackImg: PLACEHOLDER_IMG,
+    page_title: 'Harga BBM Pertamina',
+    sub_title: 'Informasi Penyesuaian Harga',
+    konten_lengkap: '<p>Informasi berkala mengenai penyesuaian harga bahan bakar minyak nonsubsidi.</p>',
+    metadata: [
+      { label: 'Hotline', value: '135', isPhone: true },
+    ],
   },
   {
     id: 3,
     slug: 'tata-kelola-perseroan',
     href: '/program/tata-kelola-perseroan',
     target: '_self',
+    title: 'Tata Kelola Perseroan',
     judul_program: 'Tata Kelola Perseroan',
+    category: 'GCG',
     kategori: 'GCG',
+    img: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80',
     banner: 'https://www.pertamina.com/file/files/2025/05/banner-gcg.webp',
     fallbackImg: DEFAULT_HERO_IMAGE,
     page_title: 'Tata Kelola Perseroan',
     sub_title: 'Good Corporate Governance (GCG)',
     konten_lengkap: `
       <p>PT Pertamina Patra Niaga berkomitmen menerapkan prinsip-prinsip Good Corporate Governance (GCG) yaitu Transparansi, Akuntabilitas, Responsibilitas, Independensi, dan Kewajaran dalam setiap proses bisnis dan pengambilan keputusan operasional.</p>
-      <p>Penerapan tata kelola yang kuat menjadi landasan bagi perseroan dalam menjaga integritas, memperkuat kepatuhan terhadap perundang-undangan, serta memaksimalkan nilai tambah jangka panjang bagi pemangku kepentingan.</p>
-      <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">Pilar Utama Tata Kelola</h3>
-      <ul class="list-disc pl-5 space-y-2 text-slate-700">
-        <li>Sistem Manajemen Anti Penyuapan (SMAP) berbasis ISO 37001</li>
-        <li>Kepatuhan Pelaporan LHKPN Pejabat Wajib Lapor</li>
-        <li>Whistleblowing System (WBS) yang terintegrasi dan aman</li>
-      </ul>
     `,
     metadata: [
       {
@@ -103,11 +95,6 @@ export const mockShowcasePrograms = [
         value: 'pertaminaclean@pertamina.com',
         isEmail: true,
       },
-      {
-        label: 'Website WBS',
-        value: 'https://pertaminaclean.tipoffs.info',
-        href: 'https://pertaminaclean.tipoffs.info',
-      },
     ],
   },
   {
@@ -115,81 +102,62 @@ export const mockShowcasePrograms = [
     slug: 'program-mundam',
     href: '/program/program-mundam',
     target: '_self',
+    title: 'Program Kampung Mundam Berdikari',
     judul_program: 'Program Kampung Mundam Berdikari',
+    category: 'PEMBERDAYAAN CSR',
     kategori: 'PEMBERDAYAAN CSR',
+    img: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80',
     banner: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80',
     fallbackImg: DEFAULT_HERO_IMAGE,
     page_title: 'Program Kampung Mundam',
     sub_title: 'Pemberdayaan Masyarakat & Ekonomi Sirkular',
     konten_lengkap: `
-      <p>Program Kampung Mundam Berdikari merupakan program Tanggung Jawab Sosial dan Lingkungan (TJSL) unggulan PT Pertamina Patra Niaga yang berfokus pada kemandirian ekonomi masyarakat pesisir melalui budidaya perikanan, pengolahan hasil mangrove, dan integrasi sirkularitas minyak jelantah.</p>
-      <p>Program ini berhasil menggerakkan puluhan kelompok usaha bersama nelayan dan kelompok wanita tani, meningkatkan taraf pendapatan keluarga hingga 35%, serta memulihkan ekosistem pesisir seluas 12 hektar.</p>
-      <h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">Fokus Kegiatan & Capaian</h3>
-      <ol class="list-decimal pl-5 space-y-2 text-slate-700">
-        <li><strong>Pengembangan UMKM Olahan Pesisir:</strong> Pelatihan pengolahan sirup mangrove dan keripik ikan dengan legalitas P-IRT dan Sertifikasi Halal.</li>
-        <li><strong>Bank Jelantah Komunitas:</strong> Edukasi pengumpulan minyak jelantah rumah tangga yang ditukar menjadi saldo tabungan emas dan sembako.</li>
-        <li><strong>Fasilitas Air Bersih Mandiri:</strong> Pemasangan instalasi desalinasi dan filter air bersih berbasis panel surya ramah lingkungan.</li>
-      </ol>
+      <p>Program Kampung Mundam Berdikari merupakan program Tanggung Jawab Sosial dan Lingkungan (TJSL) unggulan PT Pertamina Patra Niaga yang berfokus pada kemandirian ekonomi masyarakat pesisir.</p>
     `,
     metadata: [
       {
         label: 'Lokasi Wilayah',
         value: 'Kelurahan Mundam, Kecamatan Medang Kampai, Kota Dumai, Riau',
       },
-      {
-        label: 'Kelompok Sasaran',
-        value: 'Kelompok Tani Pesisir Berdikari & Kelompok Wanita Nelayan Mandiri',
-      },
-      {
-        label: 'Kontak Officer CSR',
-        value: 'csr.dumai@pertaminapatraniaga.com',
-        isEmail: true,
-      },
-      {
-        label: 'Hotline Layanan',
-        value: '135',
-        isPhone: true,
-      },
     ],
   },
 ];
-
 
 export const mockCsrAidPrograms = [
   {
     id: 1,
     title: 'Bantuan Pendidikan',
     desc: 'Penyaluran beasiswa berprestasi, renovasi ruang kelas sekolah dasar, serta pengadaan buku literasi dan perangkat komputer di wilayah sekitar operasi.',
-    gambar_cover: DEFAULT_HERO_IMAGE,
+    gambar_cover: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 2,
     title: 'Bantuan Kesehatan',
     desc: 'Layanan pengobatan gratis keliling, program penurunan stunting anak usia dini, dan pemberian makanan tambahan gizi seimbang serta sarana posyandu.',
-    gambar_cover: DEFAULT_HERO_IMAGE,
+    gambar_cover: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 3,
     title: 'Sarana Air Bersih (APO)',
     desc: 'Pembangunan instalasi filtrasi air bersih, pengeboran sumur air tawar, serta jaringan pipa mandiri bagi ratusan kepala keluarga pesisir.',
-    gambar_cover: DEFAULT_HERO_IMAGE,
+    gambar_cover: 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 4,
     title: 'Pemberdayaan UMKM',
     desc: 'Bantuan alat produksi bagi kelompok usaha wanita nelayan, pendampingan sertifikasi halal dan izin edar, serta akses pameran produk lokal.',
-    gambar_cover: DEFAULT_HERO_IMAGE,
+    gambar_cover: 'https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 5,
     title: 'Pelestarian Mangrove',
     desc: 'Penyaluran bibit mangrove unggul, pembuatan tanggul pemecah ombak ramah lingkungan, dan sarana penunjang kelompok tani hutan mangrove pesisir.',
-    gambar_cover: DEFAULT_HERO_IMAGE,
+    gambar_cover: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&q=80',
   },
   {
     id: 6,
     title: 'Tanggap Bencana & Sembako',
     desc: 'Distribusi bantuan sembako berkala untuk masyarakat pra-sejahtera dan respon cepat tanggap darurat logistik bagi wilayah terdampak musibah.',
-    gambar_cover: DEFAULT_HERO_IMAGE,
+    gambar_cover: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1200&q=80',
   },
 ];
