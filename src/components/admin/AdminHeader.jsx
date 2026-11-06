@@ -53,11 +53,7 @@ export default function AdminHeader() {
             </button>
           </div>
 
-          {/* Badge Instansi Mitra */}
-          <div className="hidden md:flex items-center px-3 py-1 rounded-full bg-slate-100 border border-slate-200">
-            <span className="text-xs font-semibold text-[#00529C]">Politeknik Caltex Riau</span>
-          </div>
-
+          
           {/* User Profile Info */}
           <div className="flex items-center gap-3 pl-3 border-l border-slate-200">
             <div className="w-8 h-8 rounded-full bg-[#00529C] text-white flex items-center justify-center font-bold text-xs shadow-sm">
