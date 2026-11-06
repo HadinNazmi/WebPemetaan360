@@ -80,7 +80,7 @@ export default function HeroVisiMisiPage() {
     <div className="flex flex-col gap-6 pb-12 max-w-4xl">
       {/* Header Halaman */}
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 font-['Plus_Jakarta_Sans']">
+        <h1 className="text-2xl font-bold text-slate-900">
           Kelola Hero &amp; Visi Misi
         </h1>
         <p className="text-sm text-slate-500 mt-1">

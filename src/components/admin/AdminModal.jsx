@@ -18,7 +18,7 @@ export default function AdminModal({ isOpen, onClose, title, children, maxWidth 
       >
         {/* Modal Header */}
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-          <h3 className="text-base font-bold text-slate-800 font-['Plus_Jakarta_Sans']">{title}</h3>
+          <h3 className="text-base font-bold text-slate-800">{title}</h3>
           <button
             type="button"
             onClick={onClose}

@@ -6,7 +6,7 @@ export default function AdminStatCard({ title, value, icon, badge, badgeColor = 
       <div className="flex items-start justify-between">
         <div className="flex flex-col">
           <span className="text-xs text-slate-500 font-medium">{title}</span>
-          <span className="text-xl font-bold text-slate-900 mt-1 font-['Plus_Jakarta_Sans']">
+          <span className="text-xl font-bold text-slate-900 mt-1">
             {value}
           </span>
         </div>

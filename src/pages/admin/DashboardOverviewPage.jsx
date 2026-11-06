@@ -37,7 +37,7 @@ export default function DashboardOverviewPage() {
       {/* 1. Header Ringkasan */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex flex-col">
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight font-['Plus_Jakarta_Sans']">
+          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
             Ringkasan Dashboard
           </h1>
           <p className="text-sm text-slate-500 mt-1">
@@ -105,7 +105,7 @@ export default function DashboardOverviewPage() {
           <div>
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
               <div>
-                <h2 className="text-base font-bold text-slate-900 font-['Plus_Jakarta_Sans']">
+                <h2 className="text-base font-bold text-slate-900">
                   Metrik Dampak (SiMinah &amp; Simon+) Overview
                 </h2>
                 <p className="text-xs text-slate-500 mt-0.5">
@@ -181,7 +181,7 @@ export default function DashboardOverviewPage() {
         {/* Right Column: Shortcut Aksi Cepat Modul Beranda */}
         <div className="lg:col-span-4 bg-white rounded-xl p-6 border border-slate-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.02)] flex flex-col justify-between">
           <div>
-            <h2 className="text-base font-bold text-slate-900 font-['Plus_Jakarta_Sans'] pb-1">
+            <h2 className="text-base font-bold text-slate-900 pb-1">
               Kelola Per Section
             </h2>
             <p className="text-xs text-slate-500 mb-4">Pintasan langsung untuk mengubah isi halaman web</p>

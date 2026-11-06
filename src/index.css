@@ -1,5 +1,26 @@
 @import "tailwindcss";
 
+/* ===== LOCAL MONTSERRAT FONT (public/font) ===== */
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/font/Montserrat-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/font/Montserrat-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+.font-montserrat {
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
 /* ===== SCROLL-DRIVEN BIDIRECTIONAL ANIMATION ===== */
 .scroll-section {
   opacity: 0.2;

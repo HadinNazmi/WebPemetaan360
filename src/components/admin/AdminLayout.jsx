@@ -5,7 +5,7 @@ import AdminHeader from './AdminHeader';
 
 export default function AdminLayout() {
   return (
-    <div className="min-h-screen bg-[#F8FAFC] font-['Inter',sans-serif] text-slate-800">
+    <div className="min-h-screen bg-[#F8FAFC] font-['Montserrat',sans-serif] text-slate-800">
       {/* 1. Sidebar Navigasi Kiri (Tetap / Preserved) */}
       <AdminSidebar />
 
