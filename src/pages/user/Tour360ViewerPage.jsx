@@ -262,13 +262,9 @@ export default function Tour360ViewerPage() {
 
             {/* Identitas Kawasan Binaan */}
             <div className="px-4 py-2 rounded-xl bg-slate-900/85 backdrop-blur-md border border-slate-700/80 shadow-lg flex flex-col">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-bold text-amber-400 uppercase tracking-wider">
-                  {wilayah.nama_wilayah}
-                </span>
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                <span className="text-[11px] text-slate-300">Live 360°</span>
-              </div>
+              <span className="text-xs font-bold text-amber-400 uppercase tracking-wider">
+                {wilayah.nama_wilayah}
+              </span>
               <span className="text-sm font-bold text-white leading-tight mt-0.5">
                 {activeScene?.nama_scene}
               </span>

@@ -159,8 +159,8 @@ export default function DashboardOverviewPage() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6 p-4 bg-slate-50 rounded-xl border border-slate-100">
               <div className="flex flex-col">
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Status Database</span>
-                <span className="text-sm font-bold text-green-600 mt-1 flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-green-500"></span> Terhubung MySQL
+                <span className="text-sm font-bold text-slate-700 mt-1 flex items-center gap-1">
+                  Terhubung MySQL
                 </span>
                 <span className="text-[11px] text-slate-400 mt-0.5">Port 3306</span>
               </div>

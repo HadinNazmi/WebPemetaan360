@@ -239,17 +239,12 @@ export default function TourWilayahPage() {
                     <td className="py-3.5 px-4 text-center">
                       <button
                         onClick={() => handleToggleActive(item)}
-                        className={`inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-0.5 rounded-full cursor-pointer transition ${
+                        className={`inline-flex items-center text-[11px] font-semibold px-2.5 py-0.5 rounded-full cursor-pointer transition ${
                           item.is_active
                             ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200'
                             : 'bg-slate-100 text-slate-500 hover:bg-slate-200 border border-slate-200'
                         }`}
                       >
-                        <span
-                          className={`w-1.5 h-1.5 rounded-full ${
-                            item.is_active ? 'bg-emerald-500' : 'bg-slate-400'
-                          }`}
-                        ></span>
                         <span>{item.is_active ? 'Aktif' : 'Draft'}</span>
                       </button>
                     </td>
