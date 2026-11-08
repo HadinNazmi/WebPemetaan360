@@ -397,3 +397,4 @@ class Tour360AdminController extends Controller
         ]);
     }
 }
+

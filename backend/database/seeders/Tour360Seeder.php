@@ -122,3 +122,4 @@ class Tour360Seeder extends Seeder
         );
     }
 }
+

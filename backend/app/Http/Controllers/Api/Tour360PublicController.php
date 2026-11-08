@@ -63,3 +63,4 @@ class Tour360PublicController extends Controller
         ]);
     }
 }
+

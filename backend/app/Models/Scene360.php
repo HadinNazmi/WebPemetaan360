@@ -52,3 +52,4 @@ class Scene360 extends Model
         return $this->hasMany(Hotspot360::class, 'scene_id');
     }
 }
+

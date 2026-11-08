@@ -48,3 +48,4 @@ class Wilayah360 extends Model
         return $this->belongsTo(Scene360::class, 'initial_scene_id');
     }
 }
+

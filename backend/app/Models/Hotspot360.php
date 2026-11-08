@@ -62,3 +62,4 @@ class Hotspot360 extends Model
         return $this->belongsTo(ProgramCsr::class, 'program_id');
     }
 }
+
