@@ -95,3 +95,4 @@ export async function optimizeImageForWeb(file, options = {}) {
     reader.readAsDataURL(file);
   });
 }
+

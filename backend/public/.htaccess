@@ -32,3 +32,12 @@
     php_value max_execution_time 300
     php_value max_input_time 300
 </IfModule>
+
+# Izinkan CORS untuk File Gambar & Media Statis (Wajib untuk WebGL / Pannellum 360)
+<IfModule mod_headers.c>
+    <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|mp4|webm)$">
+        Header set Access-Control-Allow-Origin "*"
+        Header set Access-Control-Allow-Methods "GET, OPTIONS"
+        Header set Access-Control-Allow-Headers "*"
+    </FilesMatch>
+</IfModule>
