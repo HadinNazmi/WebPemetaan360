@@ -17,9 +17,19 @@ export default function HomePage() {
       <Navbar />
 
       {/* 2. SECTION HERO / VIRTUAL TOUR 360 & TABS */}
-      <AnimatedSection id="hero" isHero={true}>
+      {/* 
+        [CATATAN UNUSED - KODE ASLI TEMAN DIPERTAHANKAN]:
+        Animasi GSAP pinning, parallax scrub, dan fade abu-abu pada hero dinonaktifkan (unused)
+        agar tampilan Hero Section langsung 'plong', jernih, dan terang tanpa penutup abu-abu.
+        Kode asli pembungkus AnimatedSection tetap disimpan di bawah ini (jangan dihapus):
+
+        <AnimatedSection id="hero" isHero={true}>
+          <HeroTourSection />
+        </AnimatedSection>
+      */}
+      <section id="hero" className="w-full relative">
         <HeroTourSection />
-      </AnimatedSection>
+      </section>
 
       {/* 3. SECTION VISI & MISI CSR + SEKILAS PERTAMINA (Masing-masing terhubung GSAP ScrollTrigger) */}
       <VisiMisiSection />

@@ -30,6 +30,14 @@
   will-change: opacity, transform;
 }
 
+/* Hero section langsung tampil plong 100% tanpa delay transisi atau penutup abu-abu */
+#hero,
+#hero.scroll-section,
+.scroll-section:first-of-type {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
 /* Saat section aktif di viewport (dua arah: scroll ke bawah maupun scroll balik ke atas) */
 .scroll-section.is-visible {
   opacity: 1;

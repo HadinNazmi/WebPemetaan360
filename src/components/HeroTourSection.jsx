@@ -31,16 +31,17 @@ export default function HeroTourSection() {
     : 'https://www.pertamina.com/file/files/2025/05/publikasi-laporan-tahunan-hero-alt.webp';
 
   return (
-    <div className="relative min-h-[90vh] md:min-h-screen bg-slate-950 text-white flex flex-col justify-between overflow-hidden font-['Montserrat',sans-serif]">
-      {/* Background Cover Image dengan Ambient Dark Overlay */}
+    <div className="relative min-h-[90vh] md:min-h-screen bg-slate-900 text-white flex flex-col justify-between overflow-hidden font-['Montserrat',sans-serif]">
+      {/* Background Cover Image Jernih (Plong) dengan Gradient Halus Saja */}
       <div className="absolute inset-0 z-0">
         <img
           src={coverUrl}
           alt={selectedWilayah?.nama_wilayah || 'Kawasan Binaan CSR'}
-          className="w-full h-full object-cover opacity-35 scale-105 transition-all duration-700 filter brightness-90"
+          className="w-full h-full object-cover object-center transition-all duration-700"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/80"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,82,156,0.18)_0%,transparent_70%)]"></div>
+        {/* Gradient halus dari kiri ke kanan agar teks terbaca jelas dan foto tetap terang plong */}
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/45 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-black/20"></div>
       </div>
 
       {/* Konten Hero Utama */}
@@ -125,3 +126,4 @@ export default function HeroTourSection() {
     </div>
   );
 }
+

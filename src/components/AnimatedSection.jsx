@@ -59,6 +59,12 @@ export default function AnimatedSection({
         // A. SECTION HERO (PINNING + PARALLAX LIFT DUA ARAH PERSIS NATURE-GSAP)
         // =========================================================================
         if (isHero) {
+          // [UNUSED - KODE ASLI TEMAN DIPERTAHANKAN]:
+          // Efek pinning, parallax scrub, dan darkening hero dinonaktifkan agar hero tampil 'plong' tanpa abu-abu
+          gsap.set(element, { opacity: 1, y: 0, scale: 1, clearProps: 'all' });
+          return;
+
+          /* KODE ASLI TEMAN (DISIMPAN AGAR TIDAK HILANG):
           const heroInner = element.firstElementChild || element;
           const heroTl = gsap.timeline({
             scrollTrigger: {
@@ -89,6 +95,7 @@ export default function AnimatedSection({
           }, 0);
 
           return;
+          */
         }
 
         // =========================================================================
@@ -215,7 +222,11 @@ export default function AnimatedSection({
   }, [staggerTarget, stagger, scrub, yOffset, parallax, isHero]);
 
   return (
-    <div ref={domRef} id={id} className={`scroll-section ${className}`}>
+    <div
+      ref={domRef}
+      id={id}
+      className={`scroll-section ${isHero ? '!opacity-100 !transform-none !transition-none' : ''} ${className}`}
+    >
       {children}
     </div>
   );
