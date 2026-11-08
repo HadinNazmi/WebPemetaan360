@@ -19,6 +19,8 @@ Route::prefix('v1')->group(function () {
     // Endpoint per modul / seksi publik
     Route::get('/visi-misi', [PublicContentController::class, 'getVisiMisi']);
     Route::get('/metrik-dampak', [PublicContentController::class, 'getMetrikDampak']);
+    Route::get('/sistem-csr', [PublicContentController::class, 'getSistemList']);
+    Route::get('/sistem-csr/{slug}', [PublicContentController::class, 'getSistemDetail']);
     Route::get('/program', [PublicContentController::class, 'getProgram']);
     Route::get('/program/{slug}', [PublicContentController::class, 'getProgramDetail']);
     Route::get('/bantuan', [PublicContentController::class, 'getBantuan']);
@@ -40,11 +42,13 @@ Route::prefix('v1')->group(function () {
         Route::get('/visi-misi', [AdminContentController::class, 'getVisiMisi']);
         Route::post('/visi-misi', [AdminContentController::class, 'updateVisiMisi']);
 
-        // 2. Metrik Dampak Digital
+        // 2. Metrik Dampak Digital & Profil Sistem CSR
         Route::get('/metrik-dampak', [AdminContentController::class, 'getMetrikDampak']);
         Route::post('/metrik-dampak', [AdminContentController::class, 'storeMetrikDampak']);
         Route::put('/metrik-dampak/{id}', [AdminContentController::class, 'updateMetrikDampak']);
         Route::delete('/metrik-dampak/{id}', [AdminContentController::class, 'deleteMetrikDampak']);
+        Route::get('/sistem-csr', [AdminContentController::class, 'getSistemCsr']);
+        Route::put('/sistem-csr/{id}', [AdminContentController::class, 'updateSistemCsr']);
 
         // 3. Program Unggulan CSR
         Route::get('/program', [AdminContentController::class, 'getPrograms']);

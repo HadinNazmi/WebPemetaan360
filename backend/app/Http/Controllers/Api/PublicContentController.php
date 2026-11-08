@@ -128,6 +128,51 @@ class PublicContentController extends Controller
     }
 
     /**
+     * Mengambil daftar Sistem CSR (SiMinah & Simon+).
+     */
+    public function getSistemList(): JsonResponse
+    {
+        $sistem = SistemCsr::where('is_active', true)
+            ->orderBy('urutan', 'asc')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $sistem,
+        ]);
+    }
+
+    /**
+     * Mengambil detail satu Sistem CSR berdasarkan kode_sistem / slug.
+     */
+    public function getSistemDetail(string $slug): JsonResponse
+    {
+        $kode = $slug === 'simonplus' ? 'simon_plus' : $slug;
+
+        $sistem = SistemCsr::with(['metrik' => function ($q) {
+            $q->where('is_active', true)->orderBy('urutan', 'asc');
+        }])
+        ->where(function ($q) use ($slug, $kode) {
+            $q->where('kode_sistem', $slug)
+              ->orWhere('kode_sistem', $kode);
+        })
+        ->where('is_active', true)
+        ->first();
+
+        if (! $sistem) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Sistem CSR tidak ditemukan.',
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $sistem,
+        ]);
+    }
+
+    /**
      * Endpoint agregasi seluruh data beranda dalam 1 request (mengoptimalkan loading frontend).
      */
     public function getHomeBundle(): JsonResponse

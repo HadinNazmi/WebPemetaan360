@@ -162,6 +162,45 @@ class AdminContentController extends Controller
     }
 
     // ==========================================
+    // 3B. KELOLA PROFIL SISTEM CSR (SIMINAH / SIMON+)
+    // ==========================================
+    public function getSistemCsr(): JsonResponse
+    {
+        $sistem = SistemCsr::with('metrik')->orderBy('urutan')->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $sistem,
+        ]);
+    }
+
+    public function updateSistemCsr(Request $request, $id): JsonResponse
+    {
+        $sistem = SistemCsr::findOrFail($id);
+
+        $validated = $request->validate([
+            'nama_sistem' => 'required|string|max:150',
+            'badge_label' => 'nullable|string|max:100',
+            'deskripsi' => 'nullable|string',
+            'gambar_cover' => 'nullable|string|max:255',
+            'deskripsi_lengkap' => 'nullable|string',
+            'url_portal' => 'nullable|string|max:500',
+            'fitur_keunggulan' => 'nullable|array',
+            'logo_url' => 'nullable|string|max:255',
+            'api_base_url' => 'nullable|string|max:255',
+            'is_active' => 'boolean',
+        ]);
+
+        $sistem->update($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Profil Sistem CSR berhasil diperbarui.',
+            'data' => $sistem,
+        ]);
+    }
+
+    // ==========================================
     // 4. PROGRAM UNGGULAN CSR
     // ==========================================
     public function getPrograms(): JsonResponse

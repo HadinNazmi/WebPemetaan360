@@ -4,18 +4,18 @@ import { NavLink } from 'react-router-dom';
 const navItemsLanding = [
   {
     to: '/admin/hero-visi-misi',
-    label: 'Hero & Visi Misi',
-    icon: 'view_headline',
-  },
-  {
-    to: '/admin/metrik-dampak',
-    label: 'Metrik Dampak (SiMinah/Simon+)',
-    icon: 'monitoring',
+    label: 'Tentang & Visi Misi',
+    icon: 'info',
   },
   {
     to: '/admin/program',
     label: 'Program Unggulan CSR',
     icon: 'verified',
+  },
+  {
+    to: '/admin/metrik-dampak',
+    label: 'Sistem CSR & Metrik',
+    icon: 'layers',
   },
   {
     to: '/admin/bantuan',

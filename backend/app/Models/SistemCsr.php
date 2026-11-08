@@ -15,7 +15,13 @@ class SistemCsr extends Model
     protected $fillable = [
         'kode_sistem',
         'nama_sistem',
+        'badge_label',
         'deskripsi',
+        'gambar_cover',
+        'deskripsi_lengkap',
+        'url_portal',
+        'fitur_keunggulan',
+        'logo_url',
         'api_base_url',
         'api_token_key',
         'urutan',
@@ -25,6 +31,7 @@ class SistemCsr extends Model
     protected function casts(): array
     {
         return [
+            'fitur_keunggulan' => 'array',
             'urutan' => 'integer',
             'is_active' => 'boolean',
         ];

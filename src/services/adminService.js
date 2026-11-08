@@ -35,6 +35,16 @@ export const adminService = {
     return res.data;
   },
 
+  // 3B. Profil Sistem CSR (SiMinah & Simon+)
+  async getSistemCsr() {
+    const res = await apiClient.get('/admin/sistem-csr');
+    return res.data;
+  },
+  async updateSistemCsr(id, data) {
+    const res = await apiClient.put(`/admin/sistem-csr/${id}`, data);
+    return res.data;
+  },
+
   // 4. Program Unggulan CSR
   async getPrograms() {
     const res = await apiClient.get('/admin/program');

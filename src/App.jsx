@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import HomePage from './pages/user/HomePage.jsx';
 import ProgramDetailPage from './pages/user/ProgramDetailPage.jsx';
 import Tour360ViewerPage from './pages/user/Tour360ViewerPage.jsx';
+import TentangKamiPage from './pages/user/TentangKamiPage.jsx';
+import SistemDetailPage from './pages/user/SistemDetailPage.jsx';
 
 // Admin Layout & Pages
 import AdminLayout from './components/admin/AdminLayout.jsx';
@@ -25,7 +27,9 @@ function App() {
       <Routes>
         {/* Halaman Publik */}
         <Route path="/" element={<HomePage />} />
+        <Route path="/tentang-kami" element={<TentangKamiPage />} />
         <Route path="/program/:slug" element={<ProgramDetailPage />} />
+        <Route path="/sistem/:slug" element={<SistemDetailPage />} />
         <Route path="/ppid" element={<ProgramDetailPage />} />
         <Route path="/tour-360" element={<Tour360ViewerPage />} />
         <Route path="/tour-360/:slug" element={<Tour360ViewerPage />} />
