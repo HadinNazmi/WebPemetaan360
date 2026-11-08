@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\AdminContentController;
 use App\Http\Controllers\Api\PublicContentController;
+use App\Http\Controllers\Api\Tour360AdminController;
+use App\Http\Controllers\Api\Tour360PublicController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -64,6 +66,33 @@ Route::prefix('v1')->group(function () {
 
         // 7. Upload Media (Standar Shared Hosting)
         Route::post('/upload', [AdminContentController::class, 'uploadImage']);
+
+        // 8. Virtual Tour 360 Admin
+        Route::prefix('tour-360')->group(function () {
+            // Upload media khusus tour 360
+            Route::post('/upload', [Tour360AdminController::class, 'uploadMedia']);
+
+            // Master Wilayah
+            Route::get('/wilayah', [Tour360AdminController::class, 'listWilayah']);
+            Route::post('/wilayah', [Tour360AdminController::class, 'storeWilayah']);
+            Route::get('/wilayah/{id}', [Tour360AdminController::class, 'showWilayah']);
+            Route::put('/wilayah/{id}', [Tour360AdminController::class, 'updateWilayah']);
+            Route::delete('/wilayah/{id}', [Tour360AdminController::class, 'destroyWilayah']);
+
+            // Scene / Titik Panorama
+            Route::get('/wilayah/{wilayahId}/scenes', [Tour360AdminController::class, 'listScenes']);
+            Route::post('/wilayah/{wilayahId}/scenes', [Tour360AdminController::class, 'storeScene']);
+            Route::get('/scenes/{id}', [Tour360AdminController::class, 'showScene']);
+            Route::put('/scenes/{id}', [Tour360AdminController::class, 'updateScene']);
+            Route::delete('/scenes/{id}', [Tour360AdminController::class, 'destroyScene']);
+            Route::post('/scenes/{id}/set-initial', [Tour360AdminController::class, 'setInitialScene']);
+
+            // Hotspot Interaktif
+            Route::get('/scenes/{sceneId}/hotspots', [Tour360AdminController::class, 'listHotspots']);
+            Route::post('/scenes/{sceneId}/hotspots', [Tour360AdminController::class, 'storeHotspot']);
+            Route::put('/hotspots/{id}', [Tour360AdminController::class, 'updateHotspot']);
+            Route::delete('/hotspots/{id}', [Tour360AdminController::class, 'destroyHotspot']);
+        });
     });
 });
 
@@ -75,3 +104,5 @@ Route::get('/program', [PublicContentController::class, 'getProgram']);
 Route::get('/program/{slug}', [PublicContentController::class, 'getProgramDetail']);
 Route::get('/bantuan', [PublicContentController::class, 'getBantuan']);
 Route::get('/artikel', [PublicContentController::class, 'getArtikel']);
+Route::get('/tour-360', [Tour360PublicController::class, 'getWilayahList']);
+Route::get('/tour-360/{slug}', [Tour360PublicController::class, 'getTourDetail']);

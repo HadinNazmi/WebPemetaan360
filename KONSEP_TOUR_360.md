@@ -176,3 +176,4 @@ Untuk menghindari kerepotan mengetik derajat koordinat secara manual, dashboard 
 | **Fase 2: Admin Scene Manager** | UI Upload & Manajemen Titik | Halaman admin kelola wilayah dan upload foto panorama 360 ke folder lokal terisolasi |
 | **Fase 3: Admin Visual Editor** | WYSIWYG Hotspot Placement | Tool klik-langsung di layar 360 untuk membuat hotspot navigasi jalan dan hotspot kartu program |
 | **Fase 4: Portal Publik 360** | Frontend Viewer Interaktif | Komponen viewer 360 di web publik dengan transisi scene dan pop-up modal program CSR terintegrasi |
+
