@@ -8,13 +8,22 @@ const routeTitleMap = {
   '/admin/program': 'Program Unggulan CSR',
   '/admin/bantuan': 'Penyaluran Bantuan CSR',
   '/admin/artikel': 'Publikasi & Siaran Pers',
+  '/admin/tour-360': 'Master Wilayah Virtual Tour 360',
   '/admin/pengguna': 'Kelola Pengguna Admin',
   '/admin/pengaturan': 'Konfigurasi Umum Web',
 };
 
 export default function AdminHeader() {
   const location = useLocation();
-  const currentTitle = routeTitleMap[location.pathname] || 'Dashboard';
+  const getHeaderTitle = () => {
+    if (routeTitleMap[location.pathname]) return routeTitleMap[location.pathname];
+    if (location.pathname.includes('/tour-360') && location.pathname.includes('/scenes')) {
+      return 'Manajer Titik Panorama & Hotspot 360';
+    }
+    if (location.pathname.startsWith('/admin/tour-360')) return 'Virtual Tour 360';
+    return 'Dashboard';
+  };
+  const currentTitle = getHeaderTitle();
 
   return (
     <header className="fixed top-0 left-[260px] right-0 h-16 bg-white z-40 border-b border-slate-200 shadow-[0_1px_8px_rgba(0,0,0,0.03)]">

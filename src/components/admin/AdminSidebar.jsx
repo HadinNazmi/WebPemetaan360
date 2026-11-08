@@ -29,6 +29,14 @@ const navItemsLanding = [
   },
 ];
 
+const navItemsTour = [
+  {
+    to: '/admin/tour-360',
+    label: 'Wilayah & Titik 360',
+    icon: '360',
+  },
+];
+
 const navItemsSystem = [
   {
     to: '/admin/pengguna',
@@ -88,6 +96,21 @@ export default function AdminSidebar() {
           </span>
           <nav className="flex flex-col gap-1">
             {navItemsLanding.map((item) => (
+              <NavLink key={item.to} to={item.to} className={linkClass}>
+                <span className="material-symbols-outlined text-[20px]">{item.icon}</span>
+                <span className="truncate">{item.label}</span>
+              </NavLink>
+            ))}
+          </nav>
+        </div>
+
+        {/* Kelompok: Pemetaan & Tour 360 */}
+        <div className="flex flex-col gap-1">
+          <span className="px-3 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">
+            Pemetaan &amp; Tour 360
+          </span>
+          <nav className="flex flex-col gap-1">
+            {navItemsTour.map((item) => (
               <NavLink key={item.to} to={item.to} className={linkClass}>
                 <span className="material-symbols-outlined text-[20px]">{item.icon}</span>
                 <span className="truncate">{item.label}</span>
