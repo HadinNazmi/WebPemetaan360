@@ -8,6 +8,7 @@ import 'pannellum/build/pannellum.js';
 export default function HeroTourSection() {
   const [heroData, setHeroData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isPannellumLoaded, setIsPannellumLoaded] = useState(false);
   const [selectedPin, setSelectedPin] = useState(null);
 
   const viewerContainerRef = useRef(null);
@@ -44,6 +45,8 @@ export default function HeroTourSection() {
       viewerInstanceRef.current = null;
     }
 
+    setIsPannellumLoaded(false);
+
     const panoramaUrl =
       getFullImageUrl(heroData.foto_panorama) || 'https://pannellum.org/images/alma.jpg';
 
@@ -64,6 +67,8 @@ export default function HeroTourSection() {
       };
     });
 
+    let fallbackTimer;
+
     try {
       const viewer = window.pannellum.viewer(viewerContainerRef.current, {
         type: 'equirectangular',
@@ -81,12 +86,27 @@ export default function HeroTourSection() {
         hotSpots: formattedHotSpots,
       });
 
+      viewer.on('load', () => {
+        setIsPannellumLoaded(true);
+      });
+
+      if (viewer.isLoaded && viewer.isLoaded()) {
+        setIsPannellumLoaded(true);
+      }
+
+      // Fallback timer maksimal 12 detik agar loading tidak menggantung
+      fallbackTimer = setTimeout(() => {
+        setIsPannellumLoaded(true);
+      }, 12000);
+
       viewerInstanceRef.current = viewer;
     } catch (err) {
       console.error('Error inisialisasi Hero Pannellum:', err);
+      setIsPannellumLoaded(true);
     }
 
     return () => {
+      if (fallbackTimer) clearTimeout(fallbackTimer);
       if (viewerInstanceRef.current) {
         try {
           viewerInstanceRef.current.destroy();
@@ -118,6 +138,27 @@ export default function HeroTourSection() {
         ref={viewerContainerRef}
         className="w-full h-full cursor-grab active:cursor-grabbing"
       />
+
+      {/* Loading Overlay Ultra-Minimalis: Logo Pertamina Patra Niaga + Lingkaran Merah Berputar */}
+      <div
+        className={`absolute inset-0 z-30 flex flex-col items-center justify-center bg-slate-950 transition-opacity duration-700 select-none ${
+          isPannellumLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'
+        }`}
+      >
+        <div className="flex flex-col items-center justify-center gap-6">
+          {/* Logo Pertamina Patra Niaga Horizontal */}
+          <div className="p-4 px-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-2xl backdrop-blur-md">
+            <img
+              src="/images/Logo Pertamina Patra Niaga Horizontal.png"
+              alt="Pertamina Patra Niaga"
+              className="h-10 sm:h-12 w-auto object-contain"
+            />
+          </div>
+
+          {/* Lingkaran Merah Pertamina Berputar Halus */}
+          <div className="w-10 h-10 rounded-full border-[3.5px] border-slate-800 border-t-[#ED1C24] border-r-[#ED1C24] animate-spin"></div>
+        </div>
+      </div>
 
       {/* Informasi Bawah Kiri (Badge Pertamina Patra Niaga + Petunjuk Interaksi) */}
       <div className="absolute bottom-6 left-6 z-20 flex flex-col gap-2 pointer-events-none select-none">

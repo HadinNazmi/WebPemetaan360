@@ -168,3 +168,16 @@
   70% { box-shadow: 0 0 0 16px rgba(237, 28, 36, 0); }
   100% { box-shadow: 0 0 0 0 rgba(237, 28, 36, 0); }
 }
+
+/* 5. Custom Loading & Clean Backdrop untuk Pannellum 360 */
+.pnlm-container {
+  background: #020617 !important; /* Hilangkan jaring-jaring pola abu-abu bawaan */
+}
+
+.pnlm-load-box,
+.pnlm-lbox,
+.pnlm-lbar,
+.pnlm-load-button {
+  display: none !important; /* Sembunyikan loading abu-abu default Pannellum */
+}
+
