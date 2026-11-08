@@ -52,3 +52,78 @@
     transition: none !important;
   }
 }
+
+/* ===== VIRTUAL TOUR 360 HOTSPOTS STYLING ===== */
+.custom-hotspot-nav,
+.custom-hotspot-preview,
+.custom-hotspot-info {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  z-index: 10;
+}
+
+/* 1. Hotspot Navigasi Jalan (Mode 1) */
+.custom-hotspot-nav {
+  background: rgba(0, 82, 156, 0.88);
+  border: 2.5px solid #ffffff;
+  box-shadow: 0 0 0 4px rgba(0, 82, 156, 0.35), 0 4px 14px rgba(0, 0, 0, 0.4);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z'/%3E%3C/svg%3E");
+  background-size: 22px;
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: pulse-hotspot-nav 2.2s infinite;
+}
+
+/* 2. Hotspot Pop-up Dulu Baru Pindah (Mode 3) */
+.custom-hotspot-preview {
+  background: rgba(234, 88, 12, 0.9);
+  border: 2.5px solid #ffffff;
+  box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.35), 0 4px 14px rgba(0, 0, 0, 0.4);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z'/%3E%3C/svg%3E");
+  background-size: 22px;
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: pulse-hotspot-preview 2.2s infinite;
+}
+
+/* 3. Hotspot Info / Program CSR (Mode 2) */
+.custom-hotspot-info {
+  background: rgba(16, 185, 129, 0.9);
+  border: 2.5px solid #ffffff;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.35), 0 4px 14px rgba(0, 0, 0, 0.4);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'/%3E%3C/svg%3E");
+  background-size: 24px;
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: pulse-hotspot-info 2.2s infinite;
+}
+
+.custom-hotspot-nav:hover,
+.custom-hotspot-preview:hover,
+.custom-hotspot-info:hover {
+  transform: scale(1.22);
+}
+
+@keyframes pulse-hotspot-nav {
+  0% { box-shadow: 0 0 0 0 rgba(0, 82, 156, 0.6); }
+  70% { box-shadow: 0 0 0 14px rgba(0, 82, 156, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 82, 156, 0); }
+}
+
+@keyframes pulse-hotspot-preview {
+  0% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.6); }
+  70% { box-shadow: 0 0 0 14px rgba(234, 88, 12, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0); }
+}
+
+@keyframes pulse-hotspot-info {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
+  70% { box-shadow: 0 0 0 14px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}

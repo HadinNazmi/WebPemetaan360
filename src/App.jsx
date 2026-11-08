@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import HomePage from './pages/user/HomePage.jsx';
 import ProgramDetailPage from './pages/user/ProgramDetailPage.jsx';
+import Tour360ViewerPage from './pages/user/Tour360ViewerPage.jsx';
 
 // Admin Layout & Pages
 import AdminLayout from './components/admin/AdminLayout.jsx';
@@ -15,6 +16,7 @@ import PenggunaAdminPage from './pages/admin/PenggunaAdminPage.jsx';
 import KonfigurasiUmumPage from './pages/admin/KonfigurasiUmumPage.jsx';
 import TourWilayahPage from './pages/admin/TourWilayahPage.jsx';
 import TourScenesPage from './pages/admin/TourScenesPage.jsx';
+import TourSceneEditorPage from './pages/admin/TourSceneEditorPage.jsx';
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/program/:slug" element={<ProgramDetailPage />} />
         <Route path="/ppid" element={<ProgramDetailPage />} />
+        <Route path="/tour-360" element={<Tour360ViewerPage />} />
+        <Route path="/tour-360/:slug" element={<Tour360ViewerPage />} />
 
         {/* =========================================
             Dashboard Admin CMS (Nested Layout)
@@ -39,6 +43,7 @@ function App() {
           <Route path="artikel" element={<PublikasiPage />} />
           <Route path="tour-360" element={<TourWilayahPage />} />
           <Route path="tour-360/:wilayahId/scenes" element={<TourScenesPage />} />
+          <Route path="tour-360/:wilayahId/scenes/:sceneId/editor" element={<TourSceneEditorPage />} />
           <Route path="pengguna" element={<PenggunaAdminPage />} />
           <Route path="pengaturan" element={<KonfigurasiUmumPage />} />
         </Route>
