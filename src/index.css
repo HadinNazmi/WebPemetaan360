@@ -26,6 +26,25 @@
   font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
+/* Matikan HANYA gesture swipe navigasi ke samping (kiri & kanan) 2 jari touchpad. Scroll atas & bawah tetap normal lancar */
+html {
+  overscroll-behavior-x: none;
+  overscroll-behavior-y: auto;
+  overflow-x: hidden;
+}
+
+body {
+  overscroll-behavior-x: none;
+  overscroll-behavior-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.pnlm-container {
+  overscroll-behavior-x: contain;
+}
+
 html,
 body,
 #root,
@@ -50,13 +69,21 @@ div {
   font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* ===== SCROLL-DRIVEN BIDIRECTIONAL ANIMATION ===== */
+/* ===== SCROLL-DRIVEN BIDIRECTIONAL ANIMATION (UNUSED - KODE ASLI TEMAN DISIMPAN) ===== */
+/*
+  [KODE ASLI TEMAN DISIMPAN]:
+  .scroll-section {
+    opacity: 0.2;
+    transform: translateY(28px);
+    transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+*/
 .scroll-section {
-  opacity: 0.2;
-  transform: translateY(28px);
-  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
 }
 
 /* Hero section langsung tampil plong 100% tanpa delay transisi atau penutup abu-abu */

@@ -86,20 +86,24 @@
   transform: translateX(3px);
 }
 
-/* Grid Split: Foto Kiri & Kartu Kanan */
+/* Layout Foto Full ke Tepi Kiri Layar & Kartu Menimpa Sedikit */
 .csr-aid-body {
-  display: grid;
-  grid-template-columns: 460px 1fr;
-  gap: 32px;
-  align-items: stretch;
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  overflow: visible;
 }
 .csr-aid-photo-wrap {
   position: relative;
-  border-radius: 16px;
+  flex: 0 0 calc(max(0px, (100vw - 1280px) / 2) + 540px);
+  width: calc(max(0px, (100vw - 1280px) / 2) + 540px);
+  height: 480px;
+  border-radius: 0 20px 20px 0;
   overflow: hidden;
-  height: 440px;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.12);
   background: #0b1d33;
+  z-index: 1;
 }
 .csr-aid-photo {
   position: absolute;
@@ -118,49 +122,27 @@
   transform: scale(1);
   z-index: 2;
 }
-.csr-aid-photo-badge {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  z-index: 5;
-  background: rgba(0, 0, 0, 0.68);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  color: #ffffff;
-  padding: 8px 16px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.4px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-}
-.csr-aid-photo-badge .badge-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: #e4002b;
-  box-shadow: 0 0 8px #e4002b;
-}
 
-/* Carousel Kartu Kanan */
+/* Carousel Kartu Kanan (Menimpa sedikit bagian kanan foto) */
 .csr-aid-carousel-wrapper {
   position: relative;
+  flex: 1;
+  min-width: 0;
+  margin-left: -90px;
+  z-index: 10;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   overflow: hidden;
 }
 .csr-aid-track {
   display: flex;
-  gap: 20px;
+  align-items: flex-start;
+  gap: 24px;
   overflow-x: auto;
+  overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  padding: 10px 6px 20px;
+  padding: 16px 40px 24px 10px;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
   cursor: grab;
@@ -177,32 +159,41 @@
 
 /* Kartu Bantuan CSR */
 .csr-aid-card {
-  flex: 0 0 270px;
-  min-width: 270px;
-  height: 360px;
+  position: relative;
+  flex: 0 0 280px;
+  width: 280px;
+  min-width: 280px;
+  max-width: 280px;
+  height: 390px;
   background: #ffffff;
   border: 1px solid #e9ecef;
   border-radius: 14px;
-  padding: 34px 28px;
+  padding: 32px 26px 70px 26px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
   scroll-snap-align: start;
-  cursor: default;
+  cursor: pointer;
   box-sizing: border-box;
-  transition: all 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .csr-aid-card-top {
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 .csr-card-title {
-  font-size: 21px;
+  font-size: 20px;
   font-weight: 600;
-  line-height: 1.3;
+  line-height: 1.35;
   color: #111111;
   margin: 0 0 14px;
+  min-height: 80px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   transition: color 0.3s ease;
 }
 .csr-card-line {
@@ -210,18 +201,24 @@
   height: 3.5px;
   background: #e4002b;
   border-radius: 2px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   transition: background 0.3s ease;
 }
 .csr-card-desc {
   font-size: 13.5px;
-  line-height: 1.68;
+  line-height: 1.65;
   color: #555555;
   margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   transition: color 0.3s ease;
 }
 .csr-card-arrow {
-  align-self: flex-end;
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
   width: 36px;
   height: 36px;
   display: inline-flex;
@@ -243,8 +240,9 @@
 .csr-aid-card.is-active {
   background: #003366;
   border-color: #003366;
-  box-shadow: 0 18px 40px rgba(0, 51, 102, 0.32);
-  transform: translateY(-8px);
+  box-shadow: 0 16px 36px rgba(0, 51, 102, 0.28);
+  /* Tidak menggunakan translateY agar semua card dan panah tetap 100% sejajar di baseline yang sama */
+  transform: none;
 }
 .csr-aid-card:hover .csr-card-title,
 .csr-aid-card.is-active .csr-card-title {
@@ -258,9 +256,14 @@
 .csr-aid-card.is-active .csr-card-desc {
   color: rgba(255, 255, 255, 0.92);
 }
-.csr-aid-card:hover .csr-card-arrow,
+.csr-aid-card:hover .csr-card-arrow {
+  color: #ffffff;
+  transform: translate(3px, -3px);
+}
 .csr-aid-card.is-active .csr-card-arrow {
   color: #ffffff;
+}
+.csr-aid-card.is-active:hover .csr-card-arrow {
   transform: translate(3px, -3px);
 }
 
@@ -271,7 +274,7 @@
   align-items: center;
   gap: 12px;
   margin-top: 14px;
-  padding-right: 6px;
+  padding-right: max(32px, calc((100vw - 1280px) / 2 + 32px));
 }
 .btn-aid-nav {
   width: 44px;
@@ -311,11 +314,23 @@
     gap: 16px;
   }
   .csr-aid-body {
-    grid-template-columns: 1fr;
-    gap: 26px;
+    flex-direction: column;
+    align-items: stretch;
   }
   .csr-aid-photo-wrap {
+    flex: none;
+    width: 100%;
     height: 320px;
+    border-radius: 0;
+  }
+  .csr-aid-carousel-wrapper {
+    margin-left: 0;
+    margin-top: -36px;
+    padding: 0 16px;
+  }
+  .csr-aid-nav {
+    padding-right: 16px;
+    justify-content: flex-end;
   }
 }
 @media (max-width: 500px) {
@@ -323,13 +338,20 @@
     font-size: 26px;
   }
   .csr-aid-card {
-    flex: 0 0 250px;
-    min-width: 250px;
-    height: 340px;
-    padding: 26px 22px;
+    flex: 0 0 260px;
+    width: 260px;
+    min-width: 260px;
+    max-width: 260px;
+    height: 380px;
+    padding: 24px 20px 64px 20px;
   }
   .csr-card-title {
-    font-size: 19px;
+    font-size: 18px;
+    min-height: 72px;
+  }
+  .csr-card-arrow {
+    bottom: 20px;
+    right: 20px;
   }
 }
 
