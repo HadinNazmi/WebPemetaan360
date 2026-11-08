@@ -1,16 +1,18 @@
 import React, { useState, useRef } from 'react';
 import { adminService } from '../../services/adminService';
 import { getFullImageUrl } from '../../utils/imageUrl';
+import { optimizeImageForWeb } from '../../utils/imageOptimizer';
 
 export default function AdminImagePicker({
   label = 'Gambar Cover / Foto',
   value = '',
   onChange,
   folder = 'general',
-  helperText = 'Mendukung format JPG, PNG, WEBP (maks. 10MB)',
+  helperText = 'Mendukung JPG, PNG, WEBP (maks. 50MB, otomatis dioptimasi WebP HD)',
 }) {
   const [mode, setMode] = useState(value && value.startsWith('http') && !value.includes('/uploads/') ? 'link' : 'upload');
   const [uploading, setUploading] = useState(false);
+  const [optimizing, setOptimizing] = useState(false);
   const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
 
@@ -23,16 +25,27 @@ export default function AdminImagePicker({
       return;
     }
 
-    if (file.size > 10 * 1024 * 1024) {
-      setError('Ukuran file maksimal 10MB.');
+    // Mendukung file mentah resolusi tinggi s.d 50MB
+    if (file.size > 50 * 1024 * 1024) {
+      setError('Ukuran file maksimal 50MB.');
       return;
     }
 
     setError(null);
-    setUploading(true);
 
     try {
-      const res = await adminService.uploadImage(file, folder);
+      // 1. Kompresi Cerdas & Konversi Otomatis ke WebP HD di Browser
+      setOptimizing(true);
+      const isPanorama = folder.includes('tour360') || folder.includes('panorama') || folder.includes('hero');
+      const optimizedFile = await optimizeImageForWeb(file, {
+        maxWidth: isPanorama ? 4096 : 2560,
+        quality: isPanorama ? 0.88 : 0.85,
+      });
+      setOptimizing(false);
+
+      // 2. Upload file WebP ringan (2-3MB) ke server
+      setUploading(true);
+      const res = await adminService.uploadImage(optimizedFile, folder);
       if (res.success && res.data?.path) {
         onChange(res.data.path);
       } else {
@@ -41,6 +54,7 @@ export default function AdminImagePicker({
     } catch (err) {
       setError(err.response?.data?.message || err.message || 'Terjadi kesalahan saat upload.');
     } finally {
+      setOptimizing(false);
       setUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
     }
@@ -98,18 +112,23 @@ export default function AdminImagePicker({
           />
 
           <div
-            onClick={() => !uploading && fileInputRef.current?.click()}
+            onClick={() => !uploading && !optimizing && fileInputRef.current?.click()}
             className={`border-2 border-dashed rounded-xl p-4 text-center cursor-pointer transition flex flex-col items-center justify-center gap-1.5 ${
-              uploading
+              optimizing || uploading
                 ? 'border-blue-300 bg-blue-50/50 cursor-wait'
                 : 'border-slate-300 hover:border-[#00529C] hover:bg-blue-50/20 bg-slate-50/50'
             }`}
           >
             <span className="material-symbols-outlined text-[28px] text-slate-400">
-              {uploading ? 'cloud_sync' : 'add_photo_alternate'}
+              {optimizing ? 'auto_fix_high' : uploading ? 'cloud_sync' : 'add_photo_alternate'}
             </span>
             <div className="text-xs">
-              {uploading ? (
+              {optimizing ? (
+                <span className="font-semibold text-amber-600 flex items-center gap-1">
+                  <span className="material-symbols-outlined text-[16px] animate-spin">progress_activity</span>
+                  Mengoptimasi resolusi &amp; kompresi WebP HD...
+                </span>
+              ) : uploading ? (
                 <span className="font-semibold text-[#00529C] flex items-center gap-1">
                   <span className="material-symbols-outlined text-[16px] animate-spin">progress_activity</span>
                   Sedang mengunggah file ke server...

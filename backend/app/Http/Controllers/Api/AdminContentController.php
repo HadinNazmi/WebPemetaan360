@@ -439,8 +439,8 @@ class AdminContentController extends Controller
     public function uploadImage(Request $request): JsonResponse
     {
         $request->validate([
-            'file' => 'required|file|image|mimes:jpeg,png,jpg,webp,svg,gif|max:10240', // maks 10MB
-            'folder' => 'nullable|string|alpha_dash|max:50',
+            'file' => 'required|file|image|mimes:jpeg,png,jpg,webp,svg,gif|max:51200', // mendukung s.d 50MB
+            'folder' => 'nullable|string|max:100',
         ]);
 
         $file = $request->file('file');

@@ -34,3 +34,4 @@ class HeroPanorama360 extends Model
         ];
     }
 }
+

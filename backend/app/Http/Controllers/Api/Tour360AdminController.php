@@ -363,9 +363,9 @@ class Tour360AdminController extends Controller
     public function uploadMedia(Request $request): JsonResponse
     {
         $request->validate([
-            'file' => 'required|file|image|mimes:jpeg,png,jpg,webp|max:25600', // Foto 360 bisa beresolusi tinggi s.d 25MB
-            'type' => 'nullable|in:panoramas,cover,hotspots',
-            'wilayah_slug' => 'nullable|string|alpha_dash|max:100',
+            'file' => 'required|file|image|mimes:jpeg,png,jpg,webp|max:51200', // Foto 360 resolusi tinggi s.d 50MB
+            'type' => 'nullable|in:panoramas,cover,hotspots,hero',
+            'wilayah_slug' => 'nullable|string|max:100',
         ]);
 
         $file = $request->file('file');
