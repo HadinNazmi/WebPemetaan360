@@ -1,15 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { apiClient } from '../services/api';
 import { getFullImageUrl } from '../utils/imageUrl';
 import 'pannellum/build/pannellum.css';
 import 'pannellum/build/pannellum.js';
 
 export default function HeroTourSection() {
-  const navigate = useNavigate();
   const [heroData, setHeroData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isRotating, setIsRotating] = useState(true);
   const [selectedPin, setSelectedPin] = useState(null);
 
   const viewerContainerRef = useRef(null);
@@ -73,7 +71,8 @@ export default function HeroTourSection() {
         pitch: heroData.default_pitch || -8.0,
         yaw: heroData.default_yaw || 0.0,
         hfov: heroData.default_hfov || 100.0,
-        autoRotate: isRotating ? (heroData.auto_rotate_speed ?? -1.2) : 0,
+        autoRotate: heroData.auto_rotate_speed ?? -1.2,
+        autoRotateInactivityDelay: 2000, // Otomatis terus berputar, dan lanjut berputar 2 detik setelah digeser mouse
         autoLoad: true,
         showZoomCtrl: false,
         showFullscreenCtrl: false,
@@ -96,20 +95,7 @@ export default function HeroTourSection() {
         }
       }
     };
-  }, [heroData, isRotating]);
-
-  // Toggle Auto Rotate
-  const toggleAutoRotate = () => {
-    if (!viewerInstanceRef.current) return;
-    if (isRotating) {
-      viewerInstanceRef.current.stopAutoRotate();
-      setIsRotating(false);
-    } else {
-      const speed = heroData?.auto_rotate_speed || -1.2;
-      viewerInstanceRef.current.startAutoRotate(speed);
-      setIsRotating(true);
-    }
-  };
+  }, [heroData]);
 
   // Toggle Fullscreen Layar Penuh
   const toggleFullscreen = () => {
@@ -133,10 +119,9 @@ export default function HeroTourSection() {
         className="w-full h-full cursor-grab active:cursor-grabbing"
       />
 
-      {/* Kontrol Ambience Atas (Badge Aerial View Kilang) */}
-      <div className="absolute top-24 left-6 z-20 pointer-events-none">
-        <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-2xl bg-slate-950/75 backdrop-blur-md border border-slate-700/60 shadow-xl text-white">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+      {/* Informasi Bawah Kiri (Badge Pertamina Patra Niaga + Petunjuk Interaksi) */}
+      <div className="absolute bottom-6 left-6 z-20 flex flex-col gap-2 pointer-events-none select-none">
+        <div className="inline-flex items-center px-4 py-2.5 rounded-2xl bg-slate-950/75 backdrop-blur-md border border-slate-700/60 shadow-xl text-white w-fit pointer-events-auto">
           <div className="flex flex-col">
             <span className="text-[10px] font-bold tracking-wider text-amber-400 uppercase">
               Pertamina Patra Niaga
@@ -146,39 +131,21 @@ export default function HeroTourSection() {
             </span>
           </div>
         </div>
+
+        <div className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-950/60 backdrop-blur-md border border-slate-700/50 text-slate-300 text-[11px] shadow-md w-fit">
+          <span className="material-symbols-outlined text-[15px] text-amber-400">touch_app</span>
+          <span>Geser mouse untuk melihat sekeliling | Klik pin lokasi untuk jelajahi kawasan binaan</span>
+        </div>
       </div>
 
-      {/* Petunjuk Interaksi Bawah Kiri */}
-      <div className="absolute bottom-6 left-6 z-20 hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-950/70 backdrop-blur-md border border-slate-700/60 text-slate-300 text-xs pointer-events-none shadow-md">
-        <span className="material-symbols-outlined text-[16px] text-amber-400">touch_app</span>
-        <span>Geser mouse untuk melihat sekeliling | Klik pin lokasi untuk masuk ke kawasan binaan</span>
-      </div>
-
-      {/* Kontrol Tools Minimalis Bawah Kanan */}
-      <div className="absolute bottom-6 right-6 z-20 flex items-center gap-2">
-        {/* Tombol Auto Rotate */}
-        <button
-          onClick={toggleAutoRotate}
-          className={`px-3 py-2 rounded-xl backdrop-blur-md border text-xs font-semibold flex items-center gap-1.5 transition shadow-lg ${
-            isRotating
-              ? 'bg-[#00529C] text-white border-blue-400'
-              : 'bg-slate-950/80 text-slate-300 border-slate-700 hover:text-white'
-          }`}
-          title="Putar Kamera Otomatis"
-        >
-          <span className="material-symbols-outlined text-[16px]">
-            {isRotating ? 'sync' : 'sync_disabled'}
-          </span>
-          <span className="hidden md:inline">{isRotating ? 'Putar Aktif' : 'Putar Jeda'}</span>
-        </button>
-
-        {/* Tombol Fullscreen */}
+      {/* Kontrol Tools Bawah Kanan (Hanya Tombol Layar Penuh) */}
+      <div className="absolute bottom-6 right-6 z-20">
         <button
           onClick={toggleFullscreen}
-          className="p-2 rounded-xl bg-slate-950/80 hover:bg-slate-900 text-slate-300 hover:text-white backdrop-blur-md border border-slate-700 shadow-lg transition"
+          className="p-2.5 rounded-xl bg-slate-950/80 hover:bg-slate-900 text-slate-300 hover:text-white backdrop-blur-md border border-slate-700 shadow-lg transition flex items-center justify-center cursor-pointer"
           title="Layar Penuh"
         >
-          <span className="material-symbols-outlined text-[18px]">fullscreen</span>
+          <span className="material-symbols-outlined text-[20px]">fullscreen</span>
         </button>
       </div>
 
@@ -197,7 +164,7 @@ export default function HeroTourSection() {
                 <div className="absolute top-2.5 right-2.5">
                   <button
                     onClick={() => setSelectedPin(null)}
-                    className="p-1 rounded-full bg-slate-900/70 hover:bg-slate-900 text-white transition"
+                    className="p-1 rounded-full bg-slate-900/70 hover:bg-slate-900 text-white transition cursor-pointer"
                   >
                     <span className="material-symbols-outlined text-[16px]">close</span>
                   </button>
@@ -226,7 +193,7 @@ export default function HeroTourSection() {
                 <button
                   type="button"
                   onClick={() => setSelectedPin(null)}
-                  className="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-500 hover:bg-slate-100 transition"
+                  className="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-500 hover:bg-slate-100 transition cursor-pointer"
                 >
                   Tutup
                 </button>
