@@ -109,7 +109,7 @@ export default function Navbar() {
           {/* Menu 1: Tentang Kami */}
           <Link to="/tentang-kami">Tentang Kami</Link>
 
-          {/* Menu 2: Program Unggulan (Dropdown Dinamis dari Database) */}
+          {/* Menu 2: Program Unggulan (Dropdown Sederhana & Dinamis) */}
           <div className="nav-dropdown">
             <span className="nav-dropdown-trigger">
               <span>Program Unggulan</span>
@@ -118,21 +118,15 @@ export default function Navbar() {
               </svg>
             </span>
             <div className="nav-dropdown-menu">
-              <div className="dropdown-header">Pilihan Program Binaan</div>
               <div className="dropdown-list">
                 {programs.length > 0 ? (
-                  programs.slice(0, 6).map((prog) => (
+                  programs.map((prog) => (
                     <Link
                       key={prog.id || prog.slug}
                       to={prog.slug ? `/program/${prog.slug}` : `/#galeri`}
                       className="dropdown-item"
                     >
-                      <div className="dropdown-item-text">
-                        <span className="dropdown-item-title">{prog.judul_program}</span>
-                        {prog.kategori && (
-                          <span className="dropdown-item-badge">{prog.kategori}</span>
-                        )}
-                      </div>
+                      <span className="dropdown-item-title">{prog.judul_program}</span>
                     </Link>
                   ))
                 ) : (
@@ -141,16 +135,10 @@ export default function Navbar() {
                   </div>
                 )}
               </div>
-              <div className="dropdown-footer">
-                <a href="/#galeri" className="dropdown-view-all">
-                  <span>Lihat Semua Program Galeri</span>
-                  <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-                </a>
-              </div>
             </div>
           </div>
 
-          {/* Menu 3: Sistem CSR (Dropdown Dinamis SiMinah & Simon+) */}
+          {/* Menu 3: Sistem CSR (Dropdown Sederhana SiMinah & Simon+) */}
           <div className="nav-dropdown">
             <span className="nav-dropdown-trigger">
               <span>Sistem CSR</span>
@@ -159,7 +147,6 @@ export default function Navbar() {
               </svg>
             </span>
             <div className="nav-dropdown-menu">
-              <div className="dropdown-header">Inovasi Digital Berkelanjutan</div>
               <div className="dropdown-list">
                 {sistemList.length > 0 ? (
                   sistemList.map((sis) => (
@@ -168,40 +155,19 @@ export default function Navbar() {
                       to={`/sistem/${sis.slug || sis.kode_sistem}`}
                       className="dropdown-item"
                     >
-                      <div className="dropdown-item-text">
-                        <span className="dropdown-item-title font-bold text-[#003366]">
-                          {sis.nama_sistem}
-                        </span>
-                        <span className="dropdown-item-desc">
-                          {sis.deskripsi
-                            ? sis.deskripsi.slice(0, 75) + '...'
-                            : sis.badge_label || 'Platform Digital CSR'}
-                        </span>
-                      </div>
+                      <span className="dropdown-item-title">{sis.nama_sistem}</span>
                     </Link>
                   ))
                 ) : (
                   <>
                     <Link to="/sistem/siminah" className="dropdown-item">
-                      <div className="dropdown-item-text">
-                        <span className="dropdown-item-title font-bold text-[#003366]">SiMinah</span>
-                        <span className="dropdown-item-desc">Sirkularitas Minyak Jelantah &amp; Bank Sampah Digital</span>
-                      </div>
+                      <span className="dropdown-item-title">SiMinah</span>
                     </Link>
                     <Link to="/sistem/simon_plus" className="dropdown-item">
-                      <div className="dropdown-item-text">
-                        <span className="dropdown-item-title font-bold text-[#003366]">Simon+</span>
-                        <span className="dropdown-item-desc">Monitoring &amp; Evaluasi Capaian Program CSR</span>
-                      </div>
+                      <span className="dropdown-item-title">Simon+</span>
                     </Link>
                   </>
                 )}
-              </div>
-              <div className="dropdown-footer">
-                <a href="/#capaian-digital" className="dropdown-view-all">
-                  <span>Lihat Capaian Metrik Lingkungan</span>
-                  <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-                </a>
               </div>
             </div>
           </div>
@@ -211,11 +177,6 @@ export default function Navbar() {
 
           {/* Menu 5: Publikasi & Berita */}
           <a href="/#berita">Publikasi &amp; Berita</a>
-
-          {/* Menu 6: Jelajah 360° */}
-          <Link to="/tour-360" className="nav-link-tour">
-            <span>Jelajah 360°</span>
-          </Link>
         </div>
       </nav>
     </header>
