@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\HeroPanorama360;
 use App\Models\Hotspot360;
 use App\Models\Scene360;
 use App\Models\Wilayah360;
@@ -394,6 +395,56 @@ class Tour360AdminController extends Controller
                 'url' => $fullUrl,
                 'filename' => $safeName,
             ],
+        ]);
+    }
+
+    // ==========================================
+    // 5. KELOLA HERO PANORAMA UTAMA (KILANG UDARA)
+    // ==========================================
+
+    public function getHeroSettings(): JsonResponse
+    {
+        $hero = HeroPanorama360::firstOrCreate([], [
+            'judul' => 'Aerial View Kilang Pertamina Dumai 360°',
+            'foto_panorama' => 'https://pannellum.org/images/alma.jpg',
+            'default_pitch' => -10.0,
+            'default_yaw' => 0.0,
+            'default_hfov' => 100.0,
+            'auto_rotate_speed' => -1.2,
+            'pins' => [],
+            'is_active' => true,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'data' => $hero,
+        ]);
+    }
+
+    public function updateHeroSettings(Request $request): JsonResponse
+    {
+        $hero = HeroPanorama360::firstOrCreate([], [
+            'judul' => 'Aerial View Kilang Pertamina Dumai 360°',
+            'foto_panorama' => 'https://pannellum.org/images/alma.jpg',
+        ]);
+
+        $validated = $request->validate([
+            'judul' => 'sometimes|required|string|max:255',
+            'foto_panorama' => 'sometimes|required|string|max:255',
+            'default_pitch' => 'nullable|numeric',
+            'default_yaw' => 'nullable|numeric',
+            'default_hfov' => 'nullable|numeric',
+            'auto_rotate_speed' => 'nullable|numeric',
+            'pins' => 'nullable|array',
+            'is_active' => 'nullable|boolean',
+        ]);
+
+        $hero->update($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Pengaturan Panorama Hero 360 berhasil disimpan.',
+            'data' => $hero,
         ]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\HeroPanorama360;
 use App\Models\Hotspot360;
 use App\Models\ProgramCsr;
 use App\Models\Scene360;
@@ -118,6 +119,29 @@ class Tour360Seeder extends Seeder
                 'deskripsi_hotspot' => 'Program pemberdayaan sirkularitas ekonomi untuk peningkatan kesejahteraan masyarakat.',
                 'teks_tombol' => 'Buka Profil Program',
                 'ikon_hotspot' => 'program',
+            ]
+        );
+
+        // 6. Panorama Hero Beranda (Aerial View Kilang 360)
+        HeroPanorama360::firstOrCreate(
+            ['id' => 1],
+            [
+                'judul' => 'Aerial View Kilang Pertamina Dumai 360°',
+                'foto_panorama' => 'https://pannellum.org/images/alma.jpg',
+                'default_pitch' => -8.0,
+                'default_yaw' => 25.0,
+                'default_hfov' => 100.0,
+                'auto_rotate_speed' => -1.0,
+                'pins' => [
+                    [
+                        'id' => 'pin-mundam',
+                        'wilayah_id' => $wilayah->id,
+                        'pitch' => -12.0,
+                        'yaw' => 35.0,
+                        'label' => 'Kawasan Binaan Mundam Jaya',
+                    ],
+                ],
+                'is_active' => true,
             ]
         );
     }

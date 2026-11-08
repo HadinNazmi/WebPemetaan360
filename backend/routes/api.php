@@ -72,6 +72,10 @@ Route::prefix('v1')->group(function () {
             // Upload media khusus tour 360
             Route::post('/upload', [Tour360AdminController::class, 'uploadMedia']);
 
+            // Panorama Hero Beranda Utama (Kilang Udara 360)
+            Route::get('/hero', [Tour360AdminController::class, 'getHeroSettings']);
+            Route::put('/hero', [Tour360AdminController::class, 'updateHeroSettings']);
+
             // Master Wilayah
             Route::get('/wilayah', [Tour360AdminController::class, 'listWilayah']);
             Route::post('/wilayah', [Tour360AdminController::class, 'storeWilayah']);
@@ -105,4 +109,5 @@ Route::get('/program/{slug}', [PublicContentController::class, 'getProgramDetail
 Route::get('/bantuan', [PublicContentController::class, 'getBantuan']);
 Route::get('/artikel', [PublicContentController::class, 'getArtikel']);
 Route::get('/tour-360', [Tour360PublicController::class, 'getWilayahList']);
+Route::get('/tour-360-hero', [Tour360PublicController::class, 'getHeroPanorama']);
 Route::get('/tour-360/{slug}', [Tour360PublicController::class, 'getTourDetail']);

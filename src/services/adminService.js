@@ -195,6 +195,16 @@ export const adminService = {
     });
     return res.data;
   },
+
+  // 10. Pengaturan Panorama Hero 360 Utama (Kilang Udara Beranda)
+  async getHero360Settings() {
+    const res = await apiClient.get('/admin/tour-360/hero');
+    return res.data;
+  },
+  async updateHero360Settings(data) {
+    const res = await apiClient.put('/admin/tour-360/hero', data);
+    return res.data;
+  },
 };
 
 export default adminService;

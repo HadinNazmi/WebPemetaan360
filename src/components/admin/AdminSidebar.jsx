@@ -35,6 +35,11 @@ const navItemsTour = [
     label: 'Wilayah & Titik 360',
     icon: '360',
   },
+  {
+    to: '/admin/tour-360/hero-settings',
+    label: 'Panorama Hero Beranda',
+    icon: 'travel_explore',
+  },
 ];
 
 const navItemsSystem = [
