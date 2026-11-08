@@ -13,10 +13,11 @@ export function getFullImageUrl(path) {
 
   // Jika berupa URL absolut (http / https)
   if (path.startsWith('http://') || path.startsWith('https://')) {
-    // Di mode development lokal (Vite), jika merujuk ke localhost:8000/uploads,
+    // Di mode development lokal (Vite), jika merujuk ke :8000/uploads/,
     // alihkan ke relative path /uploads agar melewati Vite proxy (bebas kendala CORS WebGL)
-    if (import.meta.env.DEV && path.includes('localhost:8000/uploads/')) {
-      return path.substring(path.indexOf('/uploads/'));
+    if (import.meta.env.DEV && path.includes('/uploads/')) {
+      const idx = path.indexOf('/uploads/');
+      return path.substring(idx);
     }
     return path;
   }
@@ -28,7 +29,7 @@ export function getFullImageUrl(path) {
     return cleanPath;
   }
 
-  const backendBase = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+  const backendBase = import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000';
   return `${backendBase}${cleanPath}`;
 }
 

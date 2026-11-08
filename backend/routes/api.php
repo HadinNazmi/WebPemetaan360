@@ -24,6 +24,11 @@ Route::prefix('v1')->group(function () {
     Route::get('/bantuan', [PublicContentController::class, 'getBantuan']);
     Route::get('/artikel', [PublicContentController::class, 'getArtikel']);
 
+    // Virtual Tour 360 Public API
+    Route::get('/tour-360', [Tour360PublicController::class, 'getWilayahList']);
+    Route::get('/tour-360-hero', [Tour360PublicController::class, 'getHeroPanorama']);
+    Route::get('/tour-360/{slug}', [Tour360PublicController::class, 'getTourDetail']);
+
     // ==========================================
     // Admin CRUD Routes (CMS Dashboard)
     // ==========================================
