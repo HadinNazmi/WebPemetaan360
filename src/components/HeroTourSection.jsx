@@ -139,25 +139,14 @@ export default function HeroTourSection() {
         className="w-full h-full cursor-grab active:cursor-grabbing"
       />
 
-      {/* Loading Overlay Ultra-Minimalis: Logo Pertamina Patra Niaga + Lingkaran Merah Berputar */}
+      {/* Loading Overlay Minimalis: Hanya Lingkaran Merah Berputar dengan Backdrop Blur Transparan */}
       <div
-        className={`absolute inset-0 z-30 flex flex-col items-center justify-center bg-slate-950 transition-opacity duration-700 select-none ${
+        className={`absolute inset-0 z-30 flex items-center justify-center bg-black/30 backdrop-blur-md transition-opacity duration-500 select-none ${
           isPannellumLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'
         }`}
       >
-        <div className="flex flex-col items-center justify-center gap-6">
-          {/* Logo Pertamina Patra Niaga Horizontal */}
-          <div className="p-4 px-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-2xl backdrop-blur-md">
-            <img
-              src="/images/Logo Pertamina Patra Niaga Horizontal.png"
-              alt="Pertamina Patra Niaga"
-              className="h-10 sm:h-12 w-auto object-contain"
-            />
-          </div>
-
-          {/* Lingkaran Merah Pertamina Berputar Halus */}
-          <div className="w-10 h-10 rounded-full border-[3.5px] border-slate-800 border-t-[#ED1C24] border-r-[#ED1C24] animate-spin"></div>
-        </div>
+        {/* Lingkaran Merah Pertamina Berputar */}
+        <div className="w-12 h-12 rounded-full border-[3.5px] border-white/20 border-t-[#ED1C24] border-r-[#ED1C24] animate-spin shadow-xl"></div>
       </div>
 
       {/* Informasi Bawah Kiri (Badge Pertamina Patra Niaga + Petunjuk Interaksi) */}

@@ -67,62 +67,72 @@ export default function Tour360ViewerPage() {
     fetchTour();
   }, [slug]);
 
-  // 2. Inisialisasi & Sinkronisasi Pannellum Viewer
+  // 2. Inisialisasi & Sinkronisasi Pannellum Viewer Multi-Scene
   useEffect(() => {
-    if (!activeScene || !viewerContainerRef.current || !window.pannellum) return;
+    if (!activeScene || !viewerContainerRef.current || !window.pannellum || scenes.length === 0) return;
 
+    // Jika viewer sudah diinisialisasi, pergantian scene ditangani oleh loadScene (tanpa destroy)
     if (viewerInstanceRef.current) {
-      try {
-        viewerInstanceRef.current.destroy();
-      } catch (e) {
-        console.warn('Pannellum destroy error:', e);
-      }
-      viewerInstanceRef.current = null;
+      return;
     }
 
     setIsPannellumLoaded(false);
 
-    const panoramaUrl = getFullImageUrl(activeScene.foto_panorama) || 'https://pannellum.org/images/alma.jpg';
+    // Format seluruh scenes ke konfigurasi Pannellum
+    const scenesDict = {};
+    scenes.forEach((s) => {
+      const formattedHotSpots = (s.hotspots || []).map((h) => {
+        let iconClass = 'custom-hotspot-nav';
+        if (h.tipe === 'popup_only') iconClass = 'custom-hotspot-info';
+        if (h.tipe === 'popup_then_move') iconClass = 'custom-hotspot-preview';
 
-    // Format hotspots untuk pengunjung publik
-    const formattedHotSpots = (activeScene.hotspots || []).map((h) => {
-      let iconClass = 'custom-hotspot-nav';
-      if (h.tipe === 'popup_only') iconClass = 'custom-hotspot-info';
-      if (h.tipe === 'popup_then_move') iconClass = 'custom-hotspot-preview';
+        return {
+          id: `pub-hs-${h.id}`,
+          pitch: h.pitch,
+          yaw: h.yaw,
+          cssClass: iconClass,
+          createTooltipFunc: (hotSpotDiv) => {
+            hotSpotDiv.classList.add('cursor-pointer');
+            const title = h.judul_hotspot || (h.target_scene ? h.target_scene.nama_scene : 'Jelajahi Titik');
+            hotSpotDiv.setAttribute('title', title);
+          },
+          clickHandlerFunc: () => {
+            handleHotspotTrigger(h);
+          },
+        };
+      });
 
-      return {
-        id: `pub-hs-${h.id}`,
-        pitch: h.pitch,
-        yaw: h.yaw,
-        cssClass: iconClass,
-        createTooltipFunc: (hotSpotDiv) => {
-          hotSpotDiv.classList.add('cursor-pointer');
-          const title = h.judul_hotspot || (h.target_scene ? h.target_scene.nama_scene : 'Jelajahi Titik');
-          hotSpotDiv.setAttribute('title', title);
-        },
-        clickHandlerFunc: () => {
-          handleHotspotTrigger(h);
-        },
+      scenesDict[`scene-${s.id}`] = {
+        title: s.nama_scene,
+        type: 'equirectangular',
+        panorama: getFullImageUrl(s.foto_panorama) || 'https://pannellum.org/images/alma.jpg',
+        pitch: s.default_pitch || 0,
+        yaw: s.default_yaw || 0,
+        hfov: s.default_hfov || 100,
+        hotSpots: formattedHotSpots,
       };
     });
 
     try {
       const viewer = window.pannellum.viewer(viewerContainerRef.current, {
-        type: 'equirectangular',
-        panorama: panoramaUrl,
-        pitch: activeScene.default_pitch || 0,
-        yaw: activeScene.default_yaw || 0,
-        hfov: activeScene.default_hfov || 100,
-        autoLoad: true,
+        default: {
+          firstScene: `scene-${activeScene.id}`,
+          sceneFadeDuration: 600,
+          autoLoad: true,
+        },
+        scenes: scenesDict,
         showZoomCtrl: true,
         showFullscreenCtrl: false, // Kami gunakan tombol fullscreen custom di header
         mouseZoom: true,
         compass: false,
-        hotSpots: formattedHotSpots,
       });
 
       viewer.on('load', () => {
         setIsPannellumLoaded(true);
+      });
+
+      viewer.on('scenechange', () => {
+        setIsPannellumLoaded(false);
       });
 
       if (viewer.isLoaded && viewer.isLoaded()) {
@@ -142,9 +152,10 @@ export default function Tour360ViewerPage() {
         } catch (e) {
           // ignore
         }
+        viewerInstanceRef.current = null;
       }
     };
-  }, [activeScene]);
+  }, [scenes]);
 
   // 3. Tangani Interaksi Hotspot Berdasarkan 3 Mode Aksi
   const handleHotspotTrigger = (hotspot) => {
@@ -161,16 +172,33 @@ export default function Tour360ViewerPage() {
     });
   };
 
-  // 4. Transisi Halus Masuk ke Scene Baru
+  // 4. Transisi Halus Masuk ke Scene Baru (Tetap Mempertahankan Scene Sebelumnya dengan Efek Blur)
   const transitionToScene = (targetSceneId, targetPitch = null, targetYaw = null) => {
     const target = scenes.find((s) => s.id === parseInt(targetSceneId));
     if (!target) return;
 
     setPopupModal({ isOpen: false, hotspot: null });
+
+    const pitch = targetPitch !== null ? targetPitch : target.default_pitch;
+    const yaw = targetYaw !== null ? targetYaw : target.default_yaw;
+
+    // Aktifkan blur transparan di atas scene sebelumnya
+    setIsPannellumLoaded(false);
+
+    if (viewerInstanceRef.current) {
+      try {
+        viewerInstanceRef.current.loadScene(`scene-${target.id}`, pitch, yaw);
+        setActiveScene(target);
+        return;
+      } catch (err) {
+        console.warn('loadScene fallback:', err);
+      }
+    }
+
     setActiveScene({
       ...target,
-      default_pitch: targetPitch !== null ? targetPitch : target.default_pitch,
-      default_yaw: targetYaw !== null ? targetYaw : target.default_yaw,
+      default_pitch: pitch,
+      default_yaw: yaw,
     });
   };
 
@@ -280,25 +308,14 @@ export default function Tour360ViewerPage() {
         className="w-full h-full cursor-grab active:cursor-grabbing"
       />
 
-      {/* Loading Overlay Ultra-Minimalis: Logo Pertamina Patra Niaga + Lingkaran Merah Berputar */}
+      {/* Loading Overlay: Hanya Lingkaran Merah Berputar dengan Efek Blur Transparan */}
       <div
-        className={`absolute inset-0 z-20 flex flex-col items-center justify-center bg-slate-950 transition-opacity duration-700 select-none ${
+        className={`absolute inset-0 z-20 flex items-center justify-center bg-black/30 backdrop-blur-md transition-opacity duration-500 select-none ${
           isPannellumLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'
         }`}
       >
-        <div className="flex flex-col items-center justify-center gap-6">
-          {/* Logo Pertamina Patra Niaga Horizontal */}
-          <div className="p-4 px-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-2xl backdrop-blur-md">
-            <img
-              src="/images/Logo Pertamina Patra Niaga Horizontal.png"
-              alt="Pertamina Patra Niaga"
-              className="h-10 sm:h-12 w-auto object-contain"
-            />
-          </div>
-
-          {/* Lingkaran Merah Pertamina Berputar Halus */}
-          <div className="w-10 h-10 rounded-full border-[3.5px] border-slate-800 border-t-[#ED1C24] border-r-[#ED1C24] animate-spin"></div>
-        </div>
+        {/* Lingkaran Merah Pertamina Berputar */}
+        <div className="w-12 h-12 rounded-full border-[3.5px] border-white/20 border-t-[#ED1C24] border-r-[#ED1C24] animate-spin shadow-xl"></div>
       </div>
 
       {/* 3. FLOATING PETUNJUK INTERAKSI (Bawah Kiri) */}
