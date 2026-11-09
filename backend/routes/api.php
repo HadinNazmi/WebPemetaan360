@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AdminContentController;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PublicContentController;
 use App\Http\Controllers\Api\Tour360AdminController;
 use App\Http\Controllers\Api\Tour360PublicController;
@@ -32,9 +33,18 @@ Route::prefix('v1')->group(function () {
     Route::get('/tour-360/{slug}', [Tour360PublicController::class, 'getTourDetail']);
 
     // ==========================================
-    // Admin CRUD Routes (CMS Dashboard)
+    // Auth Routes (Login Admin CMS)
     // ==========================================
-    Route::prefix('admin')->group(function () {
+    Route::post('/login', [AuthController::class, 'login']);
+
+    // ==========================================
+    // Admin CRUD Routes (CMS Dashboard Terproteksi)
+    // ==========================================
+    Route::prefix('admin')->middleware('auth.admin')->group(function () {
+        // Auth Session & Profile
+        Route::post('/logout', [AuthController::class, 'logout']);
+        Route::get('/me', [AuthController::class, 'me']);
+
         // Overview Stats
         Route::get('/stats', [AdminContentController::class, 'getDashboardStats']);
 
@@ -69,9 +79,9 @@ Route::prefix('v1')->group(function () {
         Route::delete('/artikel/{id}', [AdminContentController::class, 'deleteArtikel']);
 
         // 6. Kelola Pengguna Admin
-        Route::get('/users', [AdminContentController::class, 'getUsers']);
-        Route::post('/users', [AdminContentController::class, 'storeUser']);
-        Route::delete('/users/{id}', [AdminContentController::class, 'deleteUser']);
+        Route::get('/users', [AuthController::class, 'getUsers']);
+        Route::post('/users', [AuthController::class, 'storeUser']);
+        Route::delete('/users/{id}', [AuthController::class, 'deleteUser']);
 
         // 7. Upload Media (Standar Shared Hosting)
         Route::post('/upload', [AdminContentController::class, 'uploadImage']);

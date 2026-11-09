@@ -6,6 +6,10 @@ import Tour360ViewerPage from './pages/user/Tour360ViewerPage.jsx';
 import TentangKamiPage from './pages/user/TentangKamiPage.jsx';
 import SistemDetailPage from './pages/user/SistemDetailPage.jsx';
 
+// Auth & Protection
+import LoginPage from './pages/auth/LoginPage.jsx';
+import ProtectedRoute from './components/auth/ProtectedRoute.jsx';
+
 // Admin Layout & Pages
 import AdminLayout from './components/admin/AdminLayout.jsx';
 import DashboardOverviewPage from './pages/admin/DashboardOverviewPage.jsx';
@@ -34,12 +38,23 @@ function App() {
         <Route path="/tour-360" element={<Tour360ViewerPage />} />
         <Route path="/tour-360/:slug" element={<Tour360ViewerPage />} />
 
+        {/* Autentikasi Admin */}
+        <Route path="/admin/login" element={<LoginPage />} />
+        <Route path="/login" element={<Navigate to="/admin/login" replace />} />
+
         {/* =========================================
-            Dashboard Admin CMS (Nested Layout)
+            Dashboard Admin CMS (Terproteksi via ProtectedRoute)
             Sidebar & Topbar tetap preserved di AdminLayout,
             hanya child route yang berganti di <Outlet />
            ========================================= */}
-        <Route path="/admin" element={<AdminLayout />}>
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<DashboardOverviewPage />} />
           <Route path="hero-visi-misi" element={<HeroVisiMisiPage />} />
           <Route path="metrik-dampak" element={<MetrikDampakPage />} />

@@ -17,7 +17,7 @@ class AdminUserSeeder extends Seeder
             ['email' => 'admin@csr.pertamina.com'],
             [
                 'name' => 'Super Admin CSR',
-                'password' => Hash::make('password123'),
+                'password' => Hash::make('123456'),
                 'role' => 'superadmin',
                 'created_by' => null,
                 'is_active' => true,

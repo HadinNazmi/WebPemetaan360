@@ -215,6 +215,20 @@ export const adminService = {
     const res = await apiClient.put('/admin/tour-360/hero', data);
     return res.data;
   },
+
+  // 11. Kelola Pengguna Admin
+  async getUsers() {
+    const res = await apiClient.get('/admin/users');
+    return res.data;
+  },
+  async createUser(data) {
+    const res = await apiClient.post('/admin/users', data);
+    return res.data;
+  },
+  async deleteUser(id) {
+    const res = await apiClient.delete(`/admin/users/${id}`);
+    return res.data;
+  },
 };
 
 export default adminService;

@@ -1,5 +1,6 @@
-import React from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import authService from '../../services/authService';
 
 const routeTitleMap = {
   '/admin': 'Ringkasan',
@@ -15,6 +16,32 @@ const routeTitleMap = {
 
 export default function AdminHeader() {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState(() => authService.getCurrentUser());
+
+  useEffect(() => {
+    const currentUser = authService.getCurrentUser();
+    if (currentUser) {
+      setUser(currentUser);
+    }
+  }, []);
+
+  const handleLogout = async () => {
+    if (window.confirm('Apakah Anda yakin ingin keluar dari sesi admin?')) {
+      await authService.logout();
+      navigate('/admin/login', { replace: true });
+    }
+  };
+
+  const getInitials = (name) => {
+    if (!name) return 'AD';
+    const parts = name.trim().split(' ');
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+    return name.slice(0, 2).toUpperCase();
+  };
   const getHeaderTitle = () => {
     if (routeTitleMap[location.pathname]) return routeTitleMap[location.pathname];
     if (location.pathname.includes('/tour-360') && location.pathname.includes('/scenes')) {
@@ -66,21 +93,24 @@ export default function AdminHeader() {
           {/* User Profile Info */}
           <div className="flex items-center gap-3 pl-3 border-l border-slate-200">
             <div className="w-8 h-8 rounded-full bg-[#00529C] text-white flex items-center justify-center font-bold text-xs shadow-sm">
-              AD
+              {getInitials(user?.name)}
             </div>
             <div className="flex flex-col">
               <span className="font-semibold text-xs text-slate-800 leading-tight">
-                admincs
+                {user?.name || 'Super Admin'}
               </span>
-              <span className="text-[10px] text-slate-500 leading-none">Super Admin</span>
+              <span className="text-[10px] text-slate-500 leading-none capitalize">
+                {user?.role === 'superadmin' ? 'Super Admin' : 'Admin CSR'}
+              </span>
             </div>
-            <Link
-              to="/"
+            <button
+              type="button"
+              onClick={handleLogout}
               className="ml-1 p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-              title="Keluar / Kembali"
+              title="Keluar dari Sesi Admin"
             >
               <span className="material-symbols-outlined text-[18px]">logout</span>
-            </Link>
+            </button>
           </div>
         </div>
       </div>
