@@ -19,21 +19,18 @@ export default function Footer() {
             <strong>Alamat:</strong> Jl. Raya Kilang Putri Tujuh, Tanjung Palas, Dumai Timur, Kota Dumai, Riau
           </p>
           <p className="footer-info-line">
-            <strong>Kolaborasi:</strong> CSR PT Pertamina Patra Niaga RU II Dumai &times; Politeknik Caltex Riau
-          </p>
-          <p className="footer-info-line">
             <strong>Email:</strong> <a href="mailto:csr.dumai@pertaminapatraniaga.com">csr.dumai@pertaminapatraniaga.com</a>
           </p>
         </div>
 
         {/* 5 Kolom Link Footer Bermanfaat Sesuai Modul Portal CSR */}
         <div className="footer-columns-grid">
-          {/* Kolom 1: Profil & Kemitraan */}
+          {/* Kolom 1: Profil */}
           <div className="footer-col">
             <h4>Tentang Kami</h4>
             <Link to="/tentang-kami">Profil Program TJSL</Link>
             <Link to="/tentang-kami">Visi &amp; Misi Keberlanjutan</Link>
-            <Link to="/tentang-kami">Kemitraan Politeknik Caltex Riau</Link>
+            <Link to="/tentang-kami">Pemberdayaan Masyarakat</Link>
             <Link to="/tentang-kami">4 Pilar CSR Pertamina</Link>
           </div>
 

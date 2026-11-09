@@ -143,7 +143,7 @@ export default function AdminSidebar() {
       {/* Footer Instansi */}
       <div className="p-3.5 border-t border-slate-200 bg-slate-50/50">
         <p className="text-[11px] text-slate-400 text-center font-medium">
-          © 2026 Politeknik Caltex Riau
+          © 2026 CSR Pertamina RU Dumai
         </p>
       </div>
     </aside>
