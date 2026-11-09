@@ -1,0 +1,295 @@
+/* ===== REPORT CAROUSEL WITH SYNCED HERO IMAGE (PERTAMINA STYLE) ===== */
+.report-section {
+  position: relative;
+  width: 100%;
+  padding: 80px 0;
+  background-color: #f8fafc;
+  overflow: hidden;
+  font-family: 'Montserrat', "Segoe UI", Arial, sans-serif;
+}
+
+.report-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.report-grid-layout {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .report-grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 540px;
+    align-items: center;
+    gap: 48px;
+  }
+}
+
+/* Sisi Kiri: Gambar Utama Hero yang Berganti Halus (Cross-fade) */
+.report-image-col {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.25);
+  background-color: #0b1d33;
+}
+
+@media (min-width: 900px) {
+  .report-image-col {
+    height: 520px;
+    aspect-ratio: auto;
+  }
+}
+
+.report-hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.report-hero-img.is-active {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 2;
+}
+
+/* Overlay gradient gelap bawah foto */
+.report-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.45) 100%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Badge aktif di atas gambar kiri */
+.report-image-badge {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  z-index: 4;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Sisi Kanan: Slider Kartu */
+.report-carousel-col {
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+@media (min-width: 900px) {
+  .report-carousel-col {
+    position: absolute;
+    left: 42%;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+  }
+}
+
+.report-carousel-viewport {
+  width: 100%;
+  overflow: hidden;
+  padding: 20px 0;
+}
+
+.report-carousel-track {
+  display: flex;
+  gap: 28px;
+  transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+
+/* Kartu Individu */
+.report-card-item {
+  flex: 0 0 290px;
+  width: 290px;
+  height: 360px;
+  background-color: #ffffff;
+  padding: 34px 28px;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.35s ease,
+              transform 0.35s ease,
+              box-shadow 0.35s ease,
+              color 0.35s ease;
+  user-select: none;
+}
+
+.report-card-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.14);
+}
+
+/* Style Kartu Saat Aktif (Warna Biru Pertamina) */
+.report-card-item.is-active {
+  background-color: #0066cb;
+  color: #ffffff;
+  box-shadow: 0 18px 44px rgba(0, 102, 203, 0.32);
+}
+
+.report-card-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.3;
+  transition: color 0.3s ease;
+}
+
+.report-card-item.is-active .report-card-title {
+  color: #ffffff;
+}
+
+/* Garis Merah Khas Pertamina */
+.report-card-line {
+  width: 42px;
+  height: 4px;
+  background-color: #e4002b;
+  border-radius: 999px;
+  margin: 16px 0;
+  transition: background-color 0.3s ease;
+}
+
+.report-card-item.is-active .report-card-line {
+  background-color: #ffffff;
+}
+
+.report-card-desc {
+  font-size: 14px;
+  line-height: 1.65;
+  color: #64748b;
+  margin-bottom: auto;
+  transition: color 0.3s ease;
+}
+
+.report-card-item.is-active .report-card-desc {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* Tombol Panah Bawah Kartu */
+.report-card-arrow-wrap {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.report-card-arrow {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #0066cb;
+  transition: all 0.3s ease;
+}
+
+.report-card-item.is-active .report-card-arrow {
+  color: #ffffff;
+}
+
+.report-card-arrow svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  fill: none;
+}
+
+/* Tombol Navigasi Panah Kiri & Kanan */
+.report-nav-controls {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  padding-right: 24px;
+}
+
+.btn-report-nav {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.25s ease;
+}
+
+.btn-report-nav:hover {
+  background-color: #0066cb;
+  border-color: #0066cb;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 102, 203, 0.25);
+}
+
+.btn-report-nav svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  fill: none;
+}
+
+/* Indikator Titik Posisi */
+.report-dots-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: auto;
+}
+
+.report-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #cbd5e1;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.report-dot.is-active {
+  width: 24px;
+  border-radius: 999px;
+  background-color: #0066cb;
+}
+
