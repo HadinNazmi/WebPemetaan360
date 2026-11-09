@@ -64,19 +64,6 @@ export default function AdminHeader() {
 
         {/* Action Controls & Profile Area */}
         <div className="flex items-center gap-4">
-          {/* Tombol Lihat Web Publik */}
-          <a
-            href="/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:text-blue-700 transition-colors text-xs font-semibold shadow-sm"
-          >
-            <span>Lihat Web Publik</span>
-            <span className="material-symbols-outlined text-[16px] text-slate-400">
-              open_in_new
-            </span>
-          </a>
-
           {/* Notifikasi */}
           <div className="relative">
             <button

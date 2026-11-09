@@ -66,22 +66,14 @@ export default function AdminSidebar() {
   return (
     <aside className="fixed left-0 top-0 h-screen w-[260px] bg-white z-50 flex flex-col border-r border-slate-200 shadow-[1px_0_4px_rgba(0,0,0,0.02)]">
       {/* Brand Header */}
-      <div className="p-4 border-b border-slate-200 flex flex-col gap-2.5 bg-white">
+      <div className="h-16 px-4 border-b border-slate-200 flex items-center bg-white">
         <NavLink to="/admin" className="block py-1 hover:opacity-90 transition-opacity">
           <img
             src="/images/Logo Pertamina Patra Niaga Horizontal.png"
             alt="Logo Pertamina Patra Niaga"
-            className="h-10 w-auto max-w-[210px] object-contain"
+            className="h-9 w-auto max-w-[210px] object-contain"
           />
         </NavLink>
-        <div className="flex items-center justify-between pt-2 border-t border-slate-100">
-          <span className="text-[11px] font-bold text-slate-700 tracking-wider uppercase">
-            CSR Pemetaan 360
-          </span>
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-50 text-[#00529C] border border-blue-100">
-            Admin CMS
-          </span>
-        </div>
       </div>
 
       {/* Navigation Links Scrollable */}
