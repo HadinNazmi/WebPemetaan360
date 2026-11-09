@@ -72,10 +72,6 @@ export default function LoginPage() {
               e.currentTarget.style.height = '42px';
             }}
           />
-          <h1 className="login-title">Portal Manajemen CSR</h1>
-          <p className="login-subtitle">
-            Masuk untuk mengelola data program, konten publikasi, dan Virtual Tour 360°
-          </p>
         </div>
 
         {/* Notifikasi Error */}
@@ -173,9 +169,6 @@ export default function LoginPage() {
             </span>
             <span>Kembali ke Beranda Utama</span>
           </Link>
-          <p className="login-security-tag">
-            Sistem Terproteksi — Akses khusus staf & administrator TJSL PT Pertamina Patra Niaga.
-          </p>
         </div>
       </div>
     </div>
