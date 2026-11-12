@@ -28,6 +28,7 @@ import TourWilayahPage from './pages/admin/TourWilayahPage.jsx';
 import TourScenesPage from './pages/admin/TourScenesPage.jsx';
 import TourSceneEditorPage from './pages/admin/TourSceneEditorPage.jsx';
 import Hero360SettingsPage from './pages/admin/Hero360SettingsPage.jsx';
+import UmkmAdminPage from './pages/admin/UmkmAdminPage.jsx';
 
 function App() {
   return (
@@ -74,6 +75,7 @@ function App() {
           <Route path="program" element={<ProgramUnggulanPage />} />
           <Route path="bantuan" element={<PenyaluranBantuanPage />} />
           <Route path="artikel" element={<PublikasiPage />} />
+          <Route path="umkm" element={<UmkmAdminPage />} />
           <Route path="tour-360" element={<TourWilayahPage />} />
           <Route path="tour-360/hero-settings" element={<Hero360SettingsPage />} />
           <Route path="tour-360/:wilayahId/scenes" element={<TourScenesPage />} />

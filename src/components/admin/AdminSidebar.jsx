@@ -27,6 +27,11 @@ const navItemsLanding = [
     label: 'Publikasi & Siaran Pers',
     icon: 'newspaper',
   },
+  {
+    to: '/admin/umkm',
+    label: 'UMKM & Produk',
+    icon: 'storefront',
+  },
 ];
 
 const navItemsTour = [
