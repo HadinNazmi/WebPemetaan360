@@ -5,6 +5,10 @@ import ProgramDetailPage from './pages/user/ProgramDetailPage.jsx';
 import Tour360ViewerPage from './pages/user/Tour360ViewerPage.jsx';
 import TentangKamiPage from './pages/user/TentangKamiPage.jsx';
 import SistemDetailPage from './pages/user/SistemDetailPage.jsx';
+import KatalogProdukPage from './pages/user/KatalogProdukPage.jsx';
+import DirektoriUmkmPage from './pages/user/DirektoriUmkmPage.jsx';
+import DetailKelompokUmkmPage from './pages/user/DetailKelompokUmkmPage.jsx';
+import { CartProvider } from './context/CartContext.jsx';
 
 // Auth & Protection
 import LoginPage from './pages/auth/LoginPage.jsx';
@@ -28,15 +32,24 @@ import Hero360SettingsPage from './pages/admin/Hero360SettingsPage.jsx';
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        {/* Halaman Publik */}
-        <Route path="/" element={<HomePage />} />
-        <Route path="/tentang-kami" element={<TentangKamiPage />} />
-        <Route path="/program/:slug" element={<ProgramDetailPage />} />
-        <Route path="/sistem/:slug" element={<SistemDetailPage />} />
-        <Route path="/ppid" element={<ProgramDetailPage />} />
-        <Route path="/tour-360" element={<Tour360ViewerPage />} />
-        <Route path="/tour-360/:slug" element={<Tour360ViewerPage />} />
+      <CartProvider>
+        <Routes>
+          {/* Halaman Publik */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/tentang-kami" element={<TentangKamiPage />} />
+          <Route path="/program/:slug" element={<ProgramDetailPage />} />
+          <Route path="/sistem/:slug" element={<SistemDetailPage />} />
+          <Route path="/ppid" element={<ProgramDetailPage />} />
+          <Route path="/tour-360" element={<Tour360ViewerPage />} />
+          <Route path="/tour-360/:slug" element={<Tour360ViewerPage />} />
+
+          {/* Halaman UMKM Binaan */}
+          <Route path="/katalog-produk" element={<KatalogProdukPage />} />
+          <Route path="/produk" element={<Navigate to="/katalog-produk" replace />} />
+          <Route path="/direktori-umkm" element={<DirektoriUmkmPage />} />
+          <Route path="/direktori-umkm/:slug" element={<DetailKelompokUmkmPage />} />
+          <Route path="/umkm" element={<Navigate to="/direktori-umkm" replace />} />
+          <Route path="/umkm/:slug" element={<DetailKelompokUmkmPage />} />
 
         {/* Autentikasi Admin */}
         <Route path="/admin/login" element={<LoginPage />} />
@@ -72,7 +85,8 @@ function App() {
         {/* Fallback jika route tidak dikenal */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </BrowserRouter>
+    </CartProvider>
+  </BrowserRouter>
   );
 }
 

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { programService } from '../services/programService';
+import { useCart } from '../context/CartContext';
 import './Navbar.css';
 
 export default function Navbar() {
+  const { totalItems, openDrawer } = useCart();
   const [headerVisible, setHeaderVisible] = useState(true);
   const [headerTheme, setHeaderTheme] = useState('black'); // 'black' | 'white'
   const [programs, setPrograms] = useState([]);
@@ -93,6 +95,20 @@ export default function Navbar() {
 
           {/* Navigasi Utilitas Atas */}
           <div className="util">
+            <button
+              type="button"
+              onClick={openDrawer}
+              className="cart-nav-btn"
+              title="Buka Keranjang Belanja"
+            >
+              <span className="material-symbols-outlined text-[18px]">
+                shopping_bag
+              </span>
+              <span>Keranjang</span>
+              {totalItems > 0 && (
+                <span className="cart-badge-count">{totalItems}</span>
+              )}
+            </button>
             <span className="lang">
               ID <span className="flag"></span>
             </span>
@@ -138,7 +154,27 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Menu 3: Sistem CSR (Dropdown Sederhana SiMinah & Simon+) */}
+          {/* Menu 3: Produk UMKM (Dropdown Katalog Produk & Katalog UMKM) */}
+          <div className="nav-dropdown">
+            <span className="nav-dropdown-trigger">
+              <span>Produk UMKM</span>
+              <svg className="chevron" viewBox="0 0 24 24">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </span>
+            <div className="nav-dropdown-menu">
+              <div className="dropdown-list">
+                <Link to="/katalog-produk" className="dropdown-item">
+                  <span className="dropdown-item-title">Katalog Produk</span>
+                </Link>
+                <Link to="/direktori-umkm" className="dropdown-item">
+                  <span className="dropdown-item-title">Katalog UMKM</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* Menu 4: Sistem CSR (Dropdown Sederhana SiMinah & Simon+) */}
           <div className="nav-dropdown">
             <span className="nav-dropdown-trigger">
               <span>Sistem CSR</span>

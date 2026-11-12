@@ -1,0 +1,463 @@
+/* ========================================================
+   Cart Drawer Styling - Pertamina Patra Niaga UMKM
+   ======================================================== */
+
+.cart-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(3px);
+  z-index: 9999;
+  display: flex;
+  justify-content: flex-end;
+  animation: cartFadeIn 0.25s ease-out;
+}
+
+@keyframes cartFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.cart-drawer-container {
+  width: 100%;
+  max-width: 480px;
+  height: 100%;
+  background-color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -8px 0 28px rgba(0, 0, 0, 0.18);
+  animation: cartSlideLeft 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  font-family: 'Montserrat', sans-serif;
+}
+
+@keyframes cartSlideLeft {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+/* Header */
+.cart-header {
+  padding: 18px 24px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.cart-header-title-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cart-header-icon-box {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #fef2f2;
+  color: #dc2626;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-header-texts h2 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.cart-header-texts p {
+  font-size: 12px;
+  color: #64748b;
+  margin: 2px 0 0 0;
+}
+
+.cart-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cart-btn-clear {
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 6px;
+  transition: color 0.15s;
+}
+
+.cart-btn-clear:hover {
+  color: #dc2626;
+  text-decoration: underline;
+}
+
+.cart-btn-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: none;
+  background: none;
+  color: #64748b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s;
+}
+
+.cart-btn-close:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+/* Body Scrollable */
+.cart-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Empty State */
+.cart-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 20px;
+  color: #94a3b8;
+}
+
+.cart-empty-icon {
+  font-size: 56px;
+  color: #cbd5e1;
+  margin-bottom: 12px;
+}
+
+/* Group Card */
+.cart-group-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.cart-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.cart-group-nama {
+  font-size: 14px;
+  font-weight: 700;
+  color: #709a12; /* Brand Green */
+}
+
+.cart-group-kecamatan {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Items in group */
+.cart-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cart-item-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed #f1f5f9;
+}
+
+.cart-item-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.cart-item-img {
+  width: 54px;
+  height: 54px;
+  border-radius: 10px;
+  object-fit: cover;
+  background-color: #f1f5f9;
+  flex-shrink: 0;
+}
+
+.cart-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cart-item-nama {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 3px 0;
+  line-height: 1.3;
+}
+
+.cart-item-price-unit {
+  font-size: 12px;
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.cart-item-price-unit span {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 400;
+}
+
+.cart-item-stepper-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.cart-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+.cart-stepper-btn {
+  width: 26px;
+  height: 26px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #475569;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.1s;
+}
+
+.cart-stepper-btn:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.cart-stepper-qty {
+  width: 28px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.cart-item-btn-remove {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s;
+}
+
+.cart-item-btn-remove:hover {
+  color: #dc2626;
+}
+
+.cart-item-subtotal {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* Subtotal per UMKM */
+.cart-group-subtotal-row {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.cart-group-subtotal-row span:first-child {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.cart-group-subtotal-row span:last-child {
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 14px;
+}
+
+.cart-btn-order-wa {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px 16px;
+  background-color: #84cc16; /* Clean Lime/Green */
+  background: linear-gradient(135deg, #8cb823 0%, #76a117 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 3px 8px rgba(118, 161, 23, 0.25);
+  transition: all 0.15s ease;
+}
+
+.cart-btn-order-wa:hover {
+  background: linear-gradient(135deg, #96c426 0%, #7fab19 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(118, 161, 23, 0.35);
+}
+
+/* Delivery Form Card */
+.cart-delivery-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.cart-delivery-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 14px;
+}
+
+.cart-delivery-header .material-symbols-outlined {
+  font-size: 18px;
+  color: #8cb823;
+}
+
+.cart-form-group {
+  margin-bottom: 12px;
+}
+
+.cart-form-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 4px;
+}
+
+.cart-form-input,
+.cart-form-textarea {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #1e293b;
+  background-color: #ffffff;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+
+.cart-form-input:focus,
+.cart-form-textarea:focus {
+  border-color: #006cb8;
+  box-shadow: 0 0 0 2px rgba(0, 108, 184, 0.12);
+}
+
+.cart-form-textarea {
+  resize: vertical;
+  min-height: 52px;
+}
+
+/* Footer Total */
+.cart-footer {
+  padding: 18px 24px;
+  background-color: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.cart-footer-total-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cart-footer-total-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.cart-footer-total-nominal {
+  font-size: 20px;
+  font-weight: 800;
+  color: #dc2626; /* Accent Red */
+}
+
+.cart-warning-multivendor {
+  background-color: #fffbeb;
+  border: 1px solid #fef3c7;
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 11px;
+  color: #92400e;
+  line-height: 1.45;
+}
+
+.cart-warning-multivendor .material-symbols-outlined {
+  font-size: 16px;
+  color: #d97706;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+.cart-footer-disclaimer {
+  text-align: center;
+  font-size: 11px;
+  color: #94a3b8;
+  margin: 0;
+  line-height: 1.4;
+}
+
