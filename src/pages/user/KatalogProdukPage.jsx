@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import CartDrawer from '../../components/cart/CartDrawer';
+import PageHero from '../../components/common/PageHero';
 import { useCart } from '../../context/CartContext';
 import { umkmService } from '../../services/umkmService';
 import './KatalogProdukPage.css';
@@ -102,14 +103,17 @@ export default function KatalogProdukPage() {
       <Navbar />
       <CartDrawer />
 
+      <PageHero
+        breadcrumbs={[
+          { label: 'Home', href: '/' },
+          { label: 'Produk UMKM', href: '/katalog-produk' },
+        ]}
+        title="Katalog Produk UMKM Binaan"
+        subtitle="Program TJSL CSR Pertamina Patra Niaga Dumai"
+        backgroundImage="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1600&q=80"
+      />
+
       <main className="katalog-container">
-        {/* Intro Singkat */}
-        <div className="katalog-intro">
-          <h1>Katalog Produk UMKM Binaan</h1>
-          <p>
-            Dukung pemberdayaan ekonomi masyarakat lokal pesisir Kota Dumai mitra TJSL PT Pertamina Patra Niaga.
-          </p>
-        </div>
 
         {/* 2 Kolom Layout: Sidebar Filter & Grid Produk */}
         <div className="katalog-layout">

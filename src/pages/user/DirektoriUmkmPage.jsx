@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import CartDrawer from '../../components/cart/CartDrawer';
+import PageHero from '../../components/common/PageHero';
 import { umkmService } from '../../services/umkmService';
 import './DirektoriUmkmPage.css';
 
@@ -50,14 +51,17 @@ export default function DirektoriUmkmPage() {
       <Navbar />
       <CartDrawer />
 
+      <PageHero
+        breadcrumbs={[
+          { label: 'Home', href: '/' },
+          { label: 'Direktori UMKM', href: '/direktori-umkm' },
+        ]}
+        title="Direktori Kelompok UMKM Binaan"
+        subtitle="Mitra TJSL CSR Pertamina Patra Niaga Dumai"
+        backgroundImage="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1600&q=80"
+      />
+
       <main className="direktori-container">
-        {/* Header */}
-        <div className="direktori-header">
-          <h1>Direktori Kelompok UMKM Binaan</h1>
-          <p>
-            Mengenal lebih dekat para pelaku usaha mikro dan kelompok wanita tani mitra binaan TJSL PT Pertamina Patra Niaga Dumai.
-          </p>
-        </div>
 
         {/* Filter Bar */}
         <div className="direktori-filters-bar">

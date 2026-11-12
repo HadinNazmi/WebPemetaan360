@@ -15,7 +15,7 @@ export default function PageHero({
   backgroundImage = 'https://www.pertamina.com/file/files/2025/05/publikasi-laporan-tahunan-hero-alt.webp',
 }) {
   return (
-    <section className="relative w-full overflow-hidden bg-slate-900 text-white min-h-[320px] md:min-h-[420px] flex items-end">
+    <section className="relative w-full overflow-hidden bg-slate-900 text-white min-h-[380px] md:min-h-[500px] flex items-end">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img
@@ -33,7 +33,7 @@ export default function PageHero({
       </div>
 
       {/* Hero Content Container */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 pb-12 md:pb-16">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 pb-16 md:pb-24">
         {/* Breadcrumb Trail */}
         {breadcrumbs && breadcrumbs.length > 0 && (
           <nav aria-label="Breadcrumb" className="mb-4">

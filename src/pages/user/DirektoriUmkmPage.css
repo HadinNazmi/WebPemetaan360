@@ -7,14 +7,14 @@
   background-color: #f8fafc;
   font-family: 'Montserrat', sans-serif;
   color: #1e293b;
-  padding-top: 130px;
+  padding-top: 0;
   padding-bottom: 80px;
 }
 
 .direktori-container {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 72px 20px 0;
 }
 
 .direktori-header {
