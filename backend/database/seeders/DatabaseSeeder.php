@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             ProgramCsrSeeder::class,
             BantuanCsrSeeder::class,
             ArtikelCsrSeeder::class,
+            UmkmSeeder::class,
         ]);
     }
 }

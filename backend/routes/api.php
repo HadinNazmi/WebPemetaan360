@@ -5,6 +5,8 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PublicContentController;
 use App\Http\Controllers\Api\Tour360AdminController;
 use App\Http\Controllers\Api\Tour360PublicController;
+use App\Http\Controllers\Api\UmkmAdminController;
+use App\Http\Controllers\Api\UmkmPublicController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +33,12 @@ Route::prefix('v1')->group(function () {
     Route::get('/tour-360', [Tour360PublicController::class, 'getWilayahList']);
     Route::get('/tour-360-hero', [Tour360PublicController::class, 'getHeroPanorama']);
     Route::get('/tour-360/{slug}', [Tour360PublicController::class, 'getTourDetail']);
+
+    // UMKM Binaan CSR Public API
+    Route::get('/umkm/produk', [UmkmPublicController::class, 'getProduk']);
+    Route::get('/umkm/kelompok', [UmkmPublicController::class, 'getKelompok']);
+    Route::get('/umkm/kelompok/{slug}', [UmkmPublicController::class, 'getKelompokDetail']);
+    Route::get('/umkm/kategori-meta', [UmkmPublicController::class, 'getKategoriMeta']);
 
     // ==========================================
     // Auth Routes (Login Admin CMS)
@@ -115,6 +123,21 @@ Route::prefix('v1')->group(function () {
             Route::post('/scenes/{sceneId}/hotspots', [Tour360AdminController::class, 'storeHotspot']);
             Route::put('/hotspots/{id}', [Tour360AdminController::class, 'updateHotspot']);
             Route::delete('/hotspots/{id}', [Tour360AdminController::class, 'destroyHotspot']);
+        });
+
+        // 9. Kelola UMKM & Produk
+        Route::prefix('umkm')->group(function () {
+            // Kelompok UMKM
+            Route::get('/kelompok', [UmkmAdminController::class, 'getKelompokList']);
+            Route::post('/kelompok', [UmkmAdminController::class, 'storeKelompok']);
+            Route::put('/kelompok/{id}', [UmkmAdminController::class, 'updateKelompok']);
+            Route::delete('/kelompok/{id}', [UmkmAdminController::class, 'deleteKelompok']);
+
+            // Produk UMKM
+            Route::get('/produk', [UmkmAdminController::class, 'getProdukList']);
+            Route::post('/produk', [UmkmAdminController::class, 'storeProduk']);
+            Route::put('/produk/{id}', [UmkmAdminController::class, 'updateProduk']);
+            Route::delete('/produk/{id}', [UmkmAdminController::class, 'deleteProduk']);
         });
     });
 });
