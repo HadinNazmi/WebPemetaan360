@@ -1,96 +1,125 @@
-// Mock data 10 Program CSR Showcase Slider sesuai file referensi index.html
-const PLACEHOLDER_IMG = 'https://www.pertamina.com/file/files/2025/05/publikasi-laporan-tahunan-hero-alt.webp';
+// Mock data Program CSR Showcase Slider
+const DEFAULT_HERO_IMAGE = 'https://www.pertamina.com/file/files/2025/05/publikasi-laporan-tahunan-hero-alt.webp';
+const PLACEHOLDER_IMG = DEFAULT_HERO_IMAGE;
 
 export const mockShowcasePrograms = [
   {
     id: 1,
-    slug: 'program-1',
-    href: 'program-1.html',
-    title: 'Layanan Informasi Publik',
+    slug: 'ppid',
+    href: '/program/ppid',
+    target: '_self',
+    title: 'Layanan Informasi Publik (PPID)',
+    judul_program: 'Layanan Informasi Publik (PPID)',
     category: 'PROFIL PPID',
+    kategori: 'PROFIL PPID',
     img: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80',
-    fallbackImg: PLACEHOLDER_IMG,
+    banner: 'https://www.pertamina.com/file/files/2025/05/banner-ppid.webp',
+    fallbackImg: DEFAULT_HERO_IMAGE,
+    page_title: 'PPID',
+    sub_title: 'Keterbukaan Informasi Publik',
+    konten_lengkap: `
+      <p>Pertamina berkomitmen pada Keterbukaan Informasi Publik yang diamanatkan dalam Undang-Undang No. 14 Tahun 2008 tentang Keterbukaan Informasi Publik.</p>
+      <p>Melalui surat keputusan Direktur Utama PT Pertamina (Persero) No. Kpts-07/C00000/2025-S0, tanggal 15 Mei 2025, tentang Pejabat Pengelola Layanan Informasi Publik Pertamina, Susunan Struktur Organisasi di PT Pertamina (Persero) sebagai berikut:</p>
+      <ol class="list-decimal pl-5 space-y-2 text-slate-700 my-4">
+        <li><strong>Corporate Secretary PT Pertamina (Persero)</strong> sebagai Atasan Pejabat Pengelola Informasi dan Dokumentasi (Atasan PPID)</li>
+        <li><strong>Vice President Corporate Communication PT Pertamina (Persero)</strong> sebagai Pejabat Pengelola Informasi dan Dokumentasi (PPID)</li>
+        <li><strong>Manager Media Communication PT Pertamina (Persero)</strong> sebagai PPID Pelaksana</li>
+      </ol>
+      <p>Sebagai Badan Publik, Pertamina berkomitmen terhadap keterbukaan informasi publik, mengacu kepada Peraturan Komisi Informasi Pusat RI No. 1 Tahun 2021 Tentang Standard Layanan Informasi Publik. Dalam pelaksanaannya, Pertamina telah terintegrasi dengan PPID seluruh Subholding dan Anak Perusahaan Pertamina Group.</p>
+    `,
+    metadata: [
+      {
+        label: 'Alamat',
+        value: 'PPID PT Pertamina (Persero)\nKantor Pusat Pertamina\nJl. Medan Merdeka Timur No. 1A\nGambir Jakarta Pusat',
+      },
+      {
+        label: 'Telp',
+        value: '135',
+        isPhone: true,
+      },
+      {
+        label: 'Email',
+        value: 'infopublik@pertamina.com',
+        isEmail: true,
+      },
+      {
+        label: 'Website',
+        value: 'https://www.pertamina.com/ppid',
+        href: 'https://www.pertamina.com/ppid',
+      },
+    ],
   },
   {
     id: 2,
-    slug: 'program-2',
-    href: 'program-2.html',
+    slug: 'harga-bbm-pertamina',
+    href: '/program/harga-bbm-pertamina',
+    target: '_self',
     title: 'Harga BBM Pertamina',
+    judul_program: 'Harga BBM Pertamina',
     category: 'INFORMASI',
+    kategori: 'INFORMASI',
     img: 'https://images.unsplash.com/photo-1545459720-aac8509eb02c?auto=format&fit=crop&w=800&q=80',
+    banner: 'https://images.unsplash.com/photo-1545459720-aac8509eb02c?auto=format&fit=crop&w=800&q=80',
     fallbackImg: PLACEHOLDER_IMG,
+    page_title: 'Harga BBM Pertamina',
+    sub_title: 'Informasi Penyesuaian Harga',
+    konten_lengkap: '<p>Informasi berkala mengenai penyesuaian harga bahan bakar minyak nonsubsidi.</p>',
+    metadata: [
+      { label: 'Hotline', value: '135', isPhone: true },
+    ],
   },
   {
     id: 3,
-    slug: 'program-3',
-    href: 'program-3.html',
+    slug: 'tata-kelola-perseroan',
+    href: '/program/tata-kelola-perseroan',
+    target: '_self',
     title: 'Tata Kelola Perseroan',
+    judul_program: 'Tata Kelola Perseroan',
     category: 'GCG',
+    kategori: 'GCG',
     img: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80',
-    fallbackImg: PLACEHOLDER_IMG,
+    banner: 'https://www.pertamina.com/file/files/2025/05/banner-gcg.webp',
+    fallbackImg: DEFAULT_HERO_IMAGE,
+    page_title: 'Tata Kelola Perseroan',
+    sub_title: 'Good Corporate Governance (GCG)',
+    konten_lengkap: `
+      <p>PT Pertamina Patra Niaga berkomitmen menerapkan prinsip-prinsip Good Corporate Governance (GCG) yaitu Transparansi, Akuntabilitas, Responsibilitas, Independensi, dan Kewajaran dalam setiap proses bisnis dan pengambilan keputusan operasional.</p>
+    `,
+    metadata: [
+      {
+        label: 'Unit Pengelola',
+        value: 'Fungsi Compliance & Governance PT Pertamina Patra Niaga',
+      },
+      {
+        label: 'Layanan Pengaduan (WBS)',
+        value: 'pertaminaclean@pertamina.com',
+        isEmail: true,
+      },
+    ],
   },
   {
     id: 4,
-    slug: 'program-4',
-    href: 'program-4.html',
-    title: 'Menjadi Perwira Pertamina',
-    category: 'REKRUTMEN',
-    img: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
-    fallbackImg: PLACEHOLDER_IMG,
-  },
-  {
-    id: 5,
-    slug: 'program-5',
-    href: 'program-5.html',
-    title: 'Restorasi Hutan Mangrove',
-    category: 'KEBERLANJUTAN',
-    img: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80',
-    fallbackImg: PLACEHOLDER_IMG,
-  },
-  {
-    id: 6,
-    slug: 'program-6',
-    href: 'program-6.html',
-    title: 'Kemandirian Komunitas Pesisir',
-    category: 'PEMBERDAYAAN',
-    img: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80',
-    fallbackImg: PLACEHOLDER_IMG,
-  },
-  {
-    id: 7,
-    slug: 'program-7',
-    href: 'program-7.html',
-    title: 'Akses Air Bersih Sehat (APO)',
-    category: 'SARANA AIR BERSIH',
-    img: 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=800&q=80',
-    fallbackImg: PLACEHOLDER_IMG,
-  },
-  {
-    id: 8,
-    slug: 'program-8',
-    href: 'program-8.html',
-    title: 'Pengelolaan Ekosistem Gambut',
-    category: 'LAHAN GAMBUT',
-    img: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&q=80',
-    fallbackImg: PLACEHOLDER_IMG,
-  },
-  {
-    id: 9,
-    slug: 'program-9',
-    href: 'program-9.html',
-    title: 'Sedekah Jelantah SiMinah',
-    category: 'SIRKULARITAS',
-    img: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=800&q=80',
-    fallbackImg: PLACEHOLDER_IMG,
-  },
-  {
-    id: 10,
-    slug: 'program-10',
-    href: 'program-10.html',
-    title: 'Energi Bersih Rendah Karbon',
-    category: 'TRANSISI ENERGI',
-    img: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=800&q=80',
-    fallbackImg: PLACEHOLDER_IMG,
+    slug: 'program-mundam',
+    href: '/program/program-mundam',
+    target: '_self',
+    title: 'Program Kampung Mundam Berdikari',
+    judul_program: 'Program Kampung Mundam Berdikari',
+    category: 'PEMBERDAYAAN CSR',
+    kategori: 'PEMBERDAYAAN CSR',
+    img: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80',
+    banner: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80',
+    fallbackImg: DEFAULT_HERO_IMAGE,
+    page_title: 'Program Kampung Mundam',
+    sub_title: 'Pemberdayaan Masyarakat & Ekonomi Sirkular',
+    konten_lengkap: `
+      <p>Program Kampung Mundam Berdikari merupakan program Tanggung Jawab Sosial dan Lingkungan (TJSL) unggulan PT Pertamina Patra Niaga yang berfokus pada kemandirian ekonomi masyarakat pesisir.</p>
+    `,
+    metadata: [
+      {
+        label: 'Lokasi Wilayah',
+        value: 'Kelurahan Mundam, Kecamatan Medang Kampai, Kota Dumai, Riau',
+      },
+    ],
   },
 ];
 

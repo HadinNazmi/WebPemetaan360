@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-dim":"#cbdbf5","on-tertiary-fixed":"#2a1700","tertiary":"#553400","tertiary-container":"#744800","primary-fixed":"#d5e3ff","secondary-fixed":"#7ffc97","on-surface":"#0b1c30","inverse-surface":"#213145","secondary-fixed-dim":"#62df7d","surface-tint":"#1d5fa9","tertiary-fixed":"#ffddb8","on-error-container":"#93000a","secondary":"#006e2d","on-tertiary":"#ffffff","inverse-primary":"#a7c8ff","surface-variant":"#d3e4fe","error-container":"#ffdad6","primary-container":"#00529c","surface-bright":"#f8f9ff","secondary-container":"#7cf994","on-primary":"#ffffff","on-primary-fixed-variant":"#004788","on-primary-container":"#a5c7ff","outline":"#727782","on-surface-variant":"#424751","surface-container":"#e5eeff","on-secondary-container":"#007230","primary":"#003b73","outline-variant":"#c2c6d3","primary-fixed-dim":"#a7c8ff","on-error":"#ffffff","on-tertiary-container":"#ffb75b","surface-container-low":"#eff4ff","surface":"#f8f9ff","surface-container-high":"#dce9ff","surface-container-lowest":"#ffffff","on-secondary-fixed":"#002109","tertiary-fixed-dim":"#ffb95f","background":"#f8f9ff","error":"#ba1a1a","on-background":"#0b1c30","on-secondary":"#ffffff","on-primary-fixed":"#001b3b","surface-container-highest":"#d3e4fe","on-tertiary-fixed-variant":"#653e00","on-secondary-fixed-variant":"#005320","inverse-on-surface":"#eaf1ff"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"margin-sm":"1rem","space-md":"1rem","space-xs":"0.25rem","space-lg":"1.5rem","gutter-sm":"1rem","space-sm":"0.5rem","margin":"2rem","space-xl":"2rem","gutter":"1.5rem"},fontFamily:{"headline-lg-mobile":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"body-lg":["Inter"],"title-md":["Plus Jakarta Sans"],"title-sm":["Plus Jakarta Sans"],"label-md":["Inter"],"body-sm":["Inter"],"body-md":["Inter"],"label-sm":["Inter"],"headline-sm":["Plus Jakarta Sans"]},fontSize:{"headline-lg-mobile":["24px",{lineHeight:"32px",letterSpacing:"-0.01em",fontWeight:"700"}],"headline-lg":["32px",{lineHeight:"40px",letterSpacing:"-0.02em",fontWeight:"700"}],"headline-md":["24px",{lineHeight:"32px",letterSpacing:"-0.01em",fontWeight:"600"}],"body-lg":["16px",{lineHeight:"24px",fontWeight:"400"}],"title-md":["16px",{lineHeight:"24px",fontWeight:"600"}],"title-sm":["14px",{lineHeight:"20px",fontWeight:"600"}],"label-md":["13px",{lineHeight:"18px",fontWeight:"500"}],"body-sm":["12px",{lineHeight:"16px",fontWeight:"400"}],"body-md":["14px",{lineHeight:"20px",fontWeight:"400"}],"label-sm":["11px",{lineHeight:"16px",letterSpacing:"0.04em",fontWeight:"600"}],"headline-sm":["20px",{lineHeight:"28px",fontWeight:"600"}]}}}};</script></head><body class="bg-surface font-body-md text-body-md text-on-surface"><aside class="fixed left-0 top-0 h-screen w-[260px] bg-surface-container-lowest z-50 flex flex-col border-r border-[#E2E8F0]"><div class="p-space-md border-b border-[#E2E8F0] flex flex-col gap-space-xs"><div class="flex items-center gap-space-sm"><img alt="Logo CSR Pemetaan 360" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WEJ5Cwn-FbjimEEJe6vmdQB632_a46GeZqlImQTOnCgeDFFSevhnwWzLCK8a-BQ4yJLKsG5q8OWEwp9P_ycLuynYOku7PSjFJB7vHTaXrY1J_kkGb3-p4tGB5ApfYSnqfFsGEB-RhM6rA8-rezEhkeIEvux4gk0VHoEqEAlUnnI5XuwKDxz3ZaZlBeh0yq8AQJmA5ZmDUYZOSY08kXi3gQSTsyAxYOUB5yl84pNykFgg"/><div class="flex flex-col"><span class="font-title-sm text-title-sm text-primary leading-tight">CSR Pemetaan 360</span><span class="font-label-sm text-[10px] text-on-surface-variant leading-none mt-0.5">Admin CMS Portal</span></div></div><div class="mt-space-xs"><span class="inline-flex items-center px-2 py-0.5 rounded-full font-label-sm text-[10px] bg-surface-container-high text-primary tracking-wide">Pertamina x Politeknik Caltex Riau</span></div></div><div class="flex-1 overflow-y-auto px-space-sm py-space-md flex flex-col gap-space-lg"><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary font-title-sm rounded-lg"><a aria-current="page" class="flex items-center gap-space-sm px-3 py-2 transition-colors bg-primary-container text-on-primary font-title-sm rounded-lg" data-path="ringkasan" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-body-md text-body-md">Ringkasan</span></a></nav><div class="flex flex-col gap-1"><span class="px-3 font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">Kelola Konten Beranda</span><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary font-title-sm rounded-lg"><a class="flex items-center gap-space-sm px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="hero-visi-misi" href="#"><span class="material-symbols-outlined text-[20px]">view_headline</span><span class="font-body-md text-body-md">Hero &amp; Visi Misi</span></a><a class="flex items-center gap-space-sm px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="virtual-tour-360-hotspot" href="#"><span class="material-symbols-outlined text-[20px]">360</span><span class="font-body-md text-body-md">Virtual Tour 360 &amp; Hotspot</span></a><a class="flex items-center gap-space-sm px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="metrik-dampak" href="#"><span class="material-symbols-outlined text-[20px]">monitoring</span><span class="font-body-md text-body-md">Metrik Dampak</span></a><a class="flex items-center gap-space-sm px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="program-unggulan-csr" href="#"><span class="material-symbols-outlined text-[20px]">verified</span><span class="font-body-md text-body-md">Program Unggulan CSR</span></a><a class="flex items-center gap-space-sm px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="penyaluran-bantuan" href="#"><span class="material-symbols-outlined text-[20px]">volunteer_activism</span><span class="font-body-md text-body-md">Penyaluran Bantuan</span></a><a class="flex items-center gap-space-sm px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="publikasi-siaran-pers" href="#"><span class="material-symbols-outlined text-[20px]">newspaper</span><span class="font-body-md text-body-md">Publikasi &amp; Siaran Pers</span></a></nav></div><div class="flex flex-col gap-1"><span class="px-3 font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">Pengaturan Sistem</span><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary font-title-sm rounded-lg"><a class="flex items-center gap-space-sm px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="kelola-pengguna-admin" href="#"><span class="material-symbols-outlined text-[20px]">manage_accounts</span><span class="font-body-md text-body-md">Kelola Pengguna Admin</span></a><a class="flex items-center gap-space-sm px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="konfigurasi-umum-web" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span class="font-body-md text-body-md">Konfigurasi Umum Web</span></a></nav></div></div><div class="p-space-md border-t border-[#E2E8F0] bg-surface-container-lowest"><p class="font-body-sm text-body-sm text-outline text-center">© 2026 Politeknik Caltex Riau</p></div></aside><div class="pl-[260px]"><header class="fixed top-0 left-[260px] right-0 h-16 bg-surface-container-lowest z-40 border-b border-[#E2E8F0] shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-space-xl flex items-center justify-between"><div class="flex items-center gap-space-sm"><span class="font-body-sm text-body-sm text-on-surface-variant">Dashboard</span><span class="text-outline-variant font-label-sm">/</span><span class="font-title-sm text-title-sm text-primary">Ringkasan</span></div><div class="flex items-center gap-space-md"><a class="inline-flex items-center gap-space-xs px-3 py-1.5 rounded-lg border border-[#E2E8F0] bg-surface-container-lowest text-on-surface hover:bg-surface-container-low transition-colors font-label-md text-label-md" href="#"><span class="font-label-md text-label-md">Lihat Web Publik</span><span class="material-symbols-outlined text-[18px] text-outline">open_in_new</span></a><div class="relative flex items-center justify-center"><button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface-container-lowest"></span></button></div><div class="hidden md:flex items-center px-2.5 py-1 rounded-full bg-surface-container-low border border-[#E2E8F0]"><span class="font-label-sm text-label-sm text-primary">Politeknik Caltex Riau</span></div><div class="flex items-center gap-space-sm pl-space-sm border-l border-[#E2E8F0]"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDx0tfXkvZrvS3yHmGzNHzJix7kjsw81XlQGhO_sA8h-QVeQXUNuz-qm7sASpdGUlVD4dxBd5ZnhjuOybMHXTx2Lmm2CiHWBrMoj_CrLutp6Jc1JELcymm3YmCNpGK2sqcQaIKcrLsgURNA_WC88UwmsD2cXocXt6hfWUPh583hn0I6wCCCprS7Tw2drPFodYQ2qqVkwHaxmAUo44asWaoq6-ucDUPVj7knZPea2tX"/><div class="flex flex-col"><span class="font-title-sm text-title-sm text-on-surface leading-tight">admincs</span><span class="font-label-sm text-[11px] text-on-surface-variant leading-none">Super Admin</span></div><a class="ml-space-xs p-1.5 text-on-surface-variant hover:text-error hover:bg-error-container rounded-lg transition-colors" data-path="login" href="#" title="Logout"><span class="material-symbols-outlined text-[20px]">logout</span></a></div></div></div></header><main class="w-full pt-16 bg-[#F8FAFC] min-h-screen px-space-xl py-space-xl"><div class="flex flex-col w-full gap-space-lg pb-12">
+<!-- PAGE HEADER AREA -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex flex-col">
+<h1 class="font-headline-md text-headline-md text-on-surface tracking-tight">Ringkasan Dashboard</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5">Pantau dan kelola konten portal CSR Pemetaan 360 secara real-time</p>
+</div>
+<div class="flex items-center gap-3">
+<!-- Date Period Selector -->
+<button class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md shadow-sm hover:bg-surface-container-low transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px] text-outline">calendar_month</span>
+<span>Jan 2026 - Des 2026</span>
+<span class="material-symbols-outlined text-[18px] text-outline">arrow_drop_down</span>
+</button>
+<!-- Primary Action CTA -->
+<button class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary-container text-on-primary font-title-sm text-title-sm shadow-sm hover:bg-primary transition-all active:scale-[0.99]" type="button">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+<span>Tambah Scene 360 Baru</span>
+</button>
+</div>
+</div>
+<!-- SECTION A: 4 KEY METRIC SUMMARY CARDS -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">Total Wilayah &amp; Scene 360</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold mt-1">12 Wilayah / 48 Scene</span>
+</div>
+<div class="w-11 h-11 rounded-full bg-surface-variant flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-[24px]">explore</span>
+</div>
+</div>
+<div class="flex items-center gap-2 mt-4 pt-3 border-t-0">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+          +6.2%
+        </span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">+3 scene bulan ini</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">Program CSR Ditampilkan</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold mt-1">8 Program</span>
+</div>
+<div class="w-11 h-11 rounded-full bg-tertiary-fixed flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-tertiary text-[24px]">verified</span>
+</div>
+</div>
+<div class="flex items-center gap-2 mt-4 pt-3">
+<span class="inline-flex items-center font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant">
+          4 Featured di Beranda
+        </span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Terverifikasi PCR</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">Total Bantuan Tersalurkan</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold mt-1">Rp 1.45 Miliar</span>
+</div>
+<div class="w-11 h-11 rounded-full bg-secondary-fixed flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-[24px]">volunteer_activism</span>
+</div>
+</div>
+<div class="flex items-center gap-2 mt-4 pt-3">
+<span class="inline-flex items-center font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed">
+          16 Mitra Komunitas
+        </span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Realisasi Dumai</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">Publikasi &amp; Siaran Pers</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold mt-1">34 Artikel</span>
+</div>
+<div class="w-11 h-11 rounded-full bg-surface-container-high flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-outline text-[24px]">newspaper</span>
+</div>
+</div>
+<div class="flex items-center gap-2 mt-4 pt-3">
+<span class="inline-flex items-center font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container-low text-primary">
+          1 Berita Utama (Featured)
+        </span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Update mingguan</span>
+</div>
+</div>
+</div>
+<!-- SECTION B: ANALYTICS & REAL-TIME LOGS (2 COLUMNS: 65% / 35%) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Left Card: 65% width (col-span-8) -->
+<div class="lg:col-span-8 bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4">
+<div>
+<h2 class="font-title-md text-title-md text-on-surface">Metrik Dampak (SiMinah &amp; Simon+) Overview</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Capaian penyerapan anggaran donasi dan jangkauan wilayah intervensi</p>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex items-center bg-surface-container-low rounded-lg p-1 text-on-surface-variant font-label-sm text-label-sm">
+<button class="px-2.5 py-1 rounded bg-surface-container-lowest text-primary shadow-sm font-semibold" type="button">Alokasi Donasi</button>
+<button class="px-2.5 py-1 rounded hover:text-on-surface transition-colors" type="button">Penerima Manfaat</button>
+</div>
+<select class="px-3 py-1.5 rounded-lg bg-surface-container-low font-label-sm text-label-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container cursor-pointer">
+<option>Tahun 2026</option>
+<option>Tahun 2025</option>
+</select>
+</div>
+</div>
+<!-- Inline Corporate SVG Chart -->
+<div class="w-full mt-2 relative">
+<svg class="w-full h-56 text-primary" fill="none" preserveaspectratio="none" viewbox="0 0 760 220">
+<!-- Grid Lines -->
+<line stroke="#E2E8F0" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="760" y1="30" y2="30"></line>
+<line stroke="#E2E8F0" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="760" y1="80" y2="80"></line>
+<line stroke="#E2E8F0" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="760" y1="130" y2="130"></line>
+<line stroke="#E2E8F0" stroke-width="1.5" x1="0" x2="760" y1="180" y2="180"></line>
+<!-- Gradient Area Definition -->
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#00529C" stop-opacity="0.22"></stop>
+<stop offset="100%" stop-color="#00529C" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<!-- Area Fill -->
+<path d="M 30,150 Q 90,140 150,110 T 270,95 T 390,60 T 510,80 T 630,40 T 730,35 L 730,180 L 30,180 Z" fill="url(#chartGradient)"></path>
+<!-- Line Trend (Realisasi) -->
+<path d="M 30,150 Q 90,140 150,110 T 270,95 T 390,60 T 510,80 T 630,40 T 730,35" fill="none" stroke="#00529C" stroke-linecap="round" stroke-width="3"></path>
+<!-- Comparative Bars (Target vs Realisasi) -->
+<rect fill="#D3E4FE" height="65" rx="3" width="14" x="75" y="115"></rect>
+<rect fill="#00529C" height="85" rx="3" width="14" x="135" y="95"></rect>
+<rect fill="#00529C" height="95" rx="3" width="14" x="255" y="85"></rect>
+<rect fill="#00529C" height="125" rx="3" width="14" x="375" y="55"></rect>
+<rect fill="#D3E4FE" height="110" rx="3" width="14" x="495" y="70"></rect>
+<rect fill="#00529C" height="135" rx="3" width="14" x="615" y="45"></rect>
+<rect fill="#00529C" height="145" rx="3" width="14" x="705" y="35"></rect>
+<!-- Data Point Markers -->
+<circle cx="390" cy="60" fill="#FFFFFF" r="5" stroke="#00529C" stroke-width="3"></circle>
+<circle cx="630" cy="40" fill="#FFFFFF" r="5" stroke="#00529C" stroke-width="3"></circle>
+<circle cx="730" cy="35" fill="#FFFFFF" r="5" stroke="#00529C" stroke-width="3"></circle>
+<!-- Interactive Milestone Tooltip Annotation -->
+<g transform="translate(565, 8)">
+<rect fill="#003B73" height="24" rx="6" width="130"></rect>
+<text fill="#FFFFFF" font-family="Inter" font-size="10" font-weight="600" text-anchor="middle" x="65" y="16">Peak: Dumai Barat (+18%)</text>
+</g>
+</svg>
+<!-- X-Axis Labels -->
+<div class="flex justify-between text-on-surface-variant font-label-sm text-[11px] px-4 mt-2">
+<span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>Mei</span><span>Jun</span><span>Jul</span><span>Agu</span><span>Sep</span><span>Okt</span><span>Nov</span><span>Des</span>
+</div>
+</div>
+<!-- Summary Metric Pills -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6 pt-5 bg-surface-container-low rounded-xl p-4">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Realisasi Target</span>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="font-title-md text-title-md text-secondary font-bold">92.4%</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
+</div>
+<span class="font-body-sm text-[11px] text-on-surface-variant mt-0.5">Mencapai target triwulan</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Penerima Manfaat Langsung</span>
+<span class="font-title-md text-title-md text-on-surface font-bold mt-1">4,820 Jiwa</span>
+<span class="font-body-sm text-[11px] text-on-surface-variant mt-0.5">Dumai &amp; Sekitarnya</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Indeks Kepuasan (IKM)</span>
+<div class="flex items-center gap-1 mt-1">
+<span class="font-title-md text-title-md text-primary font-bold">4.85</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">/ 5.0</span>
+</div>
+<span class="font-body-sm text-[11px] text-secondary font-medium mt-0.5">Sangat Puas (A+)</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-body-sm text-body-sm mt-5 pt-3">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-outline">schedule</span>
+<span>Terakhir diperbarui: Hari ini, 10:45 WIB</span>
+</div>
+<button class="text-primary font-label-md text-label-md hover:underline flex items-center gap-1" type="button">
+<span>Unduh Laporan Audit</span>
+<span class="material-symbols-outlined text-[16px]">download</span>
+</button>
+</div>
+</div>
+<!-- Right Card: 35% width (col-span-4) -->
+<div class="lg:col-span-4 bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-4">
+<div class="flex flex-col">
+<h2 class="font-title-md text-title-md text-on-surface">Aktivitas Terakhir Tim Admin</h2>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Log pembaharuan data berkala</span>
+</div>
+<a class="font-label-md text-label-md text-primary hover:underline" href="#">Lihat Semua</a>
+</div>
+<!-- Chronological Timeline -->
+<div class="flex flex-col gap-4 mt-2">
+<!-- Item 1 -->
+<div class="flex items-start gap-3">
+<img class="w-9 h-9 rounded-full object-cover shrink-0 shadow-sm" data-alt="Corporate headshot of an Indonesian IT professional admin Ahmad Fauzi, confident smile, clean corporate studio backdrop, high fidelity, 8k resolution" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKbV7sjib43HlrwE-hK_LjFIy1ookglOhw_2WcUPYqzu8RAOhgXQfHtF0iHJXXlKIh-xg-e3tECfqpRYBycxkCWhr9z_yoGh2a8alYrfO8cPLR7DwFx2OuCTjbYUGjMTflKtWljagFfTkxBTTqDCXev7UNRgLBrpQyu9-XQ_zr0f08GuPtJWTKMu7f3YCYqSSGY31rit3hro_3Yp_-gk0aL7oxWCpamTHMhiz8Oi4X"/>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<span class="font-title-sm text-title-sm text-on-surface truncate">Ahmad Fauzi</span>
+<span class="font-label-sm text-[10px] px-2 py-0.5 rounded bg-surface-variant text-primary font-medium shrink-0">Hotspot 360</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 mt-0.5">Menambahkan Hotspot pada Scene Dumai Barat (Kelurahan Mundam)</p>
+<span class="font-body-sm text-[11px] text-outline">2m yang lalu</span>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-start gap-3">
+<img class="w-9 h-9 rounded-full object-cover shrink-0 shadow-sm" data-alt="Corporate headshot of Siti Nurhaliza an Indonesian female CSR officer wearing professional formal attire and hijab, bright natural lighting, soft office blur background, sharp focus" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxdCWF5pDKJxqhbvE_7vp5qVRyK3NPN3J1PXsUCQGQ79RJGa_20FQhrIPM6BiMt_FuMtUjJsx_qsSNf4DNhasEw2HoQjlFDHPdUv_tO8n4VmlUtFLM6r2L4aJCwjCWm8S_aURQ2G-5T2bVT7HTfMahY1FLQaTsc8_QZSHOiKikRnA876Z9886UI0Yc6NpcqSQn1HcjRLFgy9H_zkroqh-7vglWVxR6qzpy0ZX1eWfz"/>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<span class="font-title-sm text-title-sm text-on-surface truncate">Siti Nurhaliza</span>
+<span class="font-label-sm text-[10px] px-2 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed-variant font-medium shrink-0">Program CSR</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 mt-0.5">Mengubah status Program Kelautan menjadi Aktif</p>
+<span class="font-body-sm text-[11px] text-outline">18m yang lalu</span>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex items-start gap-3">
+<img class="w-9 h-9 rounded-full object-cover shrink-0 shadow-sm" data-alt="Portrait of Budi Santoso an Indonesian field supervisor in blue corporate polo shirt, natural warm sunlight, polite expression, ultra detailed realistic portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmRMsYNeHOdOCzEGI-NTstFbPPNv_bvOYP4dx4fBtqWOTtPgwdK-OHhvcOnKVxwcagnSMYBgunu3Dplt-aURJP0ySq2qFsHLIOOGWjduBp9mSItez_wRFllJNv2lYoXDeuK9CaT7KIMwxop97b0BOAN_5wyT_HkdpSCJYWspfZXKgWtcjl1Kzm1t6Gd1lIRw2ykphU28rUTCG1n0gR3dtg9Rj2IgxKRIACpq3WrNnw"/>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<span class="font-title-sm text-title-sm text-on-surface truncate">Budi Santoso</span>
+<span class="font-label-sm text-[10px] px-2 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-medium shrink-0">Bantuan</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 mt-0.5">Memperbarui data penyaluran bantuan UMKM Nelayan Rp 150 Jt</p>
+<span class="font-body-sm text-[11px] text-outline">1j yang lalu</span>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="flex items-start gap-3">
+<div class="w-9 h-9 rounded-full bg-surface-container-high flex items-center justify-center shrink-0 text-primary font-bold text-xs">
+              RP
+            </div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<span class="font-title-sm text-title-sm text-on-surface truncate">Rian Pratama</span>
+<span class="font-label-sm text-[10px] px-2 py-0.5 rounded bg-surface-container-low text-primary font-medium shrink-0">Publikasi</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 mt-0.5">Menerbitkan Siaran Pers: Peresmian Ekowisata Mangrove Dumai</p>
+<span class="font-body-sm text-[11px] text-outline">3j yang lalu</span>
+</div>
+</div>
+<!-- Item 5 -->
+<div class="flex items-start gap-3">
+<div class="w-9 h-9 rounded-full bg-primary-container text-on-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">admin_panel_settings</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<span class="font-title-sm text-title-sm text-on-surface truncate">admincs</span>
+<span class="font-label-sm text-[10px] px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-medium shrink-0">Sistem</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 mt-0.5">Melakukan backup konfigurasi portal publik</p>
+<span class="font-body-sm text-[11px] text-outline">5j yang lalu</span>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-4 mt-2">
+<a class="w-full inline-flex items-center justify-center gap-1.5 py-2 rounded-lg bg-surface-container-low hover:bg-surface-container text-primary font-label-md text-label-md transition-colors" href="#">
+<span>Buka Audit Log Lengkap</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</a>
+</div>
+</div>
+</div>
+<!-- SECTION C: INTERACTIVE MAP & CONTENT DISTRIBUTION (FULL WIDTH) -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col gap-6">
+<!-- Section Header & Filter Pills -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Sebaran Wilayah Virtual Tour 360 &amp; Program CSR</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Titik sebaran panorama 360 dan realisasi program CSR per kecamatan di Dumai</p>
+</div>
+<!-- Quick Filter Pills -->
+<div class="flex flex-wrap items-center gap-1.5">
+<button class="px-3 py-1.5 rounded-full bg-primary-container text-on-primary font-label-sm text-label-sm font-semibold shadow-sm" type="button">Semua Kecamatan</button>
+<button class="px-3 py-1.5 rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface font-label-sm text-label-sm transition-colors" type="button">Dumai Timur</button>
+<button class="px-3 py-1.5 rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface font-label-sm text-label-sm transition-colors" type="button">Dumai Barat</button>
+<button class="px-3 py-1.5 rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface font-label-sm text-label-sm transition-colors" type="button">Dumai Kota</button>
+<button class="px-3 py-1.5 rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface font-label-sm text-label-sm transition-colors" type="button">Bukit Kapur</button>
+<button class="px-3 py-1.5 rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface font-label-sm text-label-sm transition-colors" type="button">Sungai Sembilan</button>
+</div>
+</div>
+<!-- 70% Map & Preview / 30% Data Table -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+<!-- Left Area (70%): Stylized Vector GIS Interactive Map Container -->
+<div class="lg:col-span-8 relative h-[480px] rounded-xl overflow-hidden bg-slate-900 shadow-inner flex flex-col justify-between p-4">
+<!-- Background Satellite / Coastal Vector Graphic Grid -->
+<div class="absolute inset-0 w-full h-full opacity-60 bg-cover bg-center" data-location="Dumai, Riau, Indonesia" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBek85TOM7_jBOgVN1bRaQWbXHRaUcdF2E_83Wxd5o9NRJ43ogOMGSyvpgb_JP-28dLZXFb9RZQR24mu08FImbyBzLe-zid_f_ujajyM_sd-ieeeYc7n7cVqCD1KfOlkJR3OzHNhLa9wD3uGsK44vDBl0i3yJ8wHdMjdJuHfHSif0LRy7CQvqYFdKAPsHn-Z4r2lmQ6W1-YLj3WpC8ntwdQB9qneu8pH_t3FqDB7xnq')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/40 pointer-events-none"></div>
+<!-- Top Floating Controls & Indicators -->
+<div class="relative z-10 flex items-center justify-between">
+<div class="inline-flex items-center gap-2 bg-surface-container-lowest/90 backdrop-blur-md px-3 py-1.5 rounded-lg shadow-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">GIS Dumai Radar Mode</span>
+<span class="text-outline-variant">|</span>
+<span class="font-body-sm text-[11px] text-on-surface-variant">48 Hotspot Aktif</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-lg bg-surface-container-lowest/90 backdrop-blur-md text-on-surface hover:bg-surface-container shadow-sm" title="Compass Reset" type="button">
+<span class="material-symbols-outlined text-[20px]">explore</span>
+</button>
+<div class="flex flex-col bg-surface-container-lowest/90 backdrop-blur-md rounded-lg shadow-sm">
+<button class="p-1.5 text-on-surface hover:bg-surface-container rounded-t-lg" type="button"><span class="material-symbols-outlined text-[18px]">add</span></button>
+<button class="p-1.5 text-on-surface hover:bg-surface-container rounded-b-lg" type="button"><span class="material-symbols-outlined text-[18px]">remove</span></button>
+</div>
+<button class="p-2 rounded-lg bg-surface-container-lowest/90 backdrop-blur-md text-on-surface hover:bg-surface-container shadow-sm" title="Fullscreen Map" type="button">
+<span class="material-symbols-outlined text-[20px]">fullscreen</span>
+</button>
+</div>
+</div>
+<!-- Interactive Hotspot Pins Over GIS Map -->
+<!-- Pin 1: Dumai Timur -->
+<div class="absolute top-[28%] left-[62%] -translate-x-1/2 -translate-y-1/2 z-20 group cursor-pointer">
+<div class="relative flex items-center">
+<span class="absolute inline-flex h-10 w-10 -left-1 -top-1 rounded-full bg-sky-400 opacity-60 animate-ping"></span>
+<div class="relative flex items-center gap-1.5 bg-primary-container text-on-primary pl-2 pr-3 py-1 rounded-full shadow-lg">
+<span class="material-symbols-outlined text-[16px]">360</span>
+<span class="font-label-sm text-[11px] font-bold tracking-wide">12 Scenes | 4 CSR</span>
+</div>
+</div>
+<span class="text-[10px] font-semibold text-white drop-shadow block mt-1 text-center bg-black/40 px-1.5 py-0.5 rounded">Dumai Timur</span>
+</div>
+<!-- Pin 2: Dumai Barat (Selected Active Hotspot) -->
+<div class="absolute top-[48%] left-[28%] -translate-x-1/2 -translate-y-1/2 z-30 group cursor-pointer">
+<div class="relative flex items-center">
+<span class="absolute inline-flex h-12 w-12 -left-2 -top-2 rounded-full bg-emerald-400 opacity-70 animate-ping"></span>
+<div class="relative flex items-center gap-1.5 bg-secondary text-on-secondary pl-2 pr-3 py-1 rounded-full shadow-xl ring-2 ring-white">
+<span class="material-symbols-outlined text-[16px]">vrpano</span>
+<span class="font-label-sm text-[11px] font-bold tracking-wide">10 Scenes | 2 CSR</span>
+</div>
+</div>
+<span class="text-[10px] font-bold text-secondary-container drop-shadow block mt-1 text-center bg-black/60 px-2 py-0.5 rounded-full">Dumai Barat (Aktif)</span>
+<!-- Tooltip Preview Card Popover -->
+<div class="absolute bottom-12 -left-20 w-64 bg-surface-container-lowest rounded-xl shadow-2xl p-3 z-40 animate-fade-in pointer-events-auto">
+<div class="relative h-24 rounded-lg overflow-hidden mb-2">
+<img class="w-full h-full object-cover" data-alt="Scenic 360 degree panoramic view of lush Dumai mangrove conservation area with wooden canopy boardwalk, calm coastal water reflection, bright daylight, high quality corporate photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJnCZ8Sk-9MefZPakxJMG7iG_bvqu9f8r62KZ89m6FlDcEniCymegr7ELmTaDvUOmSL_sFkaKTpntGgU6EQ9sCrp53ysjgcCQllzjLEJdS3xz6_ee1lEbYmQCVAGtW4mYJkOXqZkjfsqFRGoXbkjIRlahYebx86XVfYvvURY-WouhzVe-tRoMFnXCywrtKJ_d3xxUZnzsmpVAQGmhjiONpf-nHLsgAUaN8hoI_2wve"/>
+<span class="absolute top-1.5 left-1.5 font-label-sm text-[10px] px-2 py-0.5 rounded bg-black/60 text-white backdrop-blur">360° View Ready</span>
+</div>
+<h4 class="font-title-sm text-title-sm text-on-surface leading-tight">Ekowisata Mangrove Mundam</h4>
+<p class="font-body-sm text-[11px] text-on-surface-variant mt-0.5">Kecamatan Dumai Barat • 8 Hotspot info</p>
+<div class="flex items-center justify-between mt-3 pt-2">
+<span class="font-label-sm text-[10px] text-secondary font-bold">Terverifikasi PCR</span>
+<button class="px-2.5 py-1 rounded bg-primary-container hover:bg-primary text-on-primary font-label-sm text-[11px] font-medium transition-colors" type="button">
+                Edit Scene
+              </button>
+</div>
+</div>
+</div>
+<!-- Pin 3: Dumai Kota -->
+<div class="absolute top-[42%] left-[48%] -translate-x-1/2 -translate-y-1/2 z-20 group cursor-pointer">
+<div class="relative flex items-center gap-1.5 bg-primary-container text-on-primary pl-2 pr-3 py-1 rounded-full shadow-lg">
+<span class="material-symbols-outlined text-[16px]">360</span>
+<span class="font-label-sm text-[11px] font-bold">8 Scenes | 3 CSR</span>
+</div>
+<span class="text-[10px] font-semibold text-white drop-shadow block mt-1 text-center bg-black/40 px-1.5 py-0.5 rounded">Dumai Kota</span>
+</div>
+<!-- Pin 4: Bukit Kapur -->
+<div class="absolute top-[72%] left-[70%] -translate-x-1/2 -translate-y-1/2 z-20 group cursor-pointer">
+<div class="relative flex items-center gap-1.5 bg-primary-container text-on-primary pl-2 pr-3 py-1 rounded-full shadow-lg">
+<span class="material-symbols-outlined text-[16px]">360</span>
+<span class="font-label-sm text-[11px] font-bold">6 Scenes | 1 CSR</span>
+</div>
+<span class="text-[10px] font-semibold text-white drop-shadow block mt-1 text-center bg-black/40 px-1.5 py-0.5 rounded">Bukit Kapur</span>
+</div>
+<!-- Bottom Legend Floating Bar -->
+<div class="relative z-10 flex flex-wrap items-center gap-4 bg-surface-container-lowest/90 backdrop-blur-md px-4 py-2 rounded-lg shadow-sm">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider font-semibold">Legenda:</span>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded-full bg-primary-container"></span>
+<span class="font-body-sm text-[12px] text-on-surface">Scene 360 Aktif</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded-full bg-secondary"></span>
+<span class="font-body-sm text-[12px] text-on-surface">Program Unggulan CSR</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded-full bg-tertiary-fixed"></span>
+<span class="font-body-sm text-[12px] text-on-surface">Hotspot Interaktif</span>
+</div>
+</div>
+</div>
+<!-- Right Area (30%): Clean Corporate Data Table -->
+<div class="lg:col-span-4 flex flex-col justify-between h-[480px]">
+<div class="overflow-hidden rounded-xl bg-surface-container-low shadow-sm">
+<div class="px-4 py-3 bg-surface-container flex items-center justify-between">
+<span class="font-title-sm text-title-sm text-on-surface">Sebaran Data Per Wilayah</span>
+<span class="font-label-sm text-[11px] text-on-surface-variant font-medium">6 Kecamatan</span>
+</div>
+<div class="divide-y divide-surface-container">
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-sm text-[11px] uppercase tracking-wider">
+<th class="py-2.5 px-3">Kecamatan</th>
+<th class="py-2.5 px-2 text-center">Scene 360</th>
+<th class="py-2.5 px-2 text-center">CSR</th>
+<th class="py-2.5 px-3 text-right">Status</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm text-on-surface divide-y divide-surface-container/60">
+<tr class="hover:bg-surface-container-lowest/60 transition-colors">
+<td class="py-2.5 px-3 font-semibold text-primary">Dumai Timur</td>
+<td class="py-2.5 px-2 text-center">12 Scene</td>
+<td class="py-2.5 px-2 text-center">4 Prog</td>
+<td class="py-2.5 px-3 text-right">
+<span class="font-label-sm text-[11px] px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-semibold">Aktif</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest/60 transition-colors bg-surface-container-lowest/30">
+<td class="py-2.5 px-3 font-semibold text-primary">Dumai Barat</td>
+<td class="py-2.5 px-2 text-center">10 Scene</td>
+<td class="py-2.5 px-2 text-center">2 Prog</td>
+<td class="py-2.5 px-3 text-right">
+<span class="font-label-sm text-[11px] px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-semibold">Aktif</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest/60 transition-colors">
+<td class="py-2.5 px-3 font-semibold text-primary">Dumai Kota</td>
+<td class="py-2.5 px-2 text-center">8 Scene</td>
+<td class="py-2.5 px-2 text-center">3 Prog</td>
+<td class="py-2.5 px-3 text-right">
+<span class="font-label-sm text-[11px] px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-semibold">Aktif</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest/60 transition-colors">
+<td class="py-2.5 px-3 font-semibold text-primary">Bukit Kapur</td>
+<td class="py-2.5 px-2 text-center">6 Scene</td>
+<td class="py-2.5 px-2 text-center">1 Prog</td>
+<td class="py-2.5 px-3 text-right">
+<span class="font-label-sm text-[11px] px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-semibold">Aktif</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest/60 transition-colors">
+<td class="py-2.5 px-3 font-semibold text-primary">Medang Kampai</td>
+<td class="py-2.5 px-2 text-center">7 Scene</td>
+<td class="py-2.5 px-2 text-center">2 Prog</td>
+<td class="py-2.5 px-3 text-right">
+<span class="font-label-sm text-[11px] px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-semibold">Aktif</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest/60 transition-colors">
+<td class="py-2.5 px-3 font-semibold text-primary">Sungai Sembilan</td>
+<td class="py-2.5 px-2 text-center">5 Scene</td>
+<td class="py-2.5 px-2 text-center">2 Prog</td>
+<td class="py-2.5 px-3 text-right">
+<span class="font-label-sm text-[11px] px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-semibold">Aktif</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Action Button at Bottom -->
+<div class="pt-3">
+<a class="w-full inline-flex items-center justify-between px-4 py-3 rounded-lg bg-surface-container-lowest hover:bg-surface-container text-primary font-title-sm text-title-sm shadow-sm transition-all group" href="#">
+<span class="font-semibold">Kelola Detail Wilayah &amp; Hotspot</span>
+<span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Simple micro-interaction for filter pills
+  document.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      if (this.innerText.includes('Kecamatan')) {
+        document.querySelectorAll('button').forEach(b => {
+          if (b.innerText.includes('Kecamatan')) {
+            b.classList.remove('bg-primary-container', 'text-on-primary', 'font-semibold');
+            b.classList.add('bg-surface-container-low', 'text-on-surface');
+          }
+        });
+        this.classList.remove('bg-surface-container-low', 'text-on-surface');
+        this.classList.add('bg-primary-container', 'text-on-primary', 'font-semibold');
+      }
+    });
+  });
+</script></main></div></body></html>

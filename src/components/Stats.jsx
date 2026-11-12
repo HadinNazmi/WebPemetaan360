@@ -68,12 +68,18 @@ export default function Stats() {
         {/* Garis Pembatas */}
         <div className="stat-divider"></div>
 
-        {/* 3 Kolom Statistik Capaian dari Mock / Service */}
-        <div className="stat-cards-grid">
-          {metrics.map((item) => (
-            <StatItem key={item.id} item={item} isVisible={isInView} />
-          ))}
-        </div>
+        {/* Kolom Statistik Capaian Murni dari Database */}
+        {metrics.length === 0 ? (
+          <div className="w-full py-8 text-center text-slate-400 text-sm">
+            Belum ada metrik capaian dampak di database.
+          </div>
+        ) : (
+          <div className="stat-cards-grid">
+            {metrics.map((item) => (
+              <StatItem key={item.id} item={item} isVisible={isInView} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

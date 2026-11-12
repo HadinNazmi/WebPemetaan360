@@ -71,77 +71,83 @@ export default function NewsSection() {
           </div>
         </div>
 
-        {/* Bento Grid 5 Artikel */}
-        <div className="news-bento-grid">
-          {/* Artikel Utama (Featured - Besar di Kiri) */}
-          {featuredArticle && (
-            <a
-              href={featuredArticle.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="news-card news-card-featured"
-            >
-              <img
-                src={featuredArticle.gambar}
-                alt={featuredArticle.judul}
-                className="news-card-img"
-                onError={(e) => {
-                  e.currentTarget.src = PLACEHOLDER_IMG;
-                }}
-              />
-              <div className="news-card-overlay"></div>
-              <div className="news-card-content">
-                <span className="news-card-tag">{featuredArticle.kategori_tag}</span>
-                <h3 className="news-card-title">{featuredArticle.judul}</h3>
-                <span className="news-card-date">
-                  <svg viewBox="0 0 24 24">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                    <line x1="16" y1="2" x2="16" y2="6" />
-                    <line x1="8" y1="2" x2="8" y2="6" />
-                    <line x1="3" y1="10" x2="21" y2="10" />
-                  </svg>
-                  {featuredArticle.published_at}
-                </span>
-              </div>
-            </a>
-          )}
+        {/* Bento Grid 5 Artikel atau Pesan Kosong */}
+        {articles.length === 0 ? (
+          <div className="w-full py-12 text-center text-slate-400 bg-slate-900/40 border border-dashed border-slate-700/50 rounded-xl my-4">
+            <p className="text-base font-medium text-slate-300">Belum ada artikel publikasi di database</p>
+            <p className="text-xs text-slate-400 mt-1">Artikel akan tampil setelah ditambahkan via database atau CMS admin.</p>
+          </div>
+        ) : (
+          <div className="news-bento-grid">
+            {/* Artikel Utama (Featured - Besar di Kiri) */}
+            {featuredArticle && (
+              <a
+                href={featuredArticle.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="news-card news-card-featured"
+              >
+                <img
+                  src={featuredArticle.gambar}
+                  alt={featuredArticle.judul}
+                  className="news-card-img"
+                  onError={(e) => {
+                    e.currentTarget.src = PLACEHOLDER_IMG;
+                  }}
+                />
+                <div className="news-card-overlay"></div>
+                <div className="news-card-content">
+                  <span className="news-card-tag">{featuredArticle.kategori_tag}</span>
+                  <h3 className="news-card-title">{featuredArticle.judul}</h3>
+                  <span className="news-card-date">
+                    <svg viewBox="0 0 24 24">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                      <line x1="16" y1="2" x2="16" y2="6" />
+                      <line x1="8" y1="2" x2="8" y2="6" />
+                      <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                    {featuredArticle.published_at}
+                  </span>
+                </div>
+              </a>
+            )}
 
-          {/* 4 Artikel Pendukung (Kanan - Grid 2x2) */}
-          {regularArticles.slice(0, 4).map((art) => (
-            <a
-              key={art.id}
-              href={art.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="news-card"
-            >
-              <img
-                src={art.gambar}
-                alt={art.judul}
-                className="news-card-img"
-                onError={(e) => {
-                  e.currentTarget.src = PLACEHOLDER_IMG;
-                }}
-              />
-              <div className="news-card-overlay"></div>
-              <div className="news-card-content">
-                <span className="news-card-tag">{art.kategori_tag}</span>
-                <h3 className="news-card-title">{art.judul}</h3>
-                <span className="news-card-date">
-                  <svg viewBox="0 0 24 24">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                    <line x1="16" y1="2" x2="16" y2="6" />
-                    <line x1="8" y1="2" x2="8" y2="6" />
-                    <line x1="3" y1="10" x2="21" y2="10" />
-                  </svg>
-                  {art.published_at}
-                </span>
-              </div>
-            </a>
-          ))}
-        </div>
+            {/* 4 Artikel Pendukung (Kanan - Grid 2x2) */}
+            {regularArticles.slice(0, 4).map((art) => (
+              <a
+                key={art.id}
+                href={art.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="news-card"
+              >
+                <img
+                  src={art.gambar}
+                  alt={art.judul}
+                  className="news-card-img"
+                  onError={(e) => {
+                    e.currentTarget.src = PLACEHOLDER_IMG;
+                  }}
+                />
+                <div className="news-card-overlay"></div>
+                <div className="news-card-content">
+                  <span className="news-card-tag">{art.kategori_tag}</span>
+                  <h3 className="news-card-title">{art.judul}</h3>
+                  <span className="news-card-date">
+                    <svg viewBox="0 0 24 24">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                      <line x1="16" y1="2" x2="16" y2="6" />
+                      <line x1="8" y1="2" x2="8" y2="6" />
+                      <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                    {art.published_at}
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
 }
-

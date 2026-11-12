@@ -1,0 +1,484 @@
+/* ========================================================
+   Katalog Produk UMKM Styling - Sesuai Mockup Referensi
+   ======================================================== */
+
+.katalog-page {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  font-family: 'Montserrat', sans-serif;
+  color: #1e293b;
+  padding-top: 0;
+  padding-bottom: 80px;
+}
+
+.katalog-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 72px 20px 0;
+}
+
+/* Page Intro */
+.katalog-intro {
+  margin-bottom: 28px;
+}
+
+.katalog-intro h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+  margin: 0 0 6px 0;
+}
+
+.katalog-intro p {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Layout Grid 2 Columns */
+.katalog-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 28px;
+  align-items: flex-start;
+}
+
+/* 1. SIDEBAR FILTER */
+.katalog-sidebar {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 22px 18px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+  position: sticky;
+  top: 140px;
+}
+
+.katalog-filter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #f1f5f9;
+  margin-bottom: 18px;
+}
+
+.katalog-filter-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.katalog-filter-title .material-symbols-outlined {
+  font-size: 18px;
+  color: #8cb823;
+}
+
+.katalog-btn-reset {
+  background: none;
+  border: none;
+  font-size: 11px;
+  font-weight: 600;
+  color: #dc2626;
+  cursor: pointer;
+  padding: 2px 4px;
+}
+
+.katalog-btn-reset:hover {
+  text-decoration: underline;
+}
+
+.filter-section {
+  margin-bottom: 22px;
+}
+
+.filter-section:last-child {
+  margin-bottom: 0;
+}
+
+.filter-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #475569;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.filter-label .material-symbols-outlined {
+  font-size: 16px;
+  color: #8cb823;
+}
+
+/* Search input */
+.filter-search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.filter-search-icon {
+  position: absolute;
+  left: 10px;
+  color: #94a3b8;
+  font-size: 18px;
+  pointer-events: none;
+}
+
+.filter-search-input {
+  width: 100%;
+  padding: 8px 10px 8px 34px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #1e293b;
+  outline: none;
+  transition: all 0.15s;
+}
+
+.filter-search-input:focus {
+  border-color: #8cb823;
+  box-shadow: 0 0 0 2px rgba(140, 184, 35, 0.15);
+}
+
+/* Categories List */
+.filter-kategori-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.filter-kategori-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: 8px;
+  border: none;
+  background: none;
+  font-size: 12px;
+  color: #475569;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+
+.filter-kategori-btn:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.filter-kategori-btn.active {
+  background-color: #8cb823;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.filter-kategori-count {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background-color: #f1f5f9;
+  color: #64748b;
+}
+
+.filter-kategori-btn.active .filter-kategori-count {
+  background-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+/* Price Range */
+.filter-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-radio-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #475569;
+  cursor: pointer;
+}
+
+.filter-radio-label input {
+  accent-color: #dc2626;
+  cursor: pointer;
+}
+
+.filter-price-manual-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.filter-price-input {
+  width: 100%;
+  padding: 7px 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 11px;
+  color: #1e293b;
+  outline: none;
+}
+
+.filter-price-input:focus {
+  border-color: #8cb823;
+}
+
+/* Dropdown Kecamatan */
+.filter-select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #334155;
+  background-color: #ffffff;
+  outline: none;
+  cursor: pointer;
+}
+
+/* 2. MAIN CONTENT AREA */
+.katalog-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Top bar sort */
+.katalog-topbar {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.katalog-count-info {
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.katalog-sort-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.katalog-sort-select {
+  padding: 6px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #0f172a;
+  background-color: #ffffff;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Product Cards Grid */
+.katalog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.product-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px -6px rgba(0, 0, 0, 0.08);
+}
+
+.product-img-box {
+  width: 100%;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+  background-color: #f1f5f9;
+}
+
+.product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.product-card:hover .product-img {
+  transform: scale(1.04);
+}
+
+.product-card-body {
+  padding: 14px 16px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.product-badges-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.badge-kategori-tag {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  background-color: #f1f5f9;
+  color: #475569;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.badge-kecamatan-tag {
+  font-size: 10px;
+  color: #64748b;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.product-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 4px 0;
+  line-height: 1.35;
+}
+
+.product-kelompok-link {
+  font-size: 11px;
+  color: #64748b;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+  margin-bottom: 12px;
+  transition: color 0.15s;
+}
+
+.product-kelompok-link:hover {
+  color: #8cb823;
+  text-decoration: underline;
+}
+
+.product-card-bottom {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px dashed #f1f5f9;
+}
+
+.product-price-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-price-nominal {
+  font-size: 16px;
+  font-weight: 800;
+  color: #dc2626; /* Pertamina Red Accent */
+  line-height: 1.2;
+}
+
+.product-price-satuan {
+  font-size: 10px;
+  color: #64748b;
+}
+
+.product-btn-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background-color: #dc2626; /* Red CTA like mockup */
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.25);
+}
+
+.product-btn-add:hover {
+  background-color: #b91c1c;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(220, 38, 38, 0.35);
+}
+
+/* Empty Grid State */
+.katalog-empty-grid {
+  grid-column: 1 / -1;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 60px 20px;
+  text-align: center;
+  color: #64748b;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .katalog-layout {
+    grid-template-columns: 240px 1fr;
+    gap: 20px;
+  }
+  .katalog-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .katalog-layout {
+    grid-template-columns: 1fr;
+  }
+  .katalog-sidebar {
+    position: static;
+  }
+  .katalog-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

@@ -26,7 +26,7 @@ export default function CsrAidSection() {
     if (!trackRef.current || items.length === 0) return;
     const nextIdx = (activeIndex + 1) % items.length;
     setActiveIndex(nextIdx);
-    const cardWidth = trackRef.current.querySelector('.csr-aid-card')?.offsetWidth || 270;
+    const cardWidth = trackRef.current.querySelector('.csr-aid-card')?.offsetWidth || 280;
     trackRef.current.scrollTo({ left: nextIdx * (cardWidth + 20), behavior: 'smooth' });
   };
 
@@ -35,7 +35,7 @@ export default function CsrAidSection() {
     if (!trackRef.current || items.length === 0) return;
     const prevIdx = (activeIndex - 1 + items.length) % items.length;
     setActiveIndex(prevIdx);
-    const cardWidth = trackRef.current.querySelector('.csr-aid-card')?.offsetWidth || 270;
+    const cardWidth = trackRef.current.querySelector('.csr-aid-card')?.offsetWidth || 280;
     trackRef.current.scrollTo({ left: prevIdx * (cardWidth + 20), behavior: 'smooth' });
   };
 
@@ -43,7 +43,7 @@ export default function CsrAidSection() {
   const handleCardClick = (idx) => {
     if (dragInfo.current.moved) return;
     setActiveIndex(idx);
-    const cardWidth = trackRef.current.querySelector('.csr-aid-card')?.offsetWidth || 270;
+    const cardWidth = trackRef.current.querySelector('.csr-aid-card')?.offsetWidth || 280;
     trackRef.current.scrollTo({ left: idx * (cardWidth + 20), behavior: 'smooth' });
   };
 
@@ -71,8 +71,6 @@ export default function CsrAidSection() {
     setIsDragging(false);
   };
 
-  const activeItem = items[activeIndex] || items[0] || {};
-
   return (
     <section className="sec-csr-aid" id="bantuan-csr">
       <div className="wrap-content">
@@ -92,42 +90,43 @@ export default function CsrAidSection() {
             </a>
           </div>
         </div>
+      </div>
 
-        {/* Body: Foto Utama Dinamis di Kiri & Kartu Bantuan di Kanan */}
-        <div className="csr-aid-body">
-          {/* Foto di Kiri: Berganti otomatis saat tombol panah / kartu diklik */}
-          <div className="csr-aid-photo-wrap">
-            {items.map((item, idx) => (
-              <img
-                key={item.id}
-                src={item.gambar_cover}
-                alt={item.title}
-                className={`csr-aid-photo ${idx === activeIndex ? 'is-active' : ''}`}
-                loading="lazy"
-                onError={(e) => {
-                  e.currentTarget.src = PLACEHOLDER_IMG;
-                }}
-              />
-            ))}
-            
-            {/* <div className="csr-aid-photo-badge">
-              <span className="badge-dot" />
-              <span>{activeItem.title || 'Program Unggulan'}</span>
-            </div> */}
-          </div>
+      {/* Body: Foto Utama Full ke Tepi Kiri & Kartu Bantuan Menimpa Sedikit */}
+      <div className="csr-aid-body">
+        {/* Foto di Kiri: Full flush ke tepi kiri layar */}
+        <div className="csr-aid-photo-wrap">
+          {items.map((item, idx) => (
+            <img
+              key={item.id}
+              src={item.gambar_cover}
+              alt={item.title}
+              className={`csr-aid-photo ${idx === activeIndex ? 'is-active' : ''}`}
+              loading="lazy"
+              onError={(e) => {
+                e.currentTarget.src = PLACEHOLDER_IMG;
+              }}
+            />
+          ))}
+        </div>
 
-          {/* Carousel Kartu Penyaluran Bantuan */}
-          <div className="csr-aid-carousel-wrapper">
-            <div
-              className={`csr-aid-track ${isDragging ? 'is-dragging' : ''}`}
-              id="csr-aid-track"
-              ref={trackRef}
-              onMouseDown={handleMouseDown}
-              onMouseMove={handleMouseMove}
-              onMouseUp={handleMouseUpOrLeave}
-              onMouseLeave={handleMouseUpOrLeave}
-            >
-              {items.map((item, idx) => {
+        {/* Carousel Kartu Penyaluran Bantuan */}
+        <div className="csr-aid-carousel-wrapper">
+          <div
+            className={`csr-aid-track ${isDragging ? 'is-dragging' : ''}`}
+            id="csr-aid-track"
+            ref={trackRef}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUpOrLeave}
+            onMouseLeave={handleMouseUpOrLeave}
+          >
+            {items.length === 0 ? (
+              <div className="text-slate-400 text-sm py-8 px-4">
+                Belum ada data penyaluran bantuan di database.
+              </div>
+            ) : (
+              items.map((item, idx) => {
                 const isActive = idx === activeIndex;
                 return (
                   <div
@@ -150,10 +149,12 @@ export default function CsrAidSection() {
                     </div>
                   </div>
                 );
-              })}
-            </div>
+              })
+            )}
+          </div>
 
-            {/* Tombol Navigasi Bawah Kanan */}
+          {/* Tombol Navigasi Bawah Kanan */}
+          {items.length > 0 && (
             <div className="csr-aid-nav">
               <button
                 className="btn-aid-nav"
@@ -174,7 +175,7 @@ export default function CsrAidSection() {
                 <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </button>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </section>

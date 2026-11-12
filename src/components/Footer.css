@@ -19,11 +19,16 @@
   margin: 0 auto 52px;
 }
 .footer-center-logo {
-  height: 48px;
+  height: 54px;
   width: auto;
+  max-width: 300px;
   object-fit: contain;
-  margin: 0 auto 18px;
+  margin: 0 auto 16px;
   display: block;
+  transition: transform 0.25s ease;
+}
+.footer-center-logo:hover {
+  transform: scale(1.02);
 }
 .footer-center-brand .footer-info-line {
   font-size: 13.5px;
@@ -187,23 +192,35 @@
 .footer-social-icons {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
-.footer-social-icons a {
-  color: #111111;
+.footer-social-pill {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  transition: color 0.2s, transform 0.2s;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #334155 !important;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
 }
-.footer-social-icons a:hover {
-  color: #e4002b;
+.footer-social-pill:hover {
+  background: #f8fafc;
+  border-color: #003366;
+  color: #003366 !important;
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 51, 102, 0.12);
 }
-.footer-social-icons svg {
-  width: 16px;
-  height: 16px;
+.footer-social-pill svg {
+  width: 15px;
+  height: 15px;
   fill: currentColor;
+  flex-shrink: 0;
 }
 
 @media (max-width: 992px) {

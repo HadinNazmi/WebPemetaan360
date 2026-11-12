@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from '../../components/Navbar.jsx';
 import AnimatedSection from '../../components/AnimatedSection.jsx';
+import HeroTourSection from '../../components/HeroTourSection.jsx';
 import VisiMisiSection from '../../components/VisiMisiSection.jsx';
 import Stats from '../../components/Stats.jsx';
 import ProgramList from '../../features/program/ProgramList.jsx';
@@ -15,26 +16,20 @@ export default function HomePage() {
       {/* 1. HEADER / NAVBAR PERTAMINA (Fixed Header - Selalu Tampil) */}
       <Navbar />
 
-      {/* 2. SECTION HERO / VIRTUAL TOUR 360 & TABS (100vh Sesuai Standar Nature-GSAP & Referensi) */}
-      <AnimatedSection id="hero" isHero={true}>
-        <div style={{
-          paddingTop: '100px',
-          minHeight: 'calc(100vh - 80px)',
-          background: '#0f172a',
-          color: '#64748b',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderBottom: '1px dashed #334151',
-          gap: '12px'
-        }}>
-          <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#94a3b8' }}>
-            [ SECTION HERO / VIRTUAL TOUR 360 & TABS ]
-          </div>
-          <div style={{ fontSize: '14px' }}>Posisi Scene 360 Panorama & Tab Pemilihan Wilayah</div>
-        </div>
-      </AnimatedSection>
+      {/* 2. SECTION HERO / VIRTUAL TOUR 360 & TABS */}
+      {/* 
+        [CATATAN UNUSED - KODE ASLI TEMAN DIPERTAHANKAN]:
+        Animasi GSAP pinning, parallax scrub, dan fade abu-abu pada hero dinonaktifkan (unused)
+        agar tampilan Hero Section langsung 'plong', jernih, dan terang tanpa penutup abu-abu.
+        Kode asli pembungkus AnimatedSection tetap disimpan di bawah ini (jangan dihapus):
+
+        <AnimatedSection id="hero" isHero={true}>
+          <HeroTourSection />
+        </AnimatedSection>
+      */}
+      <section id="hero" className="w-full relative">
+        <HeroTourSection />
+      </section>
 
       {/* 3. SECTION VISI & MISI CSR + SEKILAS PERTAMINA (Masing-masing terhubung GSAP ScrollTrigger) */}
       <VisiMisiSection />

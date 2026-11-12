@@ -1,12 +1,97 @@
 @import "tailwindcss";
 
-/* ===== SCROLL-DRIVEN BIDIRECTIONAL ANIMATION ===== */
+@theme {
+  --font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --default-font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ===== LOCAL MONTSERRAT FONT (public/font) ===== */
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/font/Montserrat-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/font/Montserrat-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Matikan HANYA gesture swipe navigasi ke samping (kiri & kanan) 2 jari touchpad. Scroll atas & bawah tetap normal lancar */
+html {
+  overscroll-behavior-x: none;
+  overscroll-behavior-y: auto;
+  overflow-x: hidden;
+}
+
+body {
+  overscroll-behavior-x: none;
+  overscroll-behavior-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.pnlm-container {
+  overscroll-behavior-x: contain;
+}
+
+html,
+body,
+#root,
+button,
+input,
+select,
+textarea,
+p,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+div {
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.font-montserrat {
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ===== SCROLL-DRIVEN BIDIRECTIONAL ANIMATION (UNUSED - KODE ASLI TEMAN DISIMPAN) ===== */
+/*
+  [KODE ASLI TEMAN DISIMPAN]:
+  .scroll-section {
+    opacity: 0.2;
+    transform: translateY(28px);
+    transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+*/
 .scroll-section {
-  opacity: 0.2;
-  transform: translateY(28px);
-  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* Hero section langsung tampil plong 100% tanpa delay transisi atau penutup abu-abu */
+#hero,
+#hero.scroll-section,
+.scroll-section:first-of-type {
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 /* Saat section aktif di viewport (dua arah: scroll ke bawah maupun scroll balik ke atas) */
@@ -31,3 +116,124 @@
     transition: none !important;
   }
 }
+
+/* ===== VIRTUAL TOUR 360 HOTSPOTS STYLING ===== */
+.custom-hotspot-nav,
+.custom-hotspot-preview,
+.custom-hotspot-info {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  z-index: 10;
+}
+
+/* 1. Hotspot Navigasi Jalan (Mode 1) */
+.custom-hotspot-nav {
+  background: rgba(0, 82, 156, 0.88);
+  border: 2.5px solid #ffffff;
+  box-shadow: 0 0 0 4px rgba(0, 82, 156, 0.35), 0 4px 14px rgba(0, 0, 0, 0.4);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z'/%3E%3C/svg%3E");
+  background-size: 22px;
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: pulse-hotspot-nav 2.2s infinite;
+}
+
+/* 2. Hotspot Pop-up Dulu Baru Pindah (Mode 3) */
+.custom-hotspot-preview {
+  background: rgba(234, 88, 12, 0.9);
+  border: 2.5px solid #ffffff;
+  box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.35), 0 4px 14px rgba(0, 0, 0, 0.4);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z'/%3E%3C/svg%3E");
+  background-size: 22px;
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: pulse-hotspot-preview 2.2s infinite;
+}
+
+/* 3. Hotspot Info / Program CSR (Mode 2) */
+.custom-hotspot-info {
+  background: rgba(16, 185, 129, 0.9);
+  border: 2.5px solid #ffffff;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.35), 0 4px 14px rgba(0, 0, 0, 0.4);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'/%3E%3C/svg%3E");
+  background-size: 24px;
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: pulse-hotspot-info 2.2s infinite;
+}
+
+.custom-hotspot-nav:hover,
+.custom-hotspot-preview:hover,
+.custom-hotspot-info:hover {
+  transform: scale(1.22);
+}
+
+@keyframes pulse-hotspot-nav {
+  0% { box-shadow: 0 0 0 0 rgba(0, 82, 156, 0.6); }
+  70% { box-shadow: 0 0 0 14px rgba(0, 82, 156, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 82, 156, 0); }
+}
+
+@keyframes pulse-hotspot-preview {
+  0% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.6); }
+  70% { box-shadow: 0 0 0 14px rgba(234, 88, 12, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0); }
+}
+
+@keyframes pulse-hotspot-info {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
+  70% { box-shadow: 0 0 0 14px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+/* 4. Pin Kawasan Binaan di Foto Udara Kilang (Hero Section) */
+.custom-hero-region-pin {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ED1C24; /* Merah Pertamina */
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 0 5px rgba(237, 28, 36, 0.4), 0 6px 18px rgba(0, 0, 0, 0.5);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'/%3E%3C/svg%3E");
+  background-size: 26px;
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: pulse-hero-pin 2.2s infinite;
+  transition: transform 0.25s ease;
+  z-index: 15;
+}
+
+.custom-hero-region-pin:hover {
+  transform: scale(1.25);
+  background-color: #00529C;
+  box-shadow: 0 0 0 6px rgba(0, 82, 156, 0.5), 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+@keyframes pulse-hero-pin {
+  0% { box-shadow: 0 0 0 0 rgba(237, 28, 36, 0.7); }
+  70% { box-shadow: 0 0 0 16px rgba(237, 28, 36, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(237, 28, 36, 0); }
+}
+
+/* 5. Custom Loading & Clean Backdrop untuk Pannellum 360 */
+.pnlm-container {
+  background: #020617 !important; /* Hilangkan jaring-jaring pola abu-abu bawaan */
+}
+
+.pnlm-load-box,
+.pnlm-lbox,
+.pnlm-lbar,
+.pnlm-load-button {
+  display: none !important; /* Sembunyikan loading abu-abu default Pannellum */
+}
+

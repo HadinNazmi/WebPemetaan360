@@ -1,0 +1,221 @@
+/* ========================================================
+   Direktori UMKM Styling
+   ======================================================== */
+
+.direktori-page {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  font-family: 'Montserrat', sans-serif;
+  color: #1e293b;
+  padding-top: 0;
+  padding-bottom: 80px;
+}
+
+.direktori-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 72px 20px 0;
+}
+
+.direktori-header {
+  margin-bottom: 32px;
+}
+
+.direktori-header h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 6px 0;
+}
+
+.direktori-header p {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+}
+
+.direktori-filters-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 12px 18px;
+  margin-bottom: 28px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  flex-wrap: wrap;
+}
+
+.direktori-search-box {
+  position: relative;
+  flex: 1;
+  min-width: 240px;
+}
+
+.direktori-search-input {
+  width: 100%;
+  padding: 8px 12px 8px 36px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+  font-family: inherit;
+}
+
+.direktori-search-input:focus {
+  border-color: #00529C;
+}
+
+.direktori-search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  font-size: 18px;
+  pointer-events: none;
+}
+
+.direktori-kecamatan-select {
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #334155;
+  background-color: #ffffff;
+  outline: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.direktori-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.umkm-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.umkm-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 26px -6px rgba(0, 0, 0, 0.09);
+}
+
+.umkm-card-img-box {
+  width: 100%;
+  height: 180px;
+  position: relative;
+  background-color: #f1f5f9;
+}
+
+.umkm-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.umkm-card-badge-angkatan {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background-color: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.umkm-card-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.umkm-card-nama {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 4px 0;
+}
+
+.umkm-card-kecamatan {
+  font-size: 12px;
+  color: #64748b;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.umkm-card-desc {
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.umkm-card-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-top: 1px dashed #f1f5f9;
+  border-bottom: 1px dashed #f1f5f9;
+  margin-bottom: 16px;
+  font-size: 11px;
+  color: #475569;
+}
+
+.umkm-card-btn-detail {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #00529C 0%, #003e75 100%);
+  color: #ffffff;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 82, 156, 0.2);
+}
+
+.umkm-card-btn-detail:hover {
+  background: linear-gradient(135deg, #0060b8 0%, #00498a 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 82, 156, 0.3);
+}
+
+@media (max-width: 1024px) {
+  .direktori-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .direktori-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
