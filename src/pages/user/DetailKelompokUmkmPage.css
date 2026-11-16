@@ -8,13 +8,13 @@
   font-family: 'Montserrat', sans-serif;
   color: #1e293b;
   padding-top: 130px;
-  padding-bottom: 80px;
+  padding-bottom: 120px;
 }
 
 .detail-umkm-container {
   max-width: 1120px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 20px 100px;
 }
 
 .detail-umkm-btn-back {
@@ -250,6 +250,7 @@
 /* Produk Unggulan Section */
 .detail-produk-section {
   margin-top: 10px;
+  margin-bottom: 40px;
 }
 
 .detail-produk-eyebrow {

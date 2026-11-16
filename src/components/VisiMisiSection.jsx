@@ -1,32 +1,47 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import AnimatedSection from './AnimatedSection.jsx';
 import { programService } from '../services/programService';
+import { pageHeroService } from '../services/pageHeroService';
 import { getFullImageUrl } from '../utils/imageUrl';
 import './VisiMisiSection.css';
 
-const PLACEHOLDER_IMG = 'https://www.pertamina.com/file/files/2025/05/publikasi-laporan-tahunan-hero-alt.webp';
+const DEFAULT_BANNER_BG = 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1600&q=80';
 
 export default function VisiMisiSection() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [katalogHero, setKatalogHero] = useState(null);
 
   useEffect(() => {
-    async function loadVisiMisi() {
+    async function loadData() {
       try {
-        const res = await programService.getVisiMisi();
-        if (res?.success && res?.data) {
-          setData(res.data);
+        const [vmRes, heroRes] = await Promise.all([
+          programService.getVisiMisi(),
+          pageHeroService.getByKey('katalog_produk').catch(() => null),
+        ]);
+
+        if (vmRes?.success && vmRes?.data) {
+          setData(vmRes.data);
+        }
+        if (heroRes?.success && heroRes?.data) {
+          setKatalogHero(heroRes.data);
         }
       } catch (err) {
-        console.error('Gagal memuat visi misi dari database:', err);
+        console.error('Gagal memuat data seksi visi misi:', err);
       } finally {
         setLoading(false);
       }
     }
-    loadVisiMisi();
+    loadData();
   }, []);
 
   const logoSrc = data?.logo_url ? getFullImageUrl(data.logo_url) : '/image/logocsr.jpeg';
+
+  // Gambar background terhubung otomatis dengan hero katalog produk
+  const bannerBgUrl = katalogHero?.background_image
+    ? getFullImageUrl(katalogHero.background_image)
+    : DEFAULT_BANNER_BG;
 
   return (
     <>
@@ -48,24 +63,27 @@ export default function VisiMisiSection() {
                     alt={data?.judul_utama || 'Logo CSR PT Pertamina Patra Niaga'}
                     className="energizing-art"
                     onError={(e) => {
-                      e.currentTarget.src = PLACEHOLDER_IMG;
+                      e.currentTarget.src = '/image/logocsr.jpeg';
                     }}
                   />
                 </div>
 
-                {/* Kolom Kanan: Teks Visi & Misi Dinamis */}
+                {/* Kolom Kanan: Visi & Misi */}
                 <div className="energizing-content">
-                  <span className="eyebrow">{data?.eyebrow || 'VISI & MISI CSR'}</span>
-                  <h2>{data?.judul_utama || 'Komitmen Keberlanjutan & Pemberdayaan Masyarakat'}</h2>
-
-                  {data?.deskripsi_pengantar && (
-                    <p>{data.deskripsi_pengantar}</p>
-                  )}
+                  <span className="eyebrow">
+                    {data?.tagline || 'PEMBERDAYAAN BERKELANJUTAN & INKLUSIF'}
+                  </span>
+                  <h2>{data?.judul_utama || 'Visi & Misi CSR'}</h2>
 
                   {data?.visi && (
-                    <p>
-                      <strong>Visi:</strong> {data.visi}
-                    </p>
+                    <div className="space-y-1 mb-4">
+                      <p>
+                        <strong>Visi:</strong>
+                      </p>
+                      <p className="text-slate-700 leading-relaxed pl-1">
+                        {data.visi}
+                      </p>
+                    </div>
                   )}
 
                   {data?.misi && (
@@ -90,9 +108,9 @@ export default function VisiMisiSection() {
         </AnimatedSection>
       )}
 
-      {/* 2. SEKSI SEKILAS PERTAMINA (sec-about-banner) */}
+      {/* 2. SEKSI BANNER AJAKAN DUKUNG UMKM BINAAN CSR (sec-about-banner) */}
       <AnimatedSection
-        id="tentang-kami"
+        id="banner-produk-umkm"
         staggerTarget=".banner-eyebrow, .banner-title, .banner-desc, .banner-actions"
         stagger={0.12}
         yOffset={65}
@@ -100,25 +118,27 @@ export default function VisiMisiSection() {
         <section
           className="sec-about-banner"
           style={{
-            backgroundImage: `linear-gradient(90deg, rgba(8, 25, 43, 0.92) 0%, rgba(8, 25, 43, 0.8) 38%, rgba(8, 25, 43, 0.35) 70%, rgba(0, 0, 0, 0.08) 100%), url('${PLACEHOLDER_IMG}')`,
+            backgroundImage: `linear-gradient(90deg, rgba(8, 25, 43, 0.94) 0%, rgba(8, 25, 43, 0.82) 42%, rgba(8, 25, 43, 0.42) 75%, rgba(0, 0, 0, 0.15) 100%), url('${bannerBgUrl}')`,
           }}
         >
           <div className="wrap-content">
             <div className="banner-content">
-              <span className="banner-eyebrow">SEKILAS PERTAMINA</span>
-              <h2 className="banner-title">Tentang Kami</h2>
+              <span className="banner-eyebrow">PEMBERDAYAAN EKONOMI LOKAL</span>
+              <h2 className="banner-title">
+                Dukung Produk Karya Mitra Binaan CSR
+              </h2>
               <p className="banner-desc">
-                Lebih dari enam dekade menyediakan energi untuk seluruh penjuru negeri dan sejumlah wilayah di luar negeri.
+                Mari bersama kita dukung kemandirian para pelaku usaha mikro dan kelompok wanita tani binaan PT Pertamina Patra Niaga Dumai. Dapatkan produk pangan lokal bermutu tinggi, higienis, dan ramah lingkungan langsung dari tangan pengrajinnya.
               </p>
               <div className="banner-actions">
-                <a href="#visi-misi" className="btn-banner">
-                  <span>Selengkapnya</span>
+                <Link to="/katalog-produk" className="btn-banner">
+                  <span>Mulai Belanja Produk Binaan</span>
                   <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H9M17 7V15"/></svg>
-                </a>
-                <a href="#visi-misi" className="btn-banner">
-                  <span>Direksi dan Komisaris</span>
+                </Link>
+                <Link to="/direktori-umkm" className="btn-banner btn-banner-secondary">
+                  <span>Kenali Kelompok Binaan</span>
                   <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H9M17 7V15"/></svg>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
