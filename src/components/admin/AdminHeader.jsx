@@ -10,6 +10,7 @@ const routeTitleMap = {
   '/admin/bantuan': 'Penyaluran Bantuan CSR',
   '/admin/artikel': 'Publikasi & Siaran Pers',
   '/admin/umkm': 'Kelola UMKM & Produk',
+  '/admin/page-heroes': 'Banner & Hero Halaman',
   '/admin/tour-360': 'Master Wilayah Virtual Tour 360',
   '/admin/pengguna': 'Kelola Pengguna Admin',
   '/admin/pengaturan': 'Konfigurasi Umum Web',

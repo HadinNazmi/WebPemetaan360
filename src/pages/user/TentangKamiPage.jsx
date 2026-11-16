@@ -54,10 +54,10 @@ export default function TentangKamiPage() {
 
       {/* 2. Hero Header Sub-Halaman Reusable */}
       <PageHero
+        pageKey="tentang_kami"
         breadcrumbs={breadcrumbs}
         title="Tentang Program TJSL &amp; Kemitraan Keberlanjutan"
-        category="Komitmen Bersama PT Pertamina Patra Niaga & Politeknik Caltex Riau"
-        badge="PROFIL CSR & KEBERLANJUTAN"
+        subtitle="Komitmen Bersama PT Pertamina Patra Niaga & Politeknik Caltex Riau"
         backgroundImage="https://www.pertamina.com/file/files/2025/05/publikasi-laporan-tahunan-hero-alt.webp"
         fallbackImage="/images/logo2.png"
       />

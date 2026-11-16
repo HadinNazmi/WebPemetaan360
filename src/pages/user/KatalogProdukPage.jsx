@@ -104,9 +104,10 @@ export default function KatalogProdukPage() {
       <CartDrawer />
 
       <PageHero
+        pageKey="katalog_produk"
         breadcrumbs={[
           { label: 'Home', href: '/' },
-          { label: 'Produk UMKM', href: '/katalog-produk' },
+          { label: 'Produk Binaan CSR', href: '/katalog-produk' },
         ]}
         title="Katalog Produk UMKM Binaan"
         subtitle="Program TJSL CSR Pertamina Patra Niaga Dumai"

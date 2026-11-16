@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AdminContentController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\PageHeroController;
 use App\Http\Controllers\Api\PublicContentController;
 use App\Http\Controllers\Api\Tour360AdminController;
 use App\Http\Controllers\Api\Tour360PublicController;
@@ -39,6 +40,10 @@ Route::prefix('v1')->group(function () {
     Route::get('/umkm/kelompok', [UmkmPublicController::class, 'getKelompok']);
     Route::get('/umkm/kelompok/{slug}', [UmkmPublicController::class, 'getKelompokDetail']);
     Route::get('/umkm/kategori-meta', [UmkmPublicController::class, 'getKategoriMeta']);
+
+    // Page Heroes Public API
+    Route::get('/page-heroes', [PageHeroController::class, 'index']);
+    Route::get('/page-heroes/{pageKey}', [PageHeroController::class, 'show']);
 
     // ==========================================
     // Auth Routes (Login Admin CMS)
@@ -138,6 +143,14 @@ Route::prefix('v1')->group(function () {
             Route::post('/produk', [UmkmAdminController::class, 'storeProduk']);
             Route::put('/produk/{id}', [UmkmAdminController::class, 'updateProduk']);
             Route::delete('/produk/{id}', [UmkmAdminController::class, 'deleteProduk']);
+        });
+
+        // 10. Kelola Hero & Banner Halaman
+        Route::prefix('page-heroes')->group(function () {
+            Route::get('/', [PageHeroController::class, 'index']);
+            Route::get('/{pageKey}', [PageHeroController::class, 'show']);
+            Route::post('/{pageKey}', [PageHeroController::class, 'update']);
+            Route::put('/{pageKey}', [PageHeroController::class, 'update']);
         });
     });
 });

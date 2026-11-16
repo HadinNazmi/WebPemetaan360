@@ -32,6 +32,11 @@ const navItemsLanding = [
     label: 'UMKM & Produk',
     icon: 'storefront',
   },
+  {
+    to: '/admin/page-heroes',
+    label: 'Banner & Hero Halaman',
+    icon: 'photo_library',
+  },
 ];
 
 const navItemsTour = [
