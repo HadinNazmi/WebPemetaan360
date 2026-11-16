@@ -16,8 +16,6 @@ export default function SistemDetailPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
     async function loadData() {
       setLoading(true);
       const [sisRes, artRes] = await Promise.all([

@@ -15,8 +15,6 @@ export default function TentangKamiPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
     async function loadData() {
       setLoading(true);
       const [vmRes, artRes] = await Promise.all([
