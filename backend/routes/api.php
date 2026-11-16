@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AdminContentController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PublicContentController;
+use App\Http\Controllers\Api\TjslAdminController;
 use App\Http\Controllers\Api\Tour360AdminController;
 use App\Http\Controllers\Api\Tour360PublicController;
 use App\Http\Controllers\Api\UmkmAdminController;
@@ -49,95 +50,103 @@ Route::prefix('v1')->group(function () {
     // Admin CRUD Routes (CMS Dashboard Terproteksi)
     // ==========================================
     Route::prefix('admin')->middleware('auth.admin')->group(function () {
-        // Auth Session & Profile
+        // Auth Session & Profile (Dapat diakses semua akun admin terautentikasi)
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::get('/me', [AuthController::class, 'me']);
-
-        // Overview Stats
-        Route::get('/stats', [AdminContentController::class, 'getDashboardStats']);
-
-        // 1. Hero & Visi Misi
-        Route::get('/visi-misi', [AdminContentController::class, 'getVisiMisi']);
-        Route::post('/visi-misi', [AdminContentController::class, 'updateVisiMisi']);
-
-        // 2. Metrik Dampak Digital & Profil Sistem CSR
-        Route::get('/metrik-dampak', [AdminContentController::class, 'getMetrikDampak']);
-        Route::post('/metrik-dampak', [AdminContentController::class, 'storeMetrikDampak']);
-        Route::put('/metrik-dampak/{id}', [AdminContentController::class, 'updateMetrikDampak']);
-        Route::delete('/metrik-dampak/{id}', [AdminContentController::class, 'deleteMetrikDampak']);
-        Route::get('/sistem-csr', [AdminContentController::class, 'getSistemCsr']);
-        Route::put('/sistem-csr/{id}', [AdminContentController::class, 'updateSistemCsr']);
-
-        // 3. Program Unggulan CSR
-        Route::get('/program', [AdminContentController::class, 'getPrograms']);
-        Route::post('/program', [AdminContentController::class, 'storeProgram']);
-        Route::put('/program/{id}', [AdminContentController::class, 'updateProgram']);
-        Route::delete('/program/{id}', [AdminContentController::class, 'deleteProgram']);
-
-        // 4. Penyaluran Bantuan CSR
-        Route::get('/bantuan', [AdminContentController::class, 'getBantuan']);
-        Route::post('/bantuan', [AdminContentController::class, 'storeBantuan']);
-        Route::put('/bantuan/{id}', [AdminContentController::class, 'updateBantuan']);
-        Route::delete('/bantuan/{id}', [AdminContentController::class, 'deleteBantuan']);
-
-        // 5. Artikel & Publikasi Media
-        Route::get('/artikel', [AdminContentController::class, 'getArtikel']);
-        Route::post('/artikel', [AdminContentController::class, 'storeArtikel']);
-        Route::put('/artikel/{id}', [AdminContentController::class, 'updateArtikel']);
-        Route::delete('/artikel/{id}', [AdminContentController::class, 'deleteArtikel']);
-
-        // 6. Kelola Pengguna Admin
-        Route::get('/users', [AuthController::class, 'getUsers']);
-        Route::post('/users', [AuthController::class, 'storeUser']);
-        Route::delete('/users/{id}', [AuthController::class, 'deleteUser']);
-
-        // 7. Upload Media (Standar Shared Hosting)
         Route::post('/upload', [AdminContentController::class, 'uploadImage']);
 
-        // 8. Virtual Tour 360 Admin
-        Route::prefix('tour-360')->group(function () {
-            // Upload media khusus tour 360
-            Route::post('/upload', [Tour360AdminController::class, 'uploadMedia']);
+        // ==========================================
+        // KHUSUS ROLE ADMIN CSR & SUPERADMIN
+        // ==========================================
+        Route::middleware('role:superadmin,admin')->group(function () {
+            // Overview Stats
+            Route::get('/stats', [AdminContentController::class, 'getDashboardStats']);
 
-            // Panorama Hero Beranda Utama (Kilang Udara 360)
-            Route::get('/hero', [Tour360AdminController::class, 'getHeroSettings']);
-            Route::put('/hero', [Tour360AdminController::class, 'updateHeroSettings']);
+            // 1. Hero & Visi Misi
+            Route::get('/visi-misi', [AdminContentController::class, 'getVisiMisi']);
+            Route::post('/visi-misi', [AdminContentController::class, 'updateVisiMisi']);
 
-            // Master Wilayah
-            Route::get('/wilayah', [Tour360AdminController::class, 'listWilayah']);
-            Route::post('/wilayah', [Tour360AdminController::class, 'storeWilayah']);
-            Route::get('/wilayah/{id}', [Tour360AdminController::class, 'showWilayah']);
-            Route::put('/wilayah/{id}', [Tour360AdminController::class, 'updateWilayah']);
-            Route::delete('/wilayah/{id}', [Tour360AdminController::class, 'destroyWilayah']);
+            // 2. Metrik Dampak Digital & Profil Sistem CSR
+            Route::get('/metrik-dampak', [AdminContentController::class, 'getMetrikDampak']);
+            Route::post('/metrik-dampak', [AdminContentController::class, 'storeMetrikDampak']);
+            Route::put('/metrik-dampak/{id}', [AdminContentController::class, 'updateMetrikDampak']);
+            Route::delete('/metrik-dampak/{id}', [AdminContentController::class, 'deleteMetrikDampak']);
+            Route::get('/sistem-csr', [AdminContentController::class, 'getSistemCsr']);
+            Route::put('/sistem-csr/{id}', [AdminContentController::class, 'updateSistemCsr']);
 
-            // Scene / Titik Panorama
-            Route::get('/wilayah/{wilayahId}/scenes', [Tour360AdminController::class, 'listScenes']);
-            Route::post('/wilayah/{wilayahId}/scenes', [Tour360AdminController::class, 'storeScene']);
-            Route::get('/scenes/{id}', [Tour360AdminController::class, 'showScene']);
-            Route::put('/scenes/{id}', [Tour360AdminController::class, 'updateScene']);
-            Route::delete('/scenes/{id}', [Tour360AdminController::class, 'destroyScene']);
-            Route::post('/scenes/{id}/set-initial', [Tour360AdminController::class, 'setInitialScene']);
+            // 3. Program Unggulan CSR
+            Route::get('/program', [AdminContentController::class, 'getPrograms']);
+            Route::post('/program', [AdminContentController::class, 'storeProgram']);
+            Route::put('/program/{id}', [AdminContentController::class, 'updateProgram']);
+            Route::delete('/program/{id}', [AdminContentController::class, 'deleteProgram']);
 
-            // Hotspot Interaktif
-            Route::get('/scenes/{sceneId}/hotspots', [Tour360AdminController::class, 'listHotspots']);
-            Route::post('/scenes/{sceneId}/hotspots', [Tour360AdminController::class, 'storeHotspot']);
-            Route::put('/hotspots/{id}', [Tour360AdminController::class, 'updateHotspot']);
-            Route::delete('/hotspots/{id}', [Tour360AdminController::class, 'destroyHotspot']);
+            // 4. Penyaluran Bantuan CSR
+            Route::get('/bantuan', [AdminContentController::class, 'getBantuan']);
+            Route::post('/bantuan', [AdminContentController::class, 'storeBantuan']);
+            Route::put('/bantuan/{id}', [AdminContentController::class, 'updateBantuan']);
+            Route::delete('/bantuan/{id}', [AdminContentController::class, 'deleteBantuan']);
+
+            // 5. Artikel & Publikasi Media
+            Route::get('/artikel', [AdminContentController::class, 'getArtikel']);
+            Route::post('/artikel', [AdminContentController::class, 'storeArtikel']);
+            Route::put('/artikel/{id}', [AdminContentController::class, 'updateArtikel']);
+            Route::delete('/artikel/{id}', [AdminContentController::class, 'deleteArtikel']);
+
+            // 6. Kelola Pengguna Admin
+            Route::get('/users', [AuthController::class, 'getUsers']);
+            Route::post('/users', [AuthController::class, 'storeUser']);
+            Route::delete('/users/{id}', [AuthController::class, 'deleteUser']);
+
+            // 8. Virtual Tour 360 Admin
+            Route::prefix('tour-360')->group(function () {
+                Route::post('/upload', [Tour360AdminController::class, 'uploadMedia']);
+                Route::get('/hero', [Tour360AdminController::class, 'getHeroSettings']);
+                Route::put('/hero', [Tour360AdminController::class, 'updateHeroSettings']);
+                Route::get('/wilayah', [Tour360AdminController::class, 'listWilayah']);
+                Route::post('/wilayah', [Tour360AdminController::class, 'storeWilayah']);
+                Route::get('/wilayah/{id}', [Tour360AdminController::class, 'showWilayah']);
+                Route::put('/wilayah/{id}', [Tour360AdminController::class, 'updateWilayah']);
+                Route::delete('/wilayah/{id}', [Tour360AdminController::class, 'destroyWilayah']);
+                Route::get('/wilayah/{wilayahId}/scenes', [Tour360AdminController::class, 'listScenes']);
+                Route::post('/wilayah/{wilayahId}/scenes', [Tour360AdminController::class, 'storeScene']);
+                Route::get('/scenes/{id}', [Tour360AdminController::class, 'showScene']);
+                Route::put('/scenes/{id}', [Tour360AdminController::class, 'updateScene']);
+                Route::delete('/scenes/{id}', [Tour360AdminController::class, 'destroyScene']);
+                Route::post('/scenes/{id}/set-initial', [Tour360AdminController::class, 'setInitialScene']);
+                Route::get('/scenes/{sceneId}/hotspots', [Tour360AdminController::class, 'listHotspots']);
+                Route::post('/scenes/{sceneId}/hotspots', [Tour360AdminController::class, 'storeHotspot']);
+                Route::put('/hotspots/{id}', [Tour360AdminController::class, 'updateHotspot']);
+                Route::delete('/hotspots/{id}', [Tour360AdminController::class, 'destroyHotspot']);
+            });
+
+            // 9. Kelola UMKM & Produk
+            Route::prefix('umkm')->group(function () {
+                Route::get('/kelompok', [UmkmAdminController::class, 'getKelompokList']);
+                Route::post('/kelompok', [UmkmAdminController::class, 'storeKelompok']);
+                Route::put('/kelompok/{id}', [UmkmAdminController::class, 'updateKelompok']);
+                Route::delete('/kelompok/{id}', [UmkmAdminController::class, 'deleteKelompok']);
+                Route::get('/produk', [UmkmAdminController::class, 'getProdukList']);
+                Route::post('/produk', [UmkmAdminController::class, 'storeProduk']);
+                Route::put('/produk/{id}', [UmkmAdminController::class, 'updateProduk']);
+                Route::delete('/produk/{id}', [UmkmAdminController::class, 'deleteProduk']);
+            });
         });
 
-        // 9. Kelola UMKM & Produk
-        Route::prefix('umkm')->group(function () {
-            // Kelompok UMKM
-            Route::get('/kelompok', [UmkmAdminController::class, 'getKelompokList']);
-            Route::post('/kelompok', [UmkmAdminController::class, 'storeKelompok']);
-            Route::put('/kelompok/{id}', [UmkmAdminController::class, 'updateKelompok']);
-            Route::delete('/kelompok/{id}', [UmkmAdminController::class, 'deleteKelompok']);
-
-            // Produk UMKM
-            Route::get('/produk', [UmkmAdminController::class, 'getProdukList']);
-            Route::post('/produk', [UmkmAdminController::class, 'storeProduk']);
-            Route::put('/produk/{id}', [UmkmAdminController::class, 'updateProduk']);
-            Route::delete('/produk/{id}', [UmkmAdminController::class, 'deleteProduk']);
+        // ==========================================
+        // KHUSUS ROLE ADMIN TJSL
+        // ==========================================
+        Route::prefix('tjsl')->middleware('role:admin_tjsl')->group(function () {
+            Route::get('/stats', [TjslAdminController::class, 'getDashboardStats']);
+            Route::get('/pilar', [TjslAdminController::class, 'getPilarList']);
+            Route::get('/program', [TjslAdminController::class, 'getPrograms']);
+            Route::post('/program', [TjslAdminController::class, 'storeProgram']);
+            Route::put('/program/{id}', [TjslAdminController::class, 'updateProgram']);
+            Route::delete('/program/{id}', [TjslAdminController::class, 'deleteProgram']);
+            Route::get('/bantuan', [TjslAdminController::class, 'getBantuan']);
+            Route::post('/bantuan', [TjslAdminController::class, 'storeBantuan']);
+            Route::put('/bantuan/{id}', [TjslAdminController::class, 'updateBantuan']);
+            Route::delete('/bantuan/{id}', [TjslAdminController::class, 'deleteBantuan']);
+            Route::get('/laporan', [TjslAdminController::class, 'getLaporan']);
         });
     });
 });

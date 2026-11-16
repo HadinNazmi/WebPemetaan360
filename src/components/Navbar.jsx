@@ -208,8 +208,25 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Menu 4: Penyaluran Bantuan CSR */}
-          <a href="/#bantuan-csr">Bantuan CSR</a>
+          {/* Menu 5: Bantuan CSR (Dropdown TJSL & Penyaluran Bantuan) */}
+          <div className="nav-dropdown">
+            <span className="nav-dropdown-trigger">
+              <span>Bantuan CSR</span>
+              <svg className="chevron" viewBox="0 0 24 24">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </span>
+            <div className="nav-dropdown-menu">
+              <div className="dropdown-list">
+                <Link to="/tjsl" className="dropdown-item">
+                  <span className="dropdown-item-title">TJSL</span>
+                </Link>
+
+                  
+
+              </div>
+            </div>
+          </div>
 
           {/* Menu 5: Publikasi & Berita */}
           <a href="/#berita">Publikasi &amp; Berita</a>
