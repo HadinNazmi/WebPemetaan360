@@ -4,7 +4,7 @@ import './Footer.css';
 
 export default function Footer() {
   return (
-    <footer className="site-footer">
+    <footer id="footer" className="site-footer">
       <div className="wrap-content">
         {/* Brand Atas: Logo Pertamina Patra Niaga Berwarna & Alamat Resmi */}
         <div className="footer-center-brand">

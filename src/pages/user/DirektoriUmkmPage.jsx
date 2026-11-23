@@ -52,6 +52,7 @@ export default function DirektoriUmkmPage() {
       <CartDrawer />
 
       <PageHero
+        pageKey="direktori_umkm"
         breadcrumbs={[
           { label: 'Home', href: '/' },
           { label: 'Direktori UMKM', href: '/direktori-umkm' },

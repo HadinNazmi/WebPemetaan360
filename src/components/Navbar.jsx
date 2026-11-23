@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { programService } from '../services/programService';
 import { useCart } from '../context/CartContext';
 import './Navbar.css';
 
 export default function Navbar() {
+  const location = useLocation();
+  const isKatalogProduk = location.pathname === '/katalog-produk';
   const { totalItems, openDrawer } = useCart();
   const [headerVisible, setHeaderVisible] = useState(true);
   const [headerTheme, setHeaderTheme] = useState('black'); // 'black' | 'white'
@@ -95,26 +97,31 @@ export default function Navbar() {
 
           {/* Navigasi Utilitas Atas */}
           <div className="util">
-            <button
-              type="button"
-              onClick={openDrawer}
-              className="cart-nav-btn"
-              title="Buka Keranjang Belanja"
-            >
-              <span className="material-symbols-outlined text-[18px]">
-                shopping_bag
-              </span>
-              <span>Keranjang</span>
-              {totalItems > 0 && (
-                <span className="cart-badge-count">{totalItems}</span>
-              )}
-            </button>
+            {isKatalogProduk && (
+              <button
+                type="button"
+                onClick={openDrawer}
+                className="cart-nav-btn"
+                title="Buka Keranjang Belanja"
+              >
+                <span className="material-symbols-outlined text-[18px]">
+                  shopping_bag
+                </span>
+                <span>Keranjang</span>
+                {totalItems > 0 && (
+                  <span className="cart-badge-count">{totalItems}</span>
+                )}
+              </button>
+            )}
+            <a href="#footer" className="util-link">
+              Hubungi Kami
+            </a>
             <span className="lang">
               ID <span className="flag"></span>
             </span>
-            <a href="/#bantuan-csr" className="btn-outline">
-              Registrasi Program
-            </a>
+            <Link to="/katalog-produk" className="btn-outline">
+              Belanja Produk Binaan
+            </Link>
           </div>
         </div>
       </div>
@@ -154,10 +161,10 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Menu 3: Produk UMKM (Dropdown Katalog Produk & Katalog UMKM) */}
+          {/* Menu 3: Produk Binaan CSR (Dropdown Katalog Produk & Katalog UMKM) */}
           <div className="nav-dropdown">
             <span className="nav-dropdown-trigger">
-              <span>Produk UMKM</span>
+              <span>Produk Binaan CSR</span>
               <svg className="chevron" viewBox="0 0 24 24">
                 <path d="M6 9l6 6 6-6" />
               </svg>
@@ -208,8 +215,8 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Menu 4: Penyaluran Bantuan CSR */}
-          <a href="/#bantuan-csr">Bantuan CSR</a>
+          {/* Menu 5: Non TJSL (Sebelumnya Bantuan CSR) */}
+          <a href="/#bantuan-csr">Non TJSL</a>
 
           {/* Menu 5: Publikasi & Berita */}
           <a href="/#berita">Publikasi &amp; Berita</a>

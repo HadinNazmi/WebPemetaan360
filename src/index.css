@@ -237,3 +237,24 @@ div {
   display: none !important; /* Sembunyikan loading abu-abu default Pannellum */
 }
 
+/* ========================================================
+   PAGE TRANSITION ANIMATION (Smooth Entrance)
+   ======================================================== */
+@keyframes pageEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-transition-wrapper {
+  animation: pageEntrance 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity, transform;
+  width: 100%;
+}
+
+

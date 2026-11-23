@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
+import { umkmService } from '../services/umkmService';
 
 const CartContext = createContext(null);
 
@@ -30,6 +31,50 @@ export function CartProvider({ children }) {
 
   // State drawer buka/tutup
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  // Sync data kelompok (termasuk nomor WA terbaru) dari database ke barang yang ada di keranjang
+  useEffect(() => {
+    if (cartItems.length === 0) return;
+
+    async function syncCartUmkmData() {
+      try {
+        const res = await umkmService.getKelompok();
+        if (res?.success && Array.isArray(res.data)) {
+          const kelompokMap = {};
+          res.data.forEach((k) => {
+            kelompokMap[k.id] = k;
+          });
+
+          setCartItems((prevItems) => {
+            let hasChanged = false;
+            const updated = prevItems.map((item) => {
+              const freshKelompok = kelompokMap[item.kelompok_id];
+              if (
+                freshKelompok &&
+                (freshKelompok.nomor_wa !== item.kelompok_wa ||
+                  freshKelompok.nama_kelompok !== item.kelompok_nama ||
+                  freshKelompok.kecamatan !== item.kelompok_kecamatan)
+              ) {
+                hasChanged = true;
+                return {
+                  ...item,
+                  kelompok_wa: freshKelompok.nomor_wa || item.kelompok_wa,
+                  kelompok_nama: freshKelompok.nama_kelompok || item.kelompok_nama,
+                  kelompok_kecamatan: freshKelompok.kecamatan || item.kelompok_kecamatan,
+                };
+              }
+              return item;
+            });
+            return hasChanged ? updated : prevItems;
+          });
+        }
+      } catch (err) {
+        console.warn('Gagal sinkronisasi data nomor WA UMKM di keranjang:', err);
+      }
+    }
+
+    syncCartUmkmData();
+  }, []);
 
   // Sync ke localStorage saat cart berubah
   useEffect(() => {

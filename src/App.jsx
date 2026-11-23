@@ -29,6 +29,8 @@ import TourScenesPage from './pages/admin/TourScenesPage.jsx';
 import TourSceneEditorPage from './pages/admin/TourSceneEditorPage.jsx';
 import Hero360SettingsPage from './pages/admin/Hero360SettingsPage.jsx';
 import UmkmAdminPage from './pages/admin/UmkmAdminPage.jsx';
+import PageHeroAdminPage from './pages/admin/PageHeroAdminPage.jsx';
+import PageTransition from './components/common/PageTransition.jsx';
 
 function App() {
   return (
@@ -36,24 +38,24 @@ function App() {
       <CartProvider>
         <Routes>
           {/* Halaman Publik */}
-          <Route path="/" element={<HomePage />} />
-          <Route path="/tentang-kami" element={<TentangKamiPage />} />
-          <Route path="/program/:slug" element={<ProgramDetailPage />} />
-          <Route path="/sistem/:slug" element={<SistemDetailPage />} />
-          <Route path="/ppid" element={<ProgramDetailPage />} />
-          <Route path="/tour-360" element={<Tour360ViewerPage />} />
-          <Route path="/tour-360/:slug" element={<Tour360ViewerPage />} />
+          <Route path="/" element={<PageTransition><HomePage /></PageTransition>} />
+          <Route path="/tentang-kami" element={<PageTransition><TentangKamiPage /></PageTransition>} />
+          <Route path="/program/:slug" element={<PageTransition><ProgramDetailPage /></PageTransition>} />
+          <Route path="/sistem/:slug" element={<PageTransition><SistemDetailPage /></PageTransition>} />
+          <Route path="/ppid" element={<PageTransition><ProgramDetailPage /></PageTransition>} />
+          <Route path="/tour-360" element={<PageTransition><Tour360ViewerPage /></PageTransition>} />
+          <Route path="/tour-360/:slug" element={<PageTransition><Tour360ViewerPage /></PageTransition>} />
 
           {/* Halaman UMKM Binaan */}
-          <Route path="/katalog-produk" element={<KatalogProdukPage />} />
+          <Route path="/katalog-produk" element={<PageTransition><KatalogProdukPage /></PageTransition>} />
           <Route path="/produk" element={<Navigate to="/katalog-produk" replace />} />
-          <Route path="/direktori-umkm" element={<DirektoriUmkmPage />} />
-          <Route path="/direktori-umkm/:slug" element={<DetailKelompokUmkmPage />} />
+          <Route path="/direktori-umkm" element={<PageTransition><DirektoriUmkmPage /></PageTransition>} />
+          <Route path="/direktori-umkm/:slug" element={<PageTransition><DetailKelompokUmkmPage /></PageTransition>} />
           <Route path="/umkm" element={<Navigate to="/direktori-umkm" replace />} />
-          <Route path="/umkm/:slug" element={<DetailKelompokUmkmPage />} />
+          <Route path="/umkm/:slug" element={<PageTransition><DetailKelompokUmkmPage /></PageTransition>} />
 
         {/* Autentikasi Admin */}
-        <Route path="/admin/login" element={<LoginPage />} />
+        <Route path="/admin/login" element={<PageTransition><LoginPage /></PageTransition>} />
         <Route path="/login" element={<Navigate to="/admin/login" replace />} />
 
         {/* =========================================
@@ -76,6 +78,7 @@ function App() {
           <Route path="bantuan" element={<PenyaluranBantuanPage />} />
           <Route path="artikel" element={<PublikasiPage />} />
           <Route path="umkm" element={<UmkmAdminPage />} />
+          <Route path="page-heroes" element={<PageHeroAdminPage />} />
           <Route path="tour-360" element={<TourWilayahPage />} />
           <Route path="tour-360/hero-settings" element={<Hero360SettingsPage />} />
           <Route path="tour-360/:wilayahId/scenes" element={<TourScenesPage />} />
