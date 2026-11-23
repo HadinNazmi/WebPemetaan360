@@ -1,6 +1,12 @@
 import { apiClient } from './api';
 
 export const tjslAdminService = {
+  // Proposal Lookup
+  async getProposalByNomor(nomor) {
+    const res = await apiClient.get(`/admin/tjsl/proposal/${encodeURIComponent(nomor)}`);
+    return res.data;
+  },
+
   // 1. Dashboard Stats
   async getDashboardStats() {
     const res = await apiClient.get('/admin/tjsl/stats');
@@ -61,4 +67,3 @@ export const tjslAdminService = {
     return res.data;
   },
 };
-

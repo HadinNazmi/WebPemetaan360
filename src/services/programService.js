@@ -293,4 +293,20 @@ export const programService = {
       return { success: false, data: null };
     }
   },
+
+  // 9. Lacak status proposal TJSL berdasarkan nomor surat pengajuan
+  async trackProposal(nomor) {
+    try {
+      const response = await apiClient.get(`/proposal/${encodeURIComponent(nomor.trim())}`);
+      return response.data;
+    } catch (error) {
+      if (error.response?.data) {
+        return error.response.data;
+      }
+      return {
+        success: false,
+        message: 'Gagal terhubung ke server atau nomor surat tidak ditemukan.',
+      };
+    }
+  },
 };

@@ -29,6 +29,8 @@ Route::prefix('v1')->group(function () {
     Route::get('/program/{slug}', [PublicContentController::class, 'getProgramDetail']);
     Route::get('/bantuan', [PublicContentController::class, 'getBantuan']);
     Route::get('/artikel', [PublicContentController::class, 'getArtikel']);
+Route::get('/proposal/{nomor}', [PublicContentController::class, 'trackProposal']);
+    Route::get('/proposal/{nomor}', [PublicContentController::class, 'trackProposal']);
 
     // Virtual Tour 360 Public API
     Route::get('/tour-360', [Tour360PublicController::class, 'getWilayahList']);
@@ -147,6 +149,7 @@ Route::prefix('v1')->group(function () {
             Route::put('/bantuan/{id}', [TjslAdminController::class, 'updateBantuan']);
             Route::delete('/bantuan/{id}', [TjslAdminController::class, 'deleteBantuan']);
             Route::get('/laporan', [TjslAdminController::class, 'getLaporan']);
+        Route::get('/proposal/{nomor}', [TjslAdminController::class, 'showProposal']);
         });
     });
 });
@@ -159,6 +162,7 @@ Route::get('/program', [PublicContentController::class, 'getProgram']);
 Route::get('/program/{slug}', [PublicContentController::class, 'getProgramDetail']);
 Route::get('/bantuan', [PublicContentController::class, 'getBantuan']);
 Route::get('/artikel', [PublicContentController::class, 'getArtikel']);
+Route::get('/proposal/{nomor}', [PublicContentController::class, 'trackProposal']);
 Route::get('/tour-360', [Tour360PublicController::class, 'getWilayahList']);
 Route::get('/tour-360-hero', [Tour360PublicController::class, 'getHeroPanorama']);
 Route::get('/tour-360/{slug}', [Tour360PublicController::class, 'getTourDetail']);

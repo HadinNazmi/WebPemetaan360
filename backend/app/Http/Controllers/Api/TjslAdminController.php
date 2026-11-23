@@ -301,5 +301,38 @@ class TjslAdminController extends Controller
             'data' => $laporan,
         ]);
     }
-}
 
+    // New method: showProposal
+    public function showProposal($nomor)
+    {
+        $proposal = \App\Models\Proposal::where('nomor_surat', $nomor)->first();
+        if (!$proposal) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nomor tidak ditemukan',
+            ], 404);
+        }
+        $tahapan = [];
+        if ($proposal->tgl_pengajuan) {
+            $tahapan[] = ['name' => 'Pengajuan & Pemetaan', 'date' => $proposal->tgl_pengajuan, 'completed' => true];
+        }
+        if ($proposal->tgl_verifikasi) {
+            $tahapan[] = ['name' => 'Verifikasi & Uji Kelayakan', 'date' => $proposal->tgl_verifikasi, 'completed' => $proposal->status !== 'ditolak'];
+        }
+        if ($proposal->tgl_penyaluran) {
+            $tahapan[] = ['name' => 'Penyaluran Bantuan', 'date' => $proposal->tgl_penyaluran, 'completed' => $proposal->status === 'diterima'];
+        }
+        if ($proposal->tgl_monitoring) {
+            $tahapan[] = ['name' => 'Monitoring & Keberlanjutan', 'date' => $proposal->tgl_monitoring, 'completed' => $proposal->status === 'diterima'];
+        }
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'status' => $proposal->status,
+                'alasan' => $proposal->alasan_tolak ?? '',
+                'tahapan' => $tahapan,
+            ],
+        ]);
+    }
+
+    }
