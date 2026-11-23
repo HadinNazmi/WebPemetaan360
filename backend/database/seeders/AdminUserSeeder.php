@@ -23,5 +23,16 @@ class AdminUserSeeder extends Seeder
                 'is_active' => true,
             ]
         );
+
+        User::updateOrCreate(
+            ['email' => 'admin.tjsl@pertamina.com'],
+            [
+                'name' => 'Admin TJSL Pertamina',
+                'password' => Hash::make('123456'),
+                'role' => 'admin_tjsl',
+                'created_by' => null,
+                'is_active' => true,
+            ]
+        );
     }
 }

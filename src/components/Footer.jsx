@@ -55,7 +55,8 @@ export default function Footer() {
           {/* Kolom 4: Publikasi & Akses */}
           <div className="footer-col">
             <h4>Publikasi &amp; Akses</h4>
-            <a href="/#bantuan-csr">Penyaluran Bantuan CSR</a>
+            <Link to="/tjsl">Program TJSL</Link>
+
             <a href="/#berita">Berita &amp; Siaran Pers</a>
             <Link to="/tour-360">Jelajah Virtual Tour 360&deg;</Link>
             <Link to="/admin">Portal Admin CMS</Link>

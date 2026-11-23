@@ -19,9 +19,12 @@ export default function LoginPage() {
   // Jika sudah login, langsung alihkan ke dashboard
   useEffect(() => {
     if (authService.isAuthenticated()) {
-      navigate('/admin', { replace: true });
+      const user = authService.getCurrentUser();
+      const target = user?.role === 'admin_tjsl' ? '/admin/tjsl' : '/admin';
+      navigate(target, { replace: true });
     }
   }, [navigate]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,7 +43,20 @@ export default function LoginPage() {
       });
 
       if (response?.success) {
-        navigate(from, { replace: true });
+        const loggedUser = response?.data?.user || authService.getCurrentUser();
+        const defaultTarget = loggedUser?.role === 'admin_tjsl' ? '/admin/tjsl' : '/admin';
+
+        let destination = defaultTarget;
+        if (location.state?.from?.pathname) {
+          const fromPath = location.state.from.pathname;
+          if (loggedUser?.role === 'admin_tjsl' && fromPath.startsWith('/admin/tjsl')) {
+            destination = fromPath;
+          } else if (loggedUser?.role !== 'admin_tjsl' && fromPath.startsWith('/admin') && !fromPath.startsWith('/admin/tjsl')) {
+            destination = fromPath;
+          }
+        }
+
+        navigate(destination, { replace: true });
       } else {
         setErrorMessage(
           response?.message || 'Login gagal. Silakan periksa kredensial Anda.'

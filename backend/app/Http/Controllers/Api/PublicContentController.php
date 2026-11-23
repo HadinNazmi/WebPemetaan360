@@ -192,4 +192,88 @@ class PublicContentController extends Controller
             ],
         ]);
     }
+
+    /**
+     * Lacak perkembangan status pengajuan proposal TJSL untuk masyarakat umum.
+     */
+    public function trackProposal(string $nomor): JsonResponse
+    {
+        $cleanNomor = trim($nomor);
+        $proposal = \App\Models\Proposal::where('nomor_surat', $cleanNomor)
+            ->orWhereRaw('LOWER(nomor_surat) = ?', [strtolower($cleanNomor)])
+            ->first();
+
+        if (!$proposal) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nomor surat pengajuan tidak ditemukan. Pastikan nomor surat yang Anda masukkan benar sesuai tanda bukti pengajuan.',
+            ], 404);
+        }
+
+        // Susun 4 tahapan alur resmi penyaluran bantuan TJSL
+        $tahapan = [
+            [
+                'step' => 1,
+                'judul' => 'Pengajuan & Pemetaan',
+                'deskripsi' => 'Penerimaan usulan proposal masyarakat dan kelengkapan administrasi.',
+                'tanggal' => $proposal->tgl_pengajuan ? date('d M Y', strtotime($proposal->tgl_pengajuan)) : null,
+                'status' => 'completed', // Tahap 1 pasti sudah selesai jika sudah tercatat
+                'catatan' => $proposal->status === 'ditolak' && !$proposal->tgl_verifikasi 
+                    ? 'Pengajuan tidak dapat diproses lebih lanjut.' 
+                    : 'Berkas pengajuan telah resmi terdaftar di sistem TJSL.',
+            ],
+            [
+                'step' => 2,
+                'judul' => 'Verifikasi & Uji Kelayakan',
+                'deskripsi' => 'Peninjauan dan evaluasi kelayakan teknis, lapangan, dan sasaran penerima manfaat oleh tim CSR.',
+                'tanggal' => $proposal->tgl_verifikasi ? date('d M Y', strtotime($proposal->tgl_verifikasi)) : null,
+                'status' => $proposal->tgl_verifikasi 
+                    ? ($proposal->status === 'ditolak' ? 'rejected' : 'completed')
+                    : ($proposal->status === 'diproses' ? 'in_progress' : 'pending'),
+                'catatan' => $proposal->status === 'ditolak' 
+                    ? ($proposal->alasan_tolak ?: 'Proposal tidak memenuhi kriteria kelayakan program.')
+                    : ($proposal->tgl_verifikasi ? 'Verifikasi dan uji kelayakan telah selesai dilakukan.' : 'Sedang dalam proses telaah dan evaluasi tim CSR.'),
+            ],
+            [
+                'step' => 3,
+                'judul' => 'Penyaluran Bantuan',
+                'deskripsi' => 'Penetapan persetujuan program dan penyerahan bantuan sarana, modal stimulan, atau fasilitas.',
+                'tanggal' => $proposal->tgl_penyaluran ? date('d M Y', strtotime($proposal->tgl_penyaluran)) : null,
+                'status' => $proposal->tgl_penyaluran 
+                    ? 'completed' 
+                    : ($proposal->status === 'diterima' && !$proposal->tgl_penyaluran ? 'in_progress' : 'pending'),
+                'catatan' => $proposal->tgl_penyaluran 
+                    ? 'Bantuan telah disalurkan kepada penerima manfaat.' 
+                    : ($proposal->status === 'diterima' ? 'Menunggu jadwal seremoni/alokasi penyerahan bantuan.' : null),
+            ],
+            [
+                'step' => 4,
+                'judul' => 'Monitoring & Keberlanjutan',
+                'deskripsi' => 'Pendampingan berkala, pelaporan progres program, evaluasi pemanfaatan dan skor dampak sosial.',
+                'tanggal' => $proposal->tgl_monitoring ? date('d M Y', strtotime($proposal->tgl_monitoring)) : null,
+                'status' => $proposal->tgl_monitoring 
+                    ? 'completed' 
+                    : ($proposal->tgl_penyaluran ? 'in_progress' : 'pending'),
+                'catatan' => $proposal->tgl_monitoring 
+                    ? 'Program aktif berjalan dan dalam pengawasan berkala tim CSR.' 
+                    : ($proposal->tgl_penyaluran ? 'Persiapan tahap monitoring dampak program.' : null),
+            ],
+        ];
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'id' => $proposal->id,
+                'nomor_surat' => $proposal->nomor_surat,
+                'nama_pengaju' => $proposal->nama_pengaju,
+                'judul_proposal' => $proposal->judul_proposal,
+                'status' => $proposal->status, // 'diproses' | 'diterima' | 'ditolak'
+                'alasan_tolak' => $proposal->alasan_tolak,
+                'keterangan_tahapan' => $proposal->keterangan_tahapan,
+                'tgl_pengajuan' => $proposal->tgl_pengajuan ? date('d M Y', strtotime($proposal->tgl_pengajuan)) : null,
+                'updated_at' => $proposal->updated_at ? date('d M Y H:i', strtotime($proposal->updated_at)) : null,
+                'tahapan' => $tahapan,
+            ],
+        ]);
+    }
 }

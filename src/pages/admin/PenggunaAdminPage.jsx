@@ -12,6 +12,7 @@ export default function PenggunaAdminPage() {
     name: '',
     email: '',
     password: '',
+    role: 'admin',
   });
 
   const loadData = async () => {
@@ -37,6 +38,7 @@ export default function PenggunaAdminPage() {
       name: '',
       email: '',
       password: '',
+      role: 'admin',
     });
     setModalOpen(true);
   };
@@ -132,8 +134,20 @@ export default function PenggunaAdminPage() {
                       {item.email}
                     </td>
                     <td className="py-3.5 px-4">
-                      <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-[#00529C]">
-                        Super Admin
+                      <span
+                        className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold ${
+                          item.role === 'admin_tjsl'
+                            ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                            : item.role === 'superadmin'
+                            ? 'bg-purple-50 text-purple-700 border border-purple-200'
+                            : 'bg-blue-50 text-[#00529C] border border-blue-200'
+                        }`}
+                      >
+                        {item.role === 'admin_tjsl'
+                          ? 'Admin TJSL'
+                          : item.role === 'superadmin'
+                          ? 'Super Admin'
+                          : 'Admin CSR'}
                       </span>
                     </td>
                     <td className="py-3.5 px-4 text-xs text-slate-400 font-mono">
@@ -192,6 +206,21 @@ export default function PenggunaAdminPage() {
               placeholder="admin@pertamina.com"
               className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-[#00529C] outline-none"
             />
+          </div>
+
+          <div>
+            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+              Role Akses *
+            </label>
+            <select
+              value={formState.role}
+              onChange={(e) => setFormState({ ...formState, role: e.target.value })}
+              className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-[#00529C] outline-none bg-white"
+            >
+              <option value="admin">Admin CSR</option>
+              <option value="admin_tjsl">Admin TJSL</option>
+              <option value="superadmin">Super Admin</option>
+            </select>
           </div>
 
           <div>

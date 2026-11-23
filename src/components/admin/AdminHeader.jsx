@@ -89,7 +89,11 @@ export default function AdminHeader() {
                 {user?.name || 'Super Admin'}
               </span>
               <span className="text-[10px] text-slate-500 leading-none capitalize">
-                {user?.role === 'superadmin' ? 'Super Admin' : 'Admin CSR'}
+                {user?.role === 'superadmin'
+                  ? 'Super Admin'
+                  : user?.role === 'admin_tjsl'
+                  ? 'Admin TJSL'
+                  : 'Admin CSR'}
               </span>
             </div>
             <button

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Navigate, useLocation, Outlet } from 'react-router-dom';
 import authService from '../../services/authService';
+import RoleProtectedRoute from './RoleProtectedRoute';
+
 
 export default function ProtectedRoute({ children }) {
   const location = useLocation();
