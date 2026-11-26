@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { adminService } from '../../services/adminService';
 import AdminModal from '../../components/admin/AdminModal';
 import AdminImagePicker from '../../components/admin/AdminImagePicker';
+import RichTextEditor from '../../components/admin/RichTextEditor';
 import { getFullImageUrl } from '../../utils/imageUrl';
 
 export default function ProgramUnggulanPage() {
@@ -318,19 +319,14 @@ export default function ProgramUnggulanPage() {
             />
           </div>
 
-          <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-              Deskripsi Lengkap Sub-Halaman (Mendukung tag HTML &lt;p&gt;, &lt;h3&gt;, &lt;ul&gt;, dll) *
-            </label>
-            <textarea
-              required
-              rows={6}
-              value={formState.deskripsi_lengkap}
-              onChange={(e) => setFormState({ ...formState, deskripsi_lengkap: e.target.value })}
-              placeholder="<p>Pertamina berkomitmen dalam pengembangan...</p>"
-              className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs font-mono focus:ring-2 focus:ring-[#00529C] outline-none"
-            />
-          </div>
+          <RichTextEditor
+            label="Deskripsi Lengkap Program"
+            value={formState.deskripsi_lengkap}
+            onChange={(val) => setFormState({ ...formState, deskripsi_lengkap: val })}
+            placeholder="Tuliskan latar belakang, inovasi, dan dampak program di sini..."
+            required={true}
+            minHeight="220px"
+          />
 
           <div>
             <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
