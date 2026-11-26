@@ -73,9 +73,9 @@ export default function PageHero({
               'https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?auto=format&fit=crop&w=1600&q=80';
           }}
         />
-        {/* Dual Gradient Overlay persis gaya referensi Pertamina */}
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/60 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+        {/* Dual Gradient Overlay: Halus & Terang agar foto tetap jernih dan teks tetap terbaca */}
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/75 via-slate-950/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
       </div>
 
       {/* Hero Content Container */}

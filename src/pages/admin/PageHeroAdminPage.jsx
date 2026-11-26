@@ -367,9 +367,9 @@ export default function PageHeroAdminPage() {
                   alt={title || 'Preview Hero'}
                   className="w-full h-full object-cover object-center"
                 />
-                {/* Dual Gradient Overlay persis komponen PageHero Pertamina */}
-                <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/60 to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+                {/* Dual Gradient Overlay: Halus & Terang agar foto tetap jernih dan teks tetap terbaca */}
+                <div className="absolute inset-0 bg-gradient-to-r from-slate-950/75 via-slate-950/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
               </div>
 
               {/* Konten Hero */}

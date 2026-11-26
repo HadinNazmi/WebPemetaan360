@@ -129,7 +129,7 @@ export default function ProgramDetailPage() {
             {/* Rich text body dari database */}
             {program.konten_lengkap ? (
               <div
-                className="prose prose-slate max-w-none text-slate-700 leading-relaxed break-words whitespace-pre-line [&>p]:mb-4 [&>h3]:text-xl [&>h3]:font-bold [&>h3]:text-slate-900 [&>h3]:mt-6 [&>h3]:mb-3"
+                className="prose prose-slate max-w-none text-slate-700 leading-relaxed break-words [&>p]:mb-3 [&>h2]:text-2xl [&>h2]:font-bold [&>h2]:text-slate-900 [&>h2]:mt-6 [&>h2]:mb-2 [&>h3]:text-xl [&>h3]:font-bold [&>h3]:text-slate-900 [&>h3]:mt-6 [&>h3]:mb-2 [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:mb-4 [&>ol]:list-decimal [&>ol]:pl-5 [&>ol]:mb-4 [&>li]:mb-1.5"
                 dangerouslySetInnerHTML={{ __html: program.konten_lengkap }}
               />
             ) : (
