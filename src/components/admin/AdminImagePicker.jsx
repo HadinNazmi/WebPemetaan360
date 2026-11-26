@@ -13,11 +13,11 @@ export default function AdminImagePicker({
   const [mode, setMode] = useState(value && value.startsWith('http') && !value.includes('/uploads/') ? 'link' : 'upload');
   const [uploading, setUploading] = useState(false);
   const [optimizing, setOptimizing] = useState(false);
+  const [isDragOver, setIsDragOver] = useState(false);
   const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
 
-  const handleFileChange = async (e) => {
-    const file = e.target.files?.[0];
+  const processFile = async (file) => {
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
@@ -57,6 +57,36 @@ export default function AdminImagePicker({
       setOptimizing(false);
       setUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files?.[0];
+    await processFile(file);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!isDragOver) setIsDragOver(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragOver(false);
+  };
+
+  const handleDrop = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragOver(false);
+
+    if (uploading || optimizing) return;
+
+    const files = e.dataTransfer?.files;
+    if (files && files.length > 0) {
+      await processFile(files[0]);
     }
   };
 
@@ -113,14 +143,24 @@ export default function AdminImagePicker({
 
           <div
             onClick={() => !uploading && !optimizing && fileInputRef.current?.click()}
-            className={`border-2 border-dashed rounded-xl p-4 text-center cursor-pointer transition flex flex-col items-center justify-center gap-1.5 ${
-              optimizing || uploading
+            onDragOver={handleDragOver}
+            onDragEnter={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            className={`border-2 border-dashed rounded-xl p-5 text-center cursor-pointer transition flex flex-col items-center justify-center gap-2 ${
+              isDragOver
+                ? 'border-[#00529C] bg-blue-100/50 scale-[1.01] shadow-md ring-2 ring-[#00529C]/30'
+                : optimizing || uploading
                 ? 'border-blue-300 bg-blue-50/50 cursor-wait'
                 : 'border-slate-300 hover:border-[#00529C] hover:bg-blue-50/20 bg-slate-50/50'
             }`}
           >
-            <span className="material-symbols-outlined text-[28px] text-slate-400">
-              {optimizing ? 'auto_fix_high' : uploading ? 'cloud_sync' : 'add_photo_alternate'}
+            <span
+              className={`material-symbols-outlined text-[32px] transition ${
+                isDragOver ? 'text-[#00529C] scale-110' : 'text-slate-400'
+              }`}
+            >
+              {optimizing ? 'auto_fix_high' : uploading ? 'cloud_sync' : isDragOver ? 'file_download' : 'cloud_upload'}
             </span>
             <div className="text-xs">
               {optimizing ? (
@@ -133,10 +173,19 @@ export default function AdminImagePicker({
                   <span className="material-symbols-outlined text-[16px] animate-spin">progress_activity</span>
                   Sedang mengunggah file ke server...
                 </span>
-              ) : (
-                <span className="font-semibold text-slate-700">
-                  Klik untuk pilih foto dari komputer/laptop
+              ) : isDragOver ? (
+                <span className="font-bold text-[#00529C] text-sm">
+                  Lepaskan file foto di sini
                 </span>
+              ) : (
+                <div className="flex flex-col gap-0.5">
+                  <span className="font-bold text-slate-800">
+                    Seret &amp; lepas foto di sini, atau <span className="text-[#00529C] underline">telusuri</span>
+                  </span>
+                  <span className="text-[11px] text-slate-500 font-normal">
+                    Bisa diseret langsung dari File Explorer komputer Anda
+                  </span>
+                </div>
               )}
             </div>
             <span className="text-[11px] text-slate-400">{helperText}</span>

@@ -13,6 +13,7 @@ export default function PageHeroAdminPage() {
   const [bgImage, setBgImage] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
+  const [isDragOver, setIsDragOver] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
@@ -51,15 +52,51 @@ export default function PageHeroAdminPage() {
     setBgImage(hero.background_image || '');
     setImageFile(null);
     setImagePreview('');
+    setIsDragOver(false);
     setSuccessMsg('');
     setErrorMsg('');
   };
 
+  const processFile = (file) => {
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      setErrorMsg('File harus berupa gambar (JPG, PNG, WEBP, dll).');
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      setErrorMsg('Ukuran file maksimal 10MB.');
+      return;
+    }
+    setErrorMsg('');
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
+
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setImageFile(file);
-      setImagePreview(URL.createObjectURL(file));
+    processFile(file);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!isDragOver) setIsDragOver(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragOver(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragOver(false);
+
+    const files = e.dataTransfer?.files;
+    if (files && files.length > 0) {
+      processFile(files[0]);
     }
   };
 
@@ -212,15 +249,63 @@ export default function PageHeroAdminPage() {
               <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
                 Upload Foto Banner Baru
               </label>
+              
               <input
+                id="pageHeroFileInput"
                 type="file"
                 accept="image/png, image/jpeg, image/jpg, image/webp"
                 onChange={handleFileChange}
-                className="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-[#00529C] hover:file:bg-blue-100 cursor-pointer border border-slate-200 rounded-lg p-1.5"
+                className="hidden"
               />
-              <p className="text-[11px] text-slate-400 mt-1">
-                Format: JPG, PNG, WEBP. Maks 5MB. Disarankan rasio lebar (16:9 atau lebar panorama min. 1600px).
-              </p>
+
+              <div
+                onClick={() => document.getElementById('pageHeroFileInput')?.click()}
+                onDragOver={handleDragOver}
+                onDragEnter={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                className={`border-2 border-dashed rounded-xl p-5 text-center cursor-pointer transition flex flex-col items-center justify-center gap-2 ${
+                  isDragOver
+                    ? 'border-[#00529C] bg-blue-100/50 scale-[1.01] shadow-md ring-2 ring-[#00529C]/30'
+                    : 'border-slate-300 hover:border-[#00529C] hover:bg-blue-50/20 bg-slate-50/50'
+                }`}
+              >
+                <span
+                  className={`material-symbols-outlined text-[32px] transition ${
+                    isDragOver ? 'text-[#00529C] scale-110' : 'text-slate-400'
+                  }`}
+                >
+                  {isDragOver ? 'file_download' : imageFile ? 'image' : 'cloud_upload'}
+                </span>
+                <div className="text-xs">
+                  {isDragOver ? (
+                    <span className="font-bold text-[#00529C] text-sm">
+                      Lepaskan file foto di sini
+                    </span>
+                  ) : imageFile ? (
+                    <div className="flex flex-col gap-0.5">
+                      <span className="font-bold text-emerald-600">
+                        Foto dipilih: {imageFile.name}
+                      </span>
+                      <span className="text-[11px] text-slate-400">
+                        Klik atau seret foto lain untuk mengganti
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col gap-0.5">
+                      <span className="font-bold text-slate-800">
+                        Seret &amp; lepas foto di sini, atau <span className="text-[#00529C] underline">telusuri</span>
+                      </span>
+                      <span className="text-[11px] text-slate-500 font-normal">
+                        Bisa diseret langsung dari File Explorer komputer Anda
+                      </span>
+                    </div>
+                  )}
+                </div>
+                <span className="text-[11px] text-slate-400">
+                  Format: JPG, PNG, WEBP. Maks 10MB. Disarankan rasio lebar (16:9).
+                </span>
+              </div>
             </div>
 
             {/* Input Alternatif: Link URL Gambar Langsung */}

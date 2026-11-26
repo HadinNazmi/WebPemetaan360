@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { umkmService } from '../../services/umkmService';
 import { adminService } from '../../services/adminService';
 import AdminModal from '../../components/admin/AdminModal';
+import AdminImagePicker from '../../components/admin/AdminImagePicker';
 
 export default function UmkmAdminPage() {
   const [activeTab, setActiveTab] = useState('kelompok'); // 'kelompok' | 'produk'
@@ -765,33 +766,15 @@ export default function UmkmAdminPage() {
 
           {/* Upload / URL Foto Banner */}
           <div>
-            <label className="block font-semibold text-slate-700 mb-1">
-              Foto Banner / Header Kelompok
-            </label>
-            <div className="flex items-center gap-3">
-              <input
-                type="text"
-                className="flex-1 px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-[#00529C]"
-                placeholder="https://... atau klik tombol unggah"
-                value={formKelompok.foto_cover}
-                onChange={(e) =>
-                  setFormKelompok({ ...formKelompok, foto_cover: e.target.value })
-                }
-              />
-              <label className="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg cursor-pointer border border-slate-300 font-semibold flex items-center gap-1.5 transition">
-                <span className="material-symbols-outlined text-[16px]">
-                  upload
-                </span>
-                <span>{uploading ? 'Mengunggah...' : 'Pilih File'}</span>
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={(e) => handleFileUpload(e, 'foto_cover', setFormKelompok)}
-                  disabled={uploading}
-                />
-              </label>
-            </div>
+            <AdminImagePicker
+              label="Foto Banner / Header Kelompok"
+              value={formKelompok.foto_cover}
+              onChange={(val) =>
+                setFormKelompok((prev) => ({ ...prev, foto_cover: val }))
+              }
+              folder="umkm"
+              helperText="Disarankan foto lanskap (rasio 16:9 atau 4:3)"
+            />
           </div>
 
           <div className="flex items-center gap-2 pt-2">
@@ -932,33 +915,15 @@ export default function UmkmAdminPage() {
 
           {/* Upload / URL Foto Produk */}
           <div>
-            <label className="block font-semibold text-slate-700 mb-1">
-              Foto Produk
-            </label>
-            <div className="flex items-center gap-3">
-              <input
-                type="text"
-                className="flex-1 px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-[#00529C]"
-                placeholder="https://... atau klik tombol unggah file"
-                value={formProduk.foto_produk}
-                onChange={(e) =>
-                  setFormProduk({ ...formProduk, foto_produk: e.target.value })
-                }
-              />
-              <label className="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg cursor-pointer border border-slate-300 font-semibold flex items-center gap-1.5 transition">
-                <span className="material-symbols-outlined text-[16px]">
-                  upload
-                </span>
-                <span>{uploading ? 'Mengunggah...' : 'Pilih Foto'}</span>
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={(e) => handleFileUpload(e, 'foto_produk', setFormProduk)}
-                  disabled={uploading}
-                />
-              </label>
-            </div>
+            <AdminImagePicker
+              label="Foto Produk *"
+              value={formProduk.foto_produk}
+              onChange={(val) =>
+                setFormProduk((prev) => ({ ...prev, foto_produk: val }))
+              }
+              folder="produk"
+              helperText="Disarankan foto rasio persegi 1:1 atau 4:3 (Maks. 50MB)"
+            />
           </div>
 
           <div>
