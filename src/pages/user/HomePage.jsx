@@ -3,7 +3,8 @@ import Navbar from '../../components/Navbar.jsx';
 import AnimatedSection from '../../components/AnimatedSection.jsx';
 import HeroTourSection from '../../components/HeroTourSection.jsx';
 import VisiMisiSection from '../../components/VisiMisiSection.jsx';
-import Stats from '../../components/Stats.jsx';
+import StatsSiminahSection from '../../components/StatsSiminahSection.jsx';
+import StatsSimonPlusSection from '../../components/StatsSimonPlusSection.jsx';
 import ProgramList from '../../features/program/ProgramList.jsx';
 import CsrAidSection from '../../features/program/CsrAidSection.jsx';
 import NewsSection from '../../features/program/NewsSection.jsx';
@@ -34,17 +35,17 @@ export default function HomePage() {
       {/* 3. SECTION VISI & MISI CSR + SEKILAS PERTAMINA (Masing-masing terhubung GSAP ScrollTrigger) */}
       <VisiMisiSection />
 
-      {/* 4. SECTION DIGITAL IMPACT / STATS (Transisi Masuk Stagger 4 Kolom Angka Siminah & Simon+) */}
+      {/* 4. SECTION CAPAIAN DIGITAL SIMINAH (Sirkularitas Minyak Jelantah) */}
       <AnimatedSection
-        id="capaian-digital"
+        id="capaian-siminah"
         staggerTarget=".stat-col"
         stagger={0.14}
         yOffset={80}
       >
-        <Stats />
+        <StatsSiminahSection />
       </AnimatedSection>
 
-      {/* 5. SECTION SHOWCASE GRID 10 FOTO PROGRAM (Transisi Masuk Stagger Kartu Galeri Slider) */}
+      {/* 5. SECTION SHOWCASE GRID FOTO PROGRAM UNGGULAN CSR */}
       <AnimatedSection
         id="galeri"
         staggerTarget=".slider-card"
@@ -54,7 +55,17 @@ export default function HomePage() {
         <ProgramList />
       </AnimatedSection>
 
-      {/* 6. SECTION PENYALURAN BANTUAN CSR (Transisi Masuk Stagger Kartu Bantuan) */}
+      {/* 6. SECTION CAPAIAN DIGITAL SIMON+ (Monitoring & Evaluasi Ketercapaian CSR - Berada di tengah Program & Bantuan) */}
+      <AnimatedSection
+        id="capaian-simon-plus"
+        staggerTarget=".stat-col"
+        stagger={0.14}
+        yOffset={80}
+      >
+        <StatsSimonPlusSection />
+      </AnimatedSection>
+
+      {/* 7. SECTION PENYALURAN BANTUAN CSR (Non TJSL) */}
       <AnimatedSection
         id="bantuan-csr"
         staggerTarget=".csr-aid-card"

@@ -112,6 +112,8 @@ export const programService = {
       if (Array.isArray(list) && list.length > 0) {
         const normalized = list.map((m) => ({
           id: m.id,
+          sistem_csr_id: m.sistem_csr_id,
+          kode_sistem: m.sistem?.kode_sistem || (m.sistem_csr_id === 1 ? 'siminah' : 'simon_plus'),
           nama_metrik: m.nama_metrik,
           kategori: m.kategori_label || m.kategori || m.nama_metrik?.toUpperCase(),
           nilai_angka: parseFloat(m.nilai_cached ?? m.nilai_angka ?? 0),
