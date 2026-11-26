@@ -129,8 +129,8 @@ export default function Navbar() {
       {/* 2. MAINNAV: STRUKTUR MENU RINGKAS & DINAMIS */}
       <nav className="mainnav">
         <div className="wrap">
-          {/* Menu 1: Tentang Kami */}
-          <Link to="/tentang-kami">Tentang Kami</Link>
+          {/* Menu 1: Tentang Kami (Mengarah ke Section Visi Misi di Beranda) */}
+          <a href="/#visi-misi">Tentang Kami</a>
 
           {/* Menu 2: Program Unggulan (Dropdown Sederhana & Dinamis) */}
           <div className="nav-dropdown">
@@ -181,45 +181,8 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Menu 4: Sistem CSR (Dropdown Sederhana SiMinah & Simon+) */}
-          <div className="nav-dropdown">
-            <span className="nav-dropdown-trigger">
-              <span>Sistem CSR</span>
-              <svg className="chevron" viewBox="0 0 24 24">
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </span>
-            <div className="nav-dropdown-menu">
-              <div className="dropdown-list">
-                {sistemList.length > 0 ? (
-                  sistemList.map((sis) => (
-                    <Link
-                      key={sis.id || sis.kode_sistem}
-                      to={`/sistem/${sis.slug || sis.kode_sistem}`}
-                      className="dropdown-item"
-                    >
-                      <span className="dropdown-item-title">{sis.nama_sistem}</span>
-                    </Link>
-                  ))
-                ) : (
-                  <>
-                    <Link to="/sistem/siminah" className="dropdown-item">
-                      <span className="dropdown-item-title">SiMinah</span>
-                    </Link>
-                    <Link to="/sistem/simon_plus" className="dropdown-item">
-                      <span className="dropdown-item-title">Simon+</span>
-                    </Link>
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Menu 5: Non TJSL (Sebelumnya Bantuan CSR) */}
+          {/* Menu 4: Non TJSL (Sebelumnya Bantuan CSR) */}
           <a href="/#bantuan-csr">Non TJSL</a>
-
-          {/* Menu 5: Publikasi & Berita */}
-          <a href="/#berita">Publikasi &amp; Berita</a>
         </div>
       </nav>
     </header>
